@@ -68,9 +68,11 @@ export const RequestForm = () => {
               console.error('Error making the POST request:', error);
               notifyError("Oops - looks like the agent is down :(");
             }
-            router.push(
-              `/requests/${result.events.Subscription.returnValues.sender}`,
-            );
+            localStorage.setItem('prompt', values["prompt"]);
+            localStorage.setItem('account', account);
+            router.push({
+                pathname: `/requests/${result.events.Subscription.returnValues.sender}`,
+            });
           });
       } catch (e) {
         console.error(e);

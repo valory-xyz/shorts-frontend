@@ -20,64 +20,41 @@ const Container = styled.div`
 `;
 
 export const Request = () => {
-  const router = useRouter();
-  const requestId = router.query.id;
-  const [isIpfsLoading, setIsIpfsLoading] = useState(true);
-  const [ipfsData, setIpfsData] = useState();
-
-  //const { data } = useDeliver(requestId);
-  const data = {requestId: 1, data: {}};
+  const [prompt, setPrompt] = useState('');
+  const [account, setAccount] = useState('');
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getIpfsResponse(data.data, data.requestId);
-        setIpfsData(response);
-      } catch (error) {
-        notifyError('Error fetching metadata from IPFS', error);
-      } finally {
-        setIsIpfsLoading(false);
-      }
-    };
+    // Get the state after navigation
+    const storedPrompt = localStorage.getItem('prompt');
+    const storedAccount = localStorage.getItem('account');
 
-    if (data?.requestId && data?.data) {
-      getData();
+    if (storedPrompt && storedAccount) {
+      setPrompt(storedPrompt);
+      setAccount(storedAccount);
     }
-  }, [data?.requestId, data?.data]);
+  }, []);
 
   return (
     <Container>
       <Card
         title={(
           <>
-            {isIpfsLoading ? (
+            {true ? (
               <Typography.Text>
-                Waiting for Mech to deliver your result...
+                Account: {account}
               </Typography.Text>
             ) : (
-              <pre>{ipfsData}</pre>
+              <pre></pre>
             )}
           </>
         )}
       >
-        {isIpfsLoading ? (
+        { false ? (
           <Skeleton active />
         ) : (
-          <Typography.Text>{ipfsData}</Typography.Text>
+          <Typography.Text>Prompt: {prompt}</Typography.Text>
         )}
       </Card>
-      <div className="mt-8">
-        <Typography.Text type="secondary">
-          {` Request ID: · `}
-          <a
-            href={`https://aimechs.autonolas.network/mech/${DEFAULT_MECH_ADDRESS}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View request on MechHub ↗
-          </a>
-        </Typography.Text>
-      </div>
     </Container>
   );
 };
