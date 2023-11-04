@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import {
-  Layout, Button, ConfigProvider, Menu,
+  Layout, Button, ConfigProvider,
 } from 'antd';
 import PropTypes from 'prop-types';
 
 import { GREEN_THEME } from 'util/theme';
-import { useState } from 'react';
 import Login from '../Login';
 import Footer from './Footer';
 import { CustomLayout, Logo } from './styles';
@@ -17,12 +16,6 @@ const { Header, Content } = Layout;
 
 const NavigationBar = ({ children }) => {
   const router = useRouter();
-  const [selectedMenu, setSelectedMenu] = useState([]);
-
-  const handleMenuItemClick = ({ key }) => {
-    router.push(`/${key}`);
-    setSelectedMenu(key);
-  };
 
   return (
     <CustomLayout pathname={router.pathname}>

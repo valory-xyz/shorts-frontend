@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Typography, Skeleton } from 'antd';
+import { Card, Typography } from 'antd';
 
-import { notifyError } from '@autonolas/frontend-library';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { getIpfsResponse } from 'common-util/functions';
-import { DEFAULT_MECH_ADDRESS } from 'common-util/AbiAndAddresses';
 
 const Container = styled.div`
   .ant-card {
@@ -38,22 +34,16 @@ export const Request = () => {
     <Container>
       <Card
         title={(
-          <>
-            {true ? (
-              <Typography.Text>
-                Account: {account}
-              </Typography.Text>
-            ) : (
-              <pre></pre>
-            )}
-          </>
+          <Typography.Text>
+            Account:
+            {account}
+          </Typography.Text>
         )}
       >
-        { false ? (
-          <Skeleton active />
-        ) : (
-          <Typography.Text>Prompt: {prompt}</Typography.Text>
-        )}
+        <Typography.Text>
+          Prompt:
+          {prompt}
+        </Typography.Text>
       </Card>
     </Container>
   );

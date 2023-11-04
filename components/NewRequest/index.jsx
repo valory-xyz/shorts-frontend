@@ -3,7 +3,7 @@ import { getAgentHash, getIpfsResponse } from 'common-util/functions';
 import { useContractRead } from 'wagmi';
 import {
   AGENT_REGISTRY_ABI,
-  AGENT_REGISTRY_ADDRESS,
+  AGENT_REGISTRY_ADDRESS_GNOSIS,
 } from 'common-util/AbiAndAddresses';
 import { RequestForm } from './RequestForm';
 
@@ -12,7 +12,7 @@ export const NewRequest = () => {
 
   const { data: agentHashes, isLoading } = useContractRead({
     abi: AGENT_REGISTRY_ABI,
-    address: AGENT_REGISTRY_ADDRESS,
+    address: AGENT_REGISTRY_ADDRESS_GNOSIS,
     functionName: 'getHashes',
     args: [],
   });

@@ -38,3 +38,7 @@ Clone down this repository. You will need `node` version `">=18"` and `yarn` ver
 - Then visit the app:
 
 `localhost:3000`
+
+### To build:
+
+`yarn run build`

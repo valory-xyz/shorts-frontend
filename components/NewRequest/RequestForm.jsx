@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   Form, Input, Button, Card, ConfigProvider,
 } from 'antd';
-import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/router';
 import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
@@ -43,8 +42,8 @@ export const RequestForm = () => {
             // Prepare the request data
             const requestData = {
               address: account,
-              prompt: values["prompt"],
-              tool: "text-to-video"
+              prompt: values.prompt,
+              tool: 'text-to-video',
             };
             // Perform the HTTP POST request only after confirming the transaction
             try {
@@ -58,20 +57,18 @@ export const RequestForm = () => {
 
               // Check if the request was successful
               if (response.ok) {
-                const jsonResponse = await response.json();
-                console.log('Request successful:', jsonResponse);
-                // Handle the successful request response here
+                // const jsonResponse = await response.json();
               } else {
                 throw new Error('Request to agent failed');
               }
             } catch (error) {
               console.error('Error making the POST request:', error);
-              notifyError("Oops - looks like the agent is down :(");
+              notifyError('Oops - looks like the agent is down :(');
             }
-            localStorage.setItem('prompt', values["prompt"]);
+            localStorage.setItem('prompt', values.prompt);
             localStorage.setItem('account', account);
             router.push({
-                pathname: `/requests/${result.events.Subscription.returnValues.sender}`,
+              pathname: `/requests/${result.events.Subscription.returnValues.sender}`,
             });
           });
       } catch (e) {

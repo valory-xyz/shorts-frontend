@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { NewRequest } from 'components/NewRequest';
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
@@ -43,7 +44,7 @@ const LandingPage = ({ initialVideos }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <NewRequest />
-      <Row style={{ height: '50px' }}></Row>
+      <Row style={{ height: '50px' }} />
       <Row gutter={[16, 16]}>
         {videos.map((video, index) => (
           <Col key={index} xs={24} sm={12} md={6} lg={6} xl={6}>
@@ -53,6 +54,10 @@ const LandingPage = ({ initialVideos }) => {
       </Row>
     </div>
   );
+};
+
+LandingPage.propTypes = {
+  initialVideos: PropTypes.array.isRequired, // or PropTypes.array if it's not required
 };
 
 export default LandingPage;
