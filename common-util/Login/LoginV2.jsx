@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Web3Modal, Web3Button } from '@web3modal/react';
+import { Web3Modal, Web3Button, Web3NetworkSwitch } from '@web3modal/react';
 import { useAccount, useNetwork, useBalance } from 'wagmi';
 import { COLOR } from '@autonolas/frontend-library';
 import { useDispatch } from 'react-redux';
@@ -111,6 +111,8 @@ export const LoginV2 = ({
 
   return (
     <LoginContainer>
+      <Web3NetworkSwitch />
+      &nbsp;&nbsp;
       <Web3Button
         balance="show"
         avatar="hide"

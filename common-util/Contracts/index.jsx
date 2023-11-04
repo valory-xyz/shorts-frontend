@@ -11,10 +11,20 @@ import { getChainId, getProvider } from 'common-util/functions';
 
 export const RPC_URLS = {
   100: process.env.NEXT_PUBLIC_GNOSIS_URL,
+  245_022_934: process.env.NEXT_PUBLIC_NEON_URL,
+  1_101: process.env.NEXT_PUBLIC_ZKEVM_POLYGON_URL
 };
 
 export const ADDRESSES = {
   100: {
+    agentRegistry: AGENT_REGISTRY_ADDRESS,
+    agentFactory: AGENT_FACTORY_ADDRESS,
+  },
+  245_022_934: {
+    agentRegistry: AGENT_REGISTRY_ADDRESS,
+    agentFactory: AGENT_FACTORY_ADDRESS,
+  },
+  1_101: {
     agentRegistry: AGENT_REGISTRY_ADDRESS,
     agentFactory: AGENT_FACTORY_ADDRESS,
   },
