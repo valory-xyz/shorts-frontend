@@ -41,9 +41,9 @@ const LandingPage = ({ initialVideos }) => {
   }, []);
 
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <NewRequest />
-      <Row></Row>
+      <Row style={{ height: '50px' }}></Row>
       <Row gutter={[16, 16]}>
         {videos.map((video, index) => (
           <Col key={index} xs={24} sm={12} md={6} lg={6} xl={6}>
@@ -51,7 +51,7 @@ const LandingPage = ({ initialVideos }) => {
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   );
 };
 

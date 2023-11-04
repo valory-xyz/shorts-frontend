@@ -15,20 +15,26 @@ This repository contains the [Shorts.wtf](https://shorts.wtf/).
 
 ## Installation and Setup Instructions
 
-Clone down this repository. You will need `node` version ">=18" and `yarn` version ">=1" installed globally on your machine.
+Clone down this repository. You will need `node` version `">=18"` and `yarn` version `">=1"` installed globally on your machine.
 
-Installation:
+### Installation:
 
 `yarn`
 
-To Run Test Suite:
+### To Run Test Suite:
 
-`yarn testc`
+`yarn test`
 
-To Start Server:
+### To Start Server:
+
+- In one terminal:
+
+`node test_server.js`
+
+- In another terminal:
 
 `yarn dev`
 
-To Visit App:
+- Then visit the app:
 
 `localhost:3000`
