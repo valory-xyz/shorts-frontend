@@ -8,8 +8,7 @@ import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
 import { GREEN_THEME } from 'util/theme';
 import { useHelpers } from 'common-util/hooks';
-import { getMechContract } from 'common-util/Contracts';
-import { getIpfsHashHelper } from './helpers';
+import { getMechContract, getAgentMultisig } from 'common-util/Contracts';
 
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
@@ -28,25 +27,49 @@ export const RequestForm = () => {
     try {
       setIsLoading(true);
 
-      const hash = await getIpfsHashHelper(
-        { ...values, nonce: uuidv4() },
-        { noImage: true },
-      );
-
       try {
         const contract = getMechContract();
+        const agentMultisigAddress = getAgentMultisig();
         const price = await contract.methods.price().call();
 
         await contract.methods
-          .request(`0x${hash}`)
+          .subscribe(agentMultisigAddress)
           .send({ from: account, value: price })
-          .then((result) => {
+          .then(async (result) => {
             notifySuccess(
               'Transaction executed',
-              'Delivery may take several seconds.',
+              'Upon delivery you will be notified!',
             );
+            // Prepare the request data
+            const requestData = {
+              address: account,
+              prompt: values["prompt"],
+              tool: "text-to-video"
+            };
+            // Perform the HTTP POST request only after confirming the transaction
+            try {
+              const response = await fetch(process.env.NEXT_PUBLIC_AGENT_URL, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData),
+              });
+
+              // Check if the request was successful
+              if (response.ok) {
+                const jsonResponse = await response.json();
+                console.log('Request successful:', jsonResponse);
+                // Handle the successful request response here
+              } else {
+                throw new Error('Request to agent failed');
+              }
+            } catch (error) {
+              console.error('Error making the POST request:', error);
+              notifyError("Oops - looks like the agent is down :(");
+            }
             router.push(
-              `/requests/${result.events.Request.returnValues.requestId}`,
+              `/requests/${result.events.Subscription.returnValues.sender}`,
             );
           });
       } catch (e) {

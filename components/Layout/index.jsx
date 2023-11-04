@@ -31,13 +31,6 @@ const NavigationBar = ({ children }) => {
           <Logo data-testid="member-logo" onClick={() => router.push('/')}>
             <LogoSvg />
           </Logo>
-          <Menu
-            theme="light"
-            mode="horizontal"
-            selectedKeys={[selectedMenu]}
-            onClick={handleMenuItemClick}
-            items={[{ key: 'devs', label: 'Devs' }]}
-          />
         </div>
 
         <div className="column-2">

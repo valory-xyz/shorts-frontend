@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import { getIpfsResponse } from 'common-util/functions';
 import { DEFAULT_MECH_ADDRESS } from 'common-util/AbiAndAddresses';
-import { useDeliver } from './useDeliver';
 
 const Container = styled.div`
   .ant-card {
@@ -26,7 +25,8 @@ export const Request = () => {
   const [isIpfsLoading, setIsIpfsLoading] = useState(true);
   const [ipfsData, setIpfsData] = useState();
 
-  const { data } = useDeliver(requestId);
+  //const { data } = useDeliver(requestId);
+  const data = {requestId: 1, data: {}};
 
   useEffect(() => {
     const getData = async () => {
@@ -45,10 +45,6 @@ export const Request = () => {
     }
   }, [data?.requestId, data?.data]);
 
-  const truncatedRequestId = requestId.length > 10
-    ? `${requestId.slice(0, 5)}...${requestId.slice(-5)}`
-    : requestId;
-
   return (
     <Container>
       <Card
@@ -59,7 +55,7 @@ export const Request = () => {
                 Waiting for Mech to deliver your result...
               </Typography.Text>
             ) : (
-              <pre>{ipfsData.prompt}</pre>
+              <pre>{ipfsData}</pre>
             )}
           </>
         )}
@@ -67,14 +63,14 @@ export const Request = () => {
         {isIpfsLoading ? (
           <Skeleton active />
         ) : (
-          <Typography.Text>{ipfsData.result}</Typography.Text>
+          <Typography.Text>{ipfsData}</Typography.Text>
         )}
       </Card>
       <div className="mt-8">
         <Typography.Text type="secondary">
-          {` Request ID: ${truncatedRequestId} · `}
+          {` Request ID: · `}
           <a
-            href={`https://shorts.wtf/mech/${DEFAULT_MECH_ADDRESS}`}
+            href={`https://aimechs.autonolas.network/mech/${DEFAULT_MECH_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
           >

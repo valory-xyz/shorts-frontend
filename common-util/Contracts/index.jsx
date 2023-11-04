@@ -4,8 +4,18 @@ import {
   AGENT_FACTORY_ABI,
   AGENT_MECH_ABI,
   DEFAULT_MECH_ADDRESS,
-  AGENT_REGISTRY_ADDRESS,
-  AGENT_REGISTRY_ABI,
+  AGENT_REGISTRY_ADDRESS_GNOSIS,
+  AGENT_FACTORY_ADDRESS_GNOSIS,
+  AGENT_MECH_ADDRESS_GNOSIS,
+  AGENT_MULTISIG_ADDRESS_GNOSIS,
+  AGENT_REGISTRY_ADDRESS_NEON,
+  AGENT_FACTORY_ADDRESS_NEON,
+  AGENT_MECH_ADDRESS_NEON,
+  AGENT_MULTISIG_ADDRESS_NEON,
+  AGENT_REGISTRY_ADDRESS_ZKEVM_POLYGON,
+  AGENT_FACTORY_ADDRESS_ZKEVM_POLYGON,
+  AGENT_MECH_ADDRESS_ZKEVM_POLYGON,
+  AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON
 } from 'common-util/AbiAndAddresses';
 import { getChainId, getProvider } from 'common-util/functions';
 
@@ -17,16 +27,22 @@ export const RPC_URLS = {
 
 export const ADDRESSES = {
   100: {
-    agentRegistry: AGENT_REGISTRY_ADDRESS,
-    agentFactory: AGENT_FACTORY_ADDRESS,
+    agentRegistry: AGENT_REGISTRY_ADDRESS_GNOSIS,
+    agentFactory: AGENT_FACTORY_ADDRESS_GNOSIS,
+    defaultMech: AGENT_MECH_ADDRESS_GNOSIS,
+    agentMultisig: AGENT_MULTISIG_ADDRESS_GNOSIS
   },
   245_022_934: {
-    agentRegistry: AGENT_REGISTRY_ADDRESS,
-    agentFactory: AGENT_FACTORY_ADDRESS,
+    agentRegistry: AGENT_REGISTRY_ADDRESS_NEON,
+    agentFactory: AGENT_FACTORY_ADDRESS_NEON,
+    defaultMech: AGENT_MECH_ADDRESS_NEON,
+    agentMultisig: AGENT_MULTISIG_ADDRESS_NEON
   },
   1_101: {
-    agentRegistry: AGENT_REGISTRY_ADDRESS,
-    agentFactory: AGENT_FACTORY_ADDRESS,
+    agentRegistry: AGENT_REGISTRY_ADDRESS_ZKEVM_POLYGON,
+    agentFactory: AGENT_FACTORY_ADDRESS_ZKEVM_POLYGON,
+    defaultMech: AGENT_MECH_ADDRESS_ZKEVM_POLYGON,
+    agentMultisig: AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON
   },
 };
 
@@ -37,23 +53,30 @@ const getWeb3Details = () => {
   return { web3, address, chainId };
 };
 
-const getContract = (abi, contractAddress) => {
-  const { web3 } = getWeb3Details();
+const getContract = (abi, contractAddress, web3) => {
   const contract = new web3.eth.Contract(abi, contractAddress);
   return contract;
 };
 
+export const getAgentMultisig= () => {
+  const { address } = getWeb3Details();
+  return address["agentMultisig"];
+};
+
 export const getAgentContract = () => {
-  const contract = getContract(AGENT_REGISTRY_ABI, AGENT_REGISTRY_ADDRESS);
+  const { web3, address } = getWeb3Details();
+  const contract = getContract(AGENT_REGISTRY_ABI, address["agentRegistry"], web3);
   return contract;
 };
 
 export const getMechMinterContract = () => {
-  const contract = getContract(AGENT_FACTORY_ABI, AGENT_FACTORY_ADDRESS);
+  const { web3, address } = getWeb3Details();
+  const contract = getContract(AGENT_FACTORY_ABI, address["agentFactory"], web3);
   return contract;
 };
 
 export const getMechContract = () => {
-  const contract = getContract(AGENT_MECH_ABI, DEFAULT_MECH_ADDRESS);
+  const { web3, address } = getWeb3Details();
+  const contract = getContract(AGENT_MECH_ABI, address["defaultMech"], web3);
   return contract;
 };
