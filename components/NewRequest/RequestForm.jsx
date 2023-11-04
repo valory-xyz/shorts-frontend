@@ -65,7 +65,7 @@ export const RequestForm = ({ isToolsLoading, tools }) => {
   };
 
   return (
-    <Card title="New Request" style={{ width: 420 }}>
+    <Card title="Imagine your content ..." style={{ width: 420 }}>
       <Form
         form={form}
         name={FORM_NAME}
@@ -76,39 +76,16 @@ export const RequestForm = ({ isToolsLoading, tools }) => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item
-          label="Tool"
-          name="tool"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the tool',
-            },
-          ]}
-        >
-          {/* if "tools" has valid elements show dropdown, else input */}
-          {isArray(tools) && tools.length > 0 ? (
-            <Select
-              loading={isToolsLoading}
-              placeholder="Select a tool"
-              getPopupContainer={(triggerNode) => triggerNode.parentNode}
-              options={tools.map((e) => ({
-                key: e,
-                value: e,
-                label: e,
-              }))}
-            />
-          ) : (
-            <Input />
-          )}
-        </Form.Item>
 
         <Form.Item
-          label="Prompt"
+          //label="Prompt"
           name="prompt"
-          rules={[{ required: true, message: 'Please input the prompt' }]}
+          rules={[{ required: true, message: 'Please write a short prompt to guide your AIContentGeneratooorr.' }]}
         >
-          <Input.TextArea rows={4} />
+          <Input.TextArea
+            rows={2}
+            placeholder="... write a short prompt to guide your AIContentGeneratooorr."
+          />
         </Form.Item>
 
         <Form.Item>
