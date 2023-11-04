@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import {
-  Form, Input, Button, Select, Card, ConfigProvider,
+  Form, Input, Button, Card, ConfigProvider,
 } from 'antd';
 import { v4 as uuidv4 } from 'uuid';
-import { isArray } from 'lodash';
 import { useRouter } from 'next/router';
 import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
@@ -16,7 +14,7 @@ import { getIpfsHashHelper } from './helpers';
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
 
-export const RequestForm = ({ isToolsLoading, tools }) => {
+export const RequestForm = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -78,7 +76,7 @@ export const RequestForm = ({ isToolsLoading, tools }) => {
       >
 
         <Form.Item
-          //label="Prompt"
+          // label="Prompt"
           name="prompt"
           rules={[{ required: true, message: 'Please write a short prompt to guide your AIContentGeneratooorr.' }]}
         >
@@ -106,12 +104,6 @@ export const RequestForm = ({ isToolsLoading, tools }) => {
   );
 };
 
-RequestForm.propTypes = {
-  isToolsLoading: PropTypes.bool,
-  tools: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-};
+RequestForm.propTypes = {};
 
-RequestForm.defaultProps = {
-  isToolsLoading: false,
-  tools: null,
-};
+RequestForm.defaultProps = {};
