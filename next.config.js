@@ -21,7 +21,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "frame-ancestors 'none';",
+            value: "frame-ancestors 'self' https://verify.walletconnect.com https://verify.walletconnect.org;",
           },
           {
             key: 'X-Content-Type-Options',
@@ -34,6 +34,26 @@ const nextConfig = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=31536000; includeSubDomains',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://verify.walletconnect.com',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://verify.walletconnect.org',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-Requested-With,content-type',
+          },
+          {
+            key: 'Access-Control-Allow-Credentials',
+            value: 'false',
           },
         ],
       },

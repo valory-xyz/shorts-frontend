@@ -4,19 +4,22 @@ import React from 'react';
 import { Card } from 'antd';
 
 const VideoCard = ({ videoHash, imageHash, prompt }) => {
-  const videoUrl = `https://ipfs.io/ipfs/${videoHash}`;
-  const imageUrl = `https://ipfs.io/ipfs/${imageHash}`;
+  const videoUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${videoHash}`;
+  // eslint-disable-next-line no-unused-vars
+  const imageUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${imageHash}`;
 
   return (
     <Card
       hoverable
-      cover={<img alt="Video thumbnail" src={imageUrl} />}
+      // cover={<img alt="Video thumbnail" src={imageUrl} />}
     >
       <Card.Meta
-        title={prompt}
-        description={
+        title={
           // eslint-disable-next-line jsx-a11y/media-has-caption
           <video src={videoUrl} controls />
+        }
+        description={
+          prompt
         }
       />
     </Card>

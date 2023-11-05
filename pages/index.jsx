@@ -47,7 +47,7 @@ const LandingPage = ({ initialVideos }) => {
       <Row style={{ height: '50px' }} />
       <Row gutter={[16, 16]}>
         {videos.map((video, index) => (
-          <Col key={index} xs={24} sm={12} md={6} lg={6} xl={6}>
+          <Col key={index} xs={24} sm={12} md={6} lg={12} xl={12}>
             <VideoCard videoHash={video.video} imageHash={video.image} prompt={video.prompt} />
           </Col>
         ))}

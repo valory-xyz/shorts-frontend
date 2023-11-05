@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Typography } from 'antd';
+import { Card, Row, Typography } from 'antd';
 
 import styled from 'styled-components';
+import Inbox from '../Inbox';
 
 const Container = styled.div`
   .ant-card {
@@ -17,6 +18,7 @@ const Container = styled.div`
 
 export const Request = () => {
   const [prompt, setPrompt] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [account, setAccount] = useState('');
 
   useEffect(() => {
@@ -35,16 +37,25 @@ export const Request = () => {
       <Card
         title={(
           <Typography.Text>
-            Account:
-            {account}
+            Success! Your prompt is being worked on ...
           </Typography.Text>
         )}
       >
         <Typography.Text>
-          Prompt:
           {prompt}
         </Typography.Text>
       </Card>
+      <Row style={{ height: '20px' }} />
+      <Card
+        title={(
+          <Typography.Text>
+            Stay informed with Wallet Connect notifications!
+          </Typography.Text>
+        )}
+      >
+        <Inbox />
+      </Card>
     </Container>
+
   );
 };
