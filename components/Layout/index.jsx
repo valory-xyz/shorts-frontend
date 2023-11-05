@@ -1,16 +1,14 @@
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import {
   Layout, Button, ConfigProvider,
 } from 'antd';
 import PropTypes from 'prop-types';
 
 import { GREEN_THEME } from 'util/theme';
+import Image from 'next/image';
 import Login from '../Login';
 import Footer from './Footer';
-import { CustomLayout, Logo } from './styles';
-
-const LogoSvg = dynamic(() => import('common-util/SVGs/logo'));
+import { CustomLayout } from './styles';
 
 const { Header, Content } = Layout;
 
@@ -21,9 +19,7 @@ const NavigationBar = ({ children }) => {
     <CustomLayout pathname={router.pathname}>
       <Header style={{ justifyContent: 'space-between' }}>
         <div className="column-1">
-          <Logo data-testid="member-logo" onClick={() => router.push('/')}>
-            <LogoSvg />
-          </Logo>
+          <Image src="/images/logo.png" alt="logo" width={280} height={61} />
         </div>
 
         <div className="column-2">
