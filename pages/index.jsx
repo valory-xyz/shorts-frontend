@@ -42,7 +42,7 @@ const LandingPage = ({ initialVideos }) => {
   }, []);
 
   const renderVideoCards = () => {
-    if (videos.length === 0) {
+    if (!videos || videos.length === 0) {
       // Fallback content when there are no videos
       return <p>No videos to display</p>;
     }
