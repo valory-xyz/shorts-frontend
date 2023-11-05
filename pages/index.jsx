@@ -6,7 +6,7 @@ import VideoCard from 'components/VideoCards/VideoCard';
 
 export const getServerSideProps = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, {mode: "no-cors"});
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, { mode: 'no-cors' });
     const data = await response.json();
 
     return {
@@ -30,7 +30,7 @@ const LandingPage = ({ initialVideos }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, {mode: "no-cors"});
+        const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, { mode: 'no-cors' });
         const data = await response.json();
         setVideos(data.data);
       } catch (error) {
