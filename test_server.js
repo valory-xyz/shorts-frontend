@@ -16,8 +16,8 @@ app.use(express.json());
 // Enable CORS for all routes
 app.use(cors());
 
-// Handle POST request to the endpoint "/api/submit"
-app.post('/api/submit', (req, res) => {
+// Handle POST request to the endpoint "/generate"
+app.post('/generate', (req, res) => {
   const { address, prompt, tool } = req.body;
   
   // Here you would handle the incoming data as needed.

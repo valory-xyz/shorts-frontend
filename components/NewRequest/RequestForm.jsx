@@ -47,7 +47,7 @@ export const RequestForm = () => {
             };
             // Perform the HTTP POST request only after confirming the transaction
             try {
-              const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/api/submit`, {
+              const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/generate`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
