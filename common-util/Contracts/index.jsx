@@ -64,8 +64,8 @@ const getContract = (abi, contractAddress, web3) => {
   return contract;
 };
 
-export const getAgentURL = () => {
-  const { chainId } = getWeb3Details();
+export const getAgentURL = (defaultChainId = null) => {
+  const { chainId } = defaultChainId ? { chainId: defaultChainId } : getWeb3Details();
   return AGENT_URLS[chainId];
 };
 

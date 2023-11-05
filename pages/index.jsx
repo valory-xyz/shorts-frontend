@@ -7,7 +7,8 @@ import { getAgentURL } from 'common-util/Contracts';
 
 export const getServerSideProps = async () => {
   try {
-    const agentURL = getAgentURL();
+    /// we server side render for 100
+    const agentURL = getAgentURL(100);
     const response = await fetch(`${agentURL}/responses`, { mode: 'no-cors' });
     const data = await response.json();
 

@@ -27,9 +27,9 @@ const VideoCard = ({ videoHash, imageHash, prompt }) => {
 };
 
 VideoCard.propTypes = {
-  videoHash: PropTypes.array.isRequired, // or PropTypes.array if it's not required
-  imageHash: PropTypes.array.isRequired, // or PropTypes.array if it's not required
-  prompt: PropTypes.array.isRequired, // or PropTypes.array if it's not required
+  videoHash: PropTypes.string.isRequired, // or PropTypes.array if it's not required
+  imageHash: PropTypes.string.isRequired, // or PropTypes.array if it's not required
+  prompt: PropTypes.string.isRequired, // or PropTypes.array if it's not required
 };
 
 export default VideoCard;
