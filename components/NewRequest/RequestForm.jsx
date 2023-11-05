@@ -43,7 +43,7 @@ export const RequestForm = () => {
             const requestData = {
               address: account,
               prompt: values.prompt,
-              tool: 'text-to-video',
+              tool: 'short-maker',
             };
             // Perform the HTTP POST request only after confirming the transaction
             try {
