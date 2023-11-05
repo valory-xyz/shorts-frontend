@@ -55,7 +55,10 @@ const LandingPage = ({ initialVideos }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '1140px', margin: '0 auto',
+    }}
+    >
       <NewRequest />
       <Row style={{ height: '50px' }} />
       <Row gutter={[16, 16]}>
