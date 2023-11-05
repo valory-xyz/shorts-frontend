@@ -11,7 +11,6 @@ const LandingPage = () => {
     const fetchVideos = async () => {
       try {
         const agentURL = getAgentURL();
-        console.log(agentURL)
         const agentResponsesURL = `${agentURL}/responses`;
         const response = await fetch(agentResponsesURL);
         const data = await response.json();
