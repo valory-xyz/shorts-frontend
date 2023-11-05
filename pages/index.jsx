@@ -3,10 +3,12 @@ import { NewRequest } from 'components/NewRequest';
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import VideoCard from 'components/VideoCards/VideoCard';
+import { getAgentURL } from 'common-util/Contracts';
 
 export const getServerSideProps = async () => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, { mode: 'no-cors' });
+    const agentURL = getAgentURL();
+    const response = await fetch(`${agentURL}/responses`, { mode: 'no-cors' });
     const data = await response.json();
 
     return {
@@ -30,7 +32,8 @@ const LandingPage = ({ initialVideos }) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, { mode: 'no-cors' });
+        const agentURL = getAgentURL();
+        const response = await fetch(`${agentURL}/responses`, { mode: 'no-cors' });
         const data = await response.json();
         setVideos(data.data);
       } catch (error) {

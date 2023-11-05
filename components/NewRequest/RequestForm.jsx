@@ -7,7 +7,7 @@ import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
 import { GREEN_THEME } from 'util/theme';
 import { useHelpers } from 'common-util/hooks';
-import { getMechContract, getAgentMultisig } from 'common-util/Contracts';
+import { getMechContract, getAgentMultisig, getAgentURL } from 'common-util/Contracts';
 
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
@@ -29,6 +29,7 @@ export const RequestForm = () => {
       try {
         const contract = getMechContract();
         const agentMultisigAddress = getAgentMultisig();
+        const agentURL = getAgentURL();
         const price = await contract.methods.price().call();
 
         await contract.methods
@@ -47,7 +48,7 @@ export const RequestForm = () => {
             };
             // Perform the HTTP POST request only after confirming the transaction
             try {
-              const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/generate`, {
+              const response = await fetch(`${agentURL}/generate`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'text/plain',

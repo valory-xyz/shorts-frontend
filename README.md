@@ -29,7 +29,15 @@ Clone down this repository. You will need `node` version `">=18"` and `yarn` ver
 
 - In one terminal:
 
-`node test_server.js`
+`node test_server_01.js`
+
+- In another terminal:
+
+`node test_server_02.js`
+
+- In another terminal:
+
+`node test_server_03.js`
 
 - In another terminal:
 
