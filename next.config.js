@@ -21,7 +21,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "frame-ancestors none';",
+            value: "frame-ancestors 'none';",
           },
           {
             key: 'X-Content-Type-Options',
