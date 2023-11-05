@@ -50,7 +50,7 @@ export const RequestForm = () => {
               const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/generate`, {
                 method: 'POST',
                 headers: {
-                  'Content-Type': 'application/json',
+                  'Content-Type': 'text/plain',
                   // Authorization: `${process.env.NEXT_PUBLIC_AGENT_AUTH}`,
                 },
                 body: JSON.stringify(requestData),
