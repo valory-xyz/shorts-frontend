@@ -41,16 +41,25 @@ const LandingPage = ({ initialVideos }) => {
     fetchVideos();
   }, []);
 
+  const renderVideoCards = () => {
+    if (videos.length === 0) {
+      // Fallback content when there are no videos
+      return <p>No videos to display</p>;
+    }
+
+    return videos.map((video, index) => (
+      <Col key={index} xs={24} sm={12} md={6} lg={12} xl={12}>
+        <VideoCard videoHash={video.video} imageHash={video.image} prompt={video.prompt} />
+      </Col>
+    ));
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <NewRequest />
       <Row style={{ height: '50px' }} />
       <Row gutter={[16, 16]}>
-        {videos.map((video, index) => (
-          <Col key={index} xs={24} sm={12} md={6} lg={12} xl={12}>
-            <VideoCard videoHash={video.video} imageHash={video.image} prompt={video.prompt} />
-          </Col>
-        ))}
+        {renderVideoCards()}
       </Row>
     </div>
   );
