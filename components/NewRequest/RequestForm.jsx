@@ -51,8 +51,11 @@ export const RequestForm = () => {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
+                  'Authorization': `${process.env.NEXT_PUBLIC_AGENT_AUTH}`,
                 },
                 body: JSON.stringify(requestData),
+                // TOFIX
+                mode: "no-cors"
               });
 
               // Check if the request was successful
