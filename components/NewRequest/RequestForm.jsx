@@ -103,11 +103,11 @@ export const RequestForm = () => {
         <Form.Item
           // label="Prompt"
           name="prompt"
-          rules={[{ required: true, message: 'Please write a short prompt to guide your AIContentGeneratooorr.' }]}
+          rules={[{ required: true, message: 'Please write a short prompt to guide your AI content Generatooorr.' }]}
         >
           <Input.TextArea
             rows={2}
-            placeholder="... write a short prompt to guide your AIContentGeneratooorr."
+            placeholder="... write a short prompt to guide your AI content Generatooorr."
           />
         </Form.Item>
 
