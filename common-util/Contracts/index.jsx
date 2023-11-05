@@ -25,6 +25,12 @@ export const RPC_URLS = {
   1_101: process.env.NEXT_PUBLIC_ZKEVM_POLYGON_URL
 };
 
+export const AGENT_URLS = {
+  100: process.env.NEXT_PUBLIC_AGENT_GNOSIS_URL,
+  245_022_934: process.env.NEXT_PUBLIC_AGENT_NEON_URL,
+  1_101: process.env.NEXT_PUBLIC_AGENT_ZKEVM_POLYGON_URL
+};
+
 export const ADDRESSES = {
   100: {
     agentRegistry: AGENT_REGISTRY_ADDRESS_GNOSIS,
@@ -58,7 +64,12 @@ const getContract = (abi, contractAddress, web3) => {
   return contract;
 };
 
-export const getAgentMultisig= () => {
+export const getAgentURL = (defaultChainId = null) => {
+  const { chainId } = defaultChainId ? { chainId: defaultChainId } : getWeb3Details();
+  return AGENT_URLS[chainId];
+};
+
+export const getAgentMultisig = () => {
   const { address } = getWeb3Details();
   return address["agentMultisig"];
 };

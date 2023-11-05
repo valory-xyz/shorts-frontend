@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 3001;
+const PORT = 3003;
 
 // Example "database" of videos
 const videoDatabase = [
   { id: 1, video: 'QmSqX9ynWMvsiinfHPKhyjt5AjjFzXUi2VbGnZ7yJSzB4q', image: 'bafybeig64atqaladigoc3ds4arltdu63wkdrk3gesjfvnfdmz35amv7faq', prompt: 'Yada yada yada yada yada yada yada yada' },
   { id: 2, video: 'QmSqX9ynWMvsiinfHPKhyjt5AjjFzXUi2VbGnZ7yJSzB4q', image: 'bafybeig64atqaladigoc3ds4arltdu63wkdrk3gesjfvnfdmz35amv7faq', prompt: 'Yada yada tada' },
+  { id: 3, video: 'QmSqX9ynWMvsiinfHPKhyjt5AjjFzXUi2VbGnZ7yJSzB4q', image: 'bafybeig64atqaladigoc3ds4arltdu63wkdrk3gesjfvnfdmz35amv7faq', prompt: 'Yada' },
   // ... more videos
 ];
 

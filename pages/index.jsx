@@ -1,36 +1,18 @@
-import PropTypes from 'prop-types';
 import { NewRequest } from 'components/NewRequest';
 import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'antd';
 import VideoCard from 'components/VideoCards/VideoCard';
+import { getAgentURL } from 'common-util/Contracts';
 
-export const getServerSideProps = async () => {
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, { mode: 'no-cors' });
-    const data = await response.json();
-
-    return {
-      props: {
-        initialVideos: data.data,
-      },
-    };
-  } catch (error) {
-    console.error('Failed to fetch videos:', error);
-    return {
-      props: {
-        initialVideos: [],
-      },
-    };
-  }
-};
-
-const LandingPage = ({ initialVideos }) => {
-  const [videos, setVideos] = useState(initialVideos);
+const LandingPage = () => {
+  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_AGENT_URL}/responses`, { mode: 'no-cors' });
+        const agentURL = getAgentURL();
+        const agentResponsesURL = `${agentURL}/responses`;
+        const response = await fetch(agentResponsesURL);
         const data = await response.json();
         setVideos(data.data);
       } catch (error) {
@@ -66,10 +48,6 @@ const LandingPage = ({ initialVideos }) => {
       </Row>
     </div>
   );
-};
-
-LandingPage.propTypes = {
-  initialVideos: PropTypes.array.isRequired, // or PropTypes.array if it's not required
 };
 
 export default LandingPage;
