@@ -2,11 +2,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Card } from 'antd';
+import { getBlockchainShortsAddress } from 'common-util/Contracts';
 
-const VideoCard = ({ videoHash, imageHash, prompt }) => {
+const VideoCard = ({
+  id, videoHash, imageHash, prompt,
+}) => {
   const videoUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${videoHash}`;
   // eslint-disable-next-line no-unused-vars
   const imageUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${imageHash}`;
+  const scanUrl = getBlockchainShortsAddress(id);
 
   return (
     <Card
@@ -19,7 +23,12 @@ const VideoCard = ({ videoHash, imageHash, prompt }) => {
           <video src={videoUrl} controls />
         }
         description={
-          prompt
+          (
+            <>
+              <div>{prompt}</div>
+              <a href={scanUrl} target="_blank" rel="noopener noreferrer">NFT</a>
+            </>
+          )
         }
       />
     </Card>
@@ -30,6 +39,7 @@ VideoCard.propTypes = {
   videoHash: PropTypes.string.isRequired, // or PropTypes.array if it's not required
   imageHash: PropTypes.string.isRequired, // or PropTypes.array if it's not required
   prompt: PropTypes.string.isRequired, // or PropTypes.array if it's not required
+  id: PropTypes.number.isRequired,
 };
 
 export default VideoCard;

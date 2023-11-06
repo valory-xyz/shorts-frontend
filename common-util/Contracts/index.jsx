@@ -3,6 +3,7 @@ import {
   AGENT_FACTORY_ADDRESS,
   AGENT_FACTORY_ABI,
   AGENT_MECH_ABI,
+  BLOCKCHAIN_SHORTS_ABI,
   DEFAULT_MECH_ADDRESS,
   AGENT_REGISTRY_ADDRESS_GNOSIS,
   AGENT_FACTORY_ADDRESS_GNOSIS,
@@ -15,7 +16,10 @@ import {
   AGENT_REGISTRY_ADDRESS_ZKEVM_POLYGON,
   AGENT_FACTORY_ADDRESS_ZKEVM_POLYGON,
   AGENT_MECH_ADDRESS_ZKEVM_POLYGON,
-  AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON
+  AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON,
+  BLOCKCHAIN_SHORTS_ADDRESS_GNOSIS,
+  BLOCKCHAIN_SHORTS_ADDRESS_NEON,
+  BLOCKCHAIN_SHORTS_ADDRESS_ZKEVM_POLYGON
 } from 'common-util/AbiAndAddresses';
 import { getChainId, getProvider } from 'common-util/functions';
 
@@ -24,6 +28,12 @@ export const RPC_URLS = {
   245_022_934: process.env.NEXT_PUBLIC_NEON_URL,
   1_101: process.env.NEXT_PUBLIC_ZKEVM_POLYGON_URL
 };
+
+export const SCAN_URLS = {
+  100: 'https://gnosisscan.io/',
+  245_022_934: 'https://zkevm.polygonscan.com/',
+  1_101: 'https://neonscan.org/'
+}
 
 export const AGENT_URLS = {
   100: process.env.NEXT_PUBLIC_AGENT_GNOSIS_URL,
@@ -36,19 +46,22 @@ export const ADDRESSES = {
     agentRegistry: AGENT_REGISTRY_ADDRESS_GNOSIS,
     agentFactory: AGENT_FACTORY_ADDRESS_GNOSIS,
     defaultMech: AGENT_MECH_ADDRESS_GNOSIS,
-    agentMultisig: AGENT_MULTISIG_ADDRESS_GNOSIS
+    agentMultisig: AGENT_MULTISIG_ADDRESS_GNOSIS,
+    blockchainShorts: BLOCKCHAIN_SHORTS_ADDRESS_GNOSIS
   },
   245_022_934: {
     agentRegistry: AGENT_REGISTRY_ADDRESS_NEON,
     agentFactory: AGENT_FACTORY_ADDRESS_NEON,
     defaultMech: AGENT_MECH_ADDRESS_NEON,
-    agentMultisig: AGENT_MULTISIG_ADDRESS_NEON
+    agentMultisig: AGENT_MULTISIG_ADDRESS_NEON,
+    blockchainShorts: BLOCKCHAIN_SHORTS_ADDRESS_NEON
   },
   1_101: {
     agentRegistry: AGENT_REGISTRY_ADDRESS_ZKEVM_POLYGON,
     agentFactory: AGENT_FACTORY_ADDRESS_ZKEVM_POLYGON,
     defaultMech: AGENT_MECH_ADDRESS_ZKEVM_POLYGON,
-    agentMultisig: AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON
+    agentMultisig: AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON,
+    blockchainShorts: BLOCKCHAIN_SHORTS_ADDRESS_ZKEVM_POLYGON
   },
 };
 
@@ -58,6 +71,19 @@ const getWeb3Details = () => {
   const address = ADDRESSES[chainId];
   return { web3, address, chainId };
 };
+
+export const getBlockchainShortsAddress = (id) => {
+  const { chainId } = getWeb3Details();
+  const url = SCAN_URLS[chainId]
+  const address = ADDRESSES[chainId]["blockchainShorts"]
+  return `${url}token/${address}`
+}
+
+const getBlockchainShortsContract = () => {
+  const { web3, address } = getWeb3Details();
+  const contract = getContract(BLOCKCHAIN_SHORTS_ABI, address["blockchainShorts"], web3);
+  return contract;
+}
 
 const getContract = (abi, contractAddress, web3) => {
   const contract = new web3.eth.Contract(abi, contractAddress);

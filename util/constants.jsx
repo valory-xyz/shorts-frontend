@@ -7,7 +7,3 @@ export const HASH_PREFIXES = {
 };
 
 export const GATEWAY_URL = 'https://gateway.autonolas.tech/ipfs/';
-
-export const GNOSIS_SCAN_URL = 'https://gnosisscan.io/';
-export const ZKEVM_POLYGON_SCAN_URL = 'https://zkevm.polygonscan.com/';
-export const NEON_SCAN_URL = 'https://neonscan.org/';
