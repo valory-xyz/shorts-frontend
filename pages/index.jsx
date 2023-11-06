@@ -31,7 +31,6 @@ const LandingPage = () => {
 
     return videos.map((video, index) => (
       <Col key={index} xs={24} sm={12} md={6} lg={12} xl={12}>
-        (// eslint-disable-next-line max-len)
         <VideoCard
           id={video.id}
           videoHash={video.video}

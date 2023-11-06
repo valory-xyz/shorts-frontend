@@ -31,8 +31,8 @@ export const RPC_URLS = {
 
 export const SCAN_URLS = {
   100: 'https://gnosisscan.io/',
-  245_022_934: 'https://zkevm.polygonscan.com/',
-  1_101: 'https://neonscan.org/'
+  245_022_934: 'https://neonscan.org/',
+  1_101: 'https://zkevm.polygonscan.com/'
 }
 
 export const AGENT_URLS = {
