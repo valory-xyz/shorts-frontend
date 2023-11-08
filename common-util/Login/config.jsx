@@ -8,7 +8,7 @@ import { gnosis, polygonZkEvm, Chain } from 'wagmi/chains';
 import { SafeConnector } from 'wagmi/connectors/safe';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { RPC_URLS } from 'common-util/Contracts';
- 
+
 export const neon = {
   id: 245_022_934,
   name: 'Neon',
@@ -27,7 +27,7 @@ export const neon = {
     default: { name: 'NeonScan', url: 'https://neonscan.org/' },
   },
   contracts: {
-    multicall3: {  // replace
+    multicall3: { // replace
       address: '0xca11bde05977b3631167028862be2a173976ca11',
       blockCreated: 11_907_934,
     },
@@ -39,7 +39,7 @@ export const projectId = process.env.NEXT_PUBLIC_WALLET_PROJECT_ID;
 export const SUPPORTED_CHAINS = [
   gnosis,
   polygonZkEvm,
-  neon
+  neon,
 ];
 
 const { publicClient, webSocketPublicClient, chains } = configureChains(

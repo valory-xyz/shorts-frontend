@@ -86,16 +86,27 @@ export default function App() {
               </div>
               {!isRegistered ? (
                 <div>
-                  To manage notifications, sign and register an identity key:&nbsp;
-                  <button type="button" onClick={performRegistration} disabled={isRegistering}>
+                  To manage notifications, sign and register an identity
+                  key:&nbsp;
+                  <button
+                    type="button"
+                    onClick={performRegistration}
+                    disabled={isRegistering}
+                  >
                     {isRegistering ? 'Signing...' : 'Sign'}
                   </button>
                 </div>
               ) : (
                 <>
                   {!isSubscribed ? (
-                    <button type="button" onClick={performSubscribe} disabled={isSubscribing}>
-                      {isSubscribing ? 'Subscribing...' : 'Subscribe to notifications'}
+                    <button
+                      type="button"
+                      onClick={performSubscribe}
+                      disabled={isSubscribing}
+                    >
+                      {isSubscribing
+                        ? 'Subscribing...'
+                        : 'Subscribe to notifications'}
                     </button>
                   ) : (
                     <>
@@ -105,13 +116,21 @@ export default function App() {
                         {messages.map((message) => (
                           <div key={message.id} className="email-item">
                             <div className="email-item-header">
-                              <h4 className="email-item-title">{message.message.title}</h4>
+                              <h4 className="email-item-title">
+                                {message.message.title}
+                              </h4>
                               <div className="email-item-date">
-                                {
-                                  new Date(message.publishedAt).toLocaleString([], {
-                                    year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit',
-                                  })
-                                }
+                                {new Date(message.publishedAt).toLocaleString(
+                                  [],
+                                  {
+                                    year: 'numeric',
+                                    month: 'numeric',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                  },
+                                )}
                               </div>
                             </div>
                             <div className="email-item-body">
