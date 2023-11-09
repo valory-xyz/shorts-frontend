@@ -115,7 +115,7 @@ export default function App() {
 
           <Popover
             content={info}
-            title="Title"
+            title="Stay informed with Wallet Connect notifications!"
             placement="right"
             overlayStyle={{ width: '400px' }}
           >

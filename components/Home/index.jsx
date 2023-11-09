@@ -1,4 +1,4 @@
-import { Row, Col } from 'antd';
+import { Row, Col, Divider } from 'antd';
 import styled from 'styled-components';
 
 import { NewRequest } from '../NewRequest';
@@ -17,7 +17,12 @@ export const HomePage = () => (
         </div>
       </Col>
 
-      <Col xs={24} md={14}>
+      <Col xs={0} md={1}>
+        <Divider type="vertical" />
+      </Col>
+
+      <Col xs={24} md={13}>
+        <Divider type="vertical" />
         <VideoList />
       </Col>
     </Row>

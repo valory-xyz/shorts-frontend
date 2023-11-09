@@ -138,7 +138,3 @@ export const RequestForm = () => {
     </Card>
   );
 };
-
-RequestForm.propTypes = {};
-
-RequestForm.defaultProps = {};
