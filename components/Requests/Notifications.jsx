@@ -1,34 +1,42 @@
-import { Avatar, List } from 'antd';
+import { List } from 'antd';
+import { useMessages } from '@web3inbox/widget-react';
+import { useHelpers } from 'common-util/hooks';
 
-const data = [
-  {
-    title: 'Ant Design Title 1',
-  },
-  {
-    title: 'Ant Design Title 2',
-  },
-  {
-    title: 'Ant Design Title 3',
-  },
-  {
-    title: 'Ant Design Title 4',
-  },
-];
+const dateFormat = {
+  year: 'numeric',
+  month: 'numeric',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+};
 
-const Notifications = () => (
-  <List
-    itemLayout="horizontal"
-    dataSource={data}
-    renderItem={(item, index) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`} />}
-          title={<a href="https://ant.design">{item.title}</a>}
-          description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-        />
-      </List.Item>
-    )}
-  />
-);
+export const Notifications = () => {
+  const { account } = useHelpers();
+  const { messages } = useMessages(account);
 
-export default Notifications;
+  return (
+    <List
+      itemLayout="horizontal"
+      dataSource={messages}
+      renderItem={(notification, index) => (
+        <List.Item key={`notification-${index}`}>
+          <List.Item.Meta
+            avatar={(
+              <>
+                {new Date(notification.publishedAt).toLocaleString(
+                  [],
+                  dateFormat,
+                )}
+              </>
+            )}
+            title={
+              <a href="https://ant.design">{notification.message.title}</a>
+            }
+            description={notification.message.body}
+          />
+        </List.Item>
+      )}
+    />
+  );
+};

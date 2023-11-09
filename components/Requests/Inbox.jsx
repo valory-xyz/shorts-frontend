@@ -1,15 +1,19 @@
 import {
   useManageSubscription,
-  useSubscription,
+  // useSubscription,
   useW3iAccount,
   useInitWeb3InboxClient,
-  useMessages,
 } from '@web3inbox/widget-react';
-import { Col, Row, Typography } from 'antd';
+import {
+  Button, Col, Popover, Row, Typography,
+} from 'antd';
 import { useCallback, useEffect } from 'react';
 import { useSignMessage, useAccount } from 'wagmi';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
-const { Text } = Typography;
+import { notifyError, notifySuccess } from '@autonolas/frontend-library';
+
+const { Text, Title } = Typography;
 
 export default function App() {
   const { address } = useAccount();
@@ -46,30 +50,23 @@ export default function App() {
   // is generated.
   const performRegistration = useCallback(async () => {
     if (!address) return;
-
-    try {
-      await register((message) => signMessageAsync({ message }));
-    } catch (registerIdentityError) {
-      // alert(registerIdentityError);
-    }
+    await register((message) => signMessageAsync({ message }));
   }, [signMessageAsync, register, address]);
-
-  useEffect(() => {
-    // Register even if an identity key exists, to account for stale keys
-    performRegistration();
-  }, [performRegistration]);
 
   const { isSubscribed, isSubscribing, subscribe } = useManageSubscription();
 
   const performSubscribe = useCallback(async () => {
-    // Register again just in case
-    await performRegistration();
-    await subscribe();
+    try {
+      await performRegistration();
+      await subscribe();
+      notifySuccess('Subscribed to notifications');
+    } catch (error) {
+      notifyError('Failed to subscribe to notifications');
+    }
   }, [subscribe, isRegistered]);
 
   // eslint-disable-next-line no-unused-vars
-  const { subscription } = useSubscription();
-  const { messages } = useMessages();
+  // const { subscription } = useSubscription();
 
   if (!isReady) {
     return <Text>Loading client...</Text>;
@@ -79,70 +76,54 @@ export default function App() {
     return <Text>Connect your wallet</Text>;
   }
 
+  const info = (
+    <Row>
+      <Col style={{ marginBottom: 16 }}>
+        To manage notifications, sign and register an identity key:&nbsp;
+      </Col>
+
+      <Col>
+        <Text strong>Address:</Text>
+      </Col>
+      <Col>
+        <Text>{`${address}`}</Text>
+      </Col>
+
+      <Col style={{ marginTop: 16 }}>
+        <Text strong>Account ID:</Text>
+      </Col>
+      <Col>
+        <Text>{`${account}`}</Text>
+      </Col>
+    </Row>
+  );
+
   return (
     <>
-      <Row gutter={[16, 16]}>
-        <Col>
-          <Text>{`Address: ${address}`}</Text>
-        </Col>
-
-        <Col>
-          <Text>{`Account ID:${account}`}</Text>
-        </Col>
-      </Row>
-
-      {!isRegistered ? (
-        <div>
-          To manage notifications, sign and register an identity key:&nbsp;
-          <button
-            type="button"
-            onClick={performRegistration}
-            disabled={isRegistering}
+      {!isRegistered || !isSubscribed ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <Button
+            type="primary"
+            onClick={performSubscribe}
+            disabled={isRegistering || isSubscribing}
+            loading={isRegistering || isSubscribing}
           >
-            {isRegistering ? 'Signing...' : 'Sign'}
-          </button>
+            {isRegistering || isSubscribing
+              ? 'Subscribing...'
+              : 'Subscribe & Notify me'}
+          </Button>
+
+          <Popover
+            content={info}
+            title="Title"
+            placement="right"
+            overlayStyle={{ width: '400px' }}
+          >
+            <QuestionCircleOutlined style={{ fontSize: 24 }} />
+          </Popover>
         </div>
       ) : (
-        <>
-          {!isSubscribed ? (
-            <button
-              type="button"
-              onClick={performSubscribe}
-              disabled={isSubscribing}
-            >
-              {isSubscribing ? 'Subscribing...' : 'Subscribe to notifications'}
-            </button>
-          ) : (
-            <>
-              <div>You are subscribed!</div>
-              <div />
-              <div className="email-list">
-                {messages.map((message) => (
-                  <div key={message.id} className="email-item">
-                    <div className="email-item-header">
-                      <h4 className="email-item-title">
-                        {message.message.title}
-                      </h4>
-                      <div className="email-item-date">
-                        {new Date(message.publishedAt).toLocaleString([], {
-                          year: 'numeric',
-                          month: 'numeric',
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                          second: '2-digit',
-                        })}
-                      </div>
-                    </div>
-                    <div className="email-item-body">
-                      <p>{message.message.body}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-        </>
+        <Title level={4}>You have subscribed to notifications!</Title>
       )}
     </>
   );

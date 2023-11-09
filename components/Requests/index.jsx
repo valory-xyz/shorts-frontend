@@ -39,22 +39,14 @@ export const Request = () => {
       <Card
         title={(
           <Typography.Text>
-            Success! Your prompt is being worked on ...
+            Success! Your prompt is being worked on...
           </Typography.Text>
         )}
       >
         <Typography.Text>{prompt}</Typography.Text>
       </Card>
       <Row style={{ height: '20px' }} />
-      <Card
-        title={(
-          <Typography.Text>
-            Stay informed with Wallet Connect notifications!
-          </Typography.Text>
-        )}
-      >
-        <Inbox />
-      </Card>
+      <Inbox />
     </Container>
   );
 };

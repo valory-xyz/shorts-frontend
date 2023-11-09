@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { BellOutlined } from '@ant-design/icons';
 
 import { GREEN_THEME } from 'util/theme';
-import Notifications from '../Requests/Notifications';
+import { Notifications } from '../Requests/Notifications';
 import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
@@ -33,7 +33,7 @@ const NavigationBar = ({ children }) => {
             </ConfigProvider>
           )}
           <Popover
-            defaultOpen
+            // defaultOpen
             title="Notifications"
             placement="top"
             // placement="topRight"
