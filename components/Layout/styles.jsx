@@ -9,10 +9,7 @@ export const CustomLayout = styled(Layout)`
     margin-top: 64px;
   }
   .site-layout-background {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 240px);
   }
   .mech-tabs {
     .ant-tabs-extra-content {

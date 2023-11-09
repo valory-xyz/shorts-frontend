@@ -1,4 +1,4 @@
-// components/VideoCard.jsx
+/* eslint-disable jsx-a11y/media-has-caption */
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Card } from 'antd';
@@ -20,10 +20,14 @@ const VideoCard = ({
       // cover={<img alt="Video thumbnail" src={imageUrl} />}
     >
       <Card.Meta
-        title={
-          // eslint-disable-next-line jsx-a11y/media-has-caption
-          <video src={videoUrl} controls />
-        }
+        title={(
+          <div>
+            <video width="420" height="320" controls>
+              <source src={videoUrl} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
         description={(
           <>
             <div>{prompt}</div>

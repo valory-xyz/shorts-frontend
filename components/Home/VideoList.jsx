@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
-  Avatar, Divider, List, Skeleton,
+  Col, Divider, Empty, Row, Skeleton,
 } from 'antd';
 import styled from 'styled-components';
+
+import { getAgentURL } from 'common-util/Contracts';
+import VideoCard from './VideoCard';
 
 const VideoContainer = styled.div`
   width: 100%;
@@ -11,65 +14,88 @@ const VideoContainer = styled.div`
 
 export const VideoList = () => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [hasMoreVideos, setHasMoreVideos] = useState(true);
   const [pageCount, setPageCount] = useState(0);
 
-  const loadMoreVideos = () => {
+  const fetchVideos = async () => {
     if (loading) {
       return;
     }
 
-    const currentPageCount = pageCount + 1;
     setLoading(true);
-    fetch(
-      `https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo&page=${currentPageCount}`,
-    )
-      .then((res) => res.json())
-      .then((body) => {
-        const moreList = body.results;
-        setData([...data, ...moreList]);
-        setHasMoreVideos(moreList.length > 0);
-        setLoading(false);
-        setPageCount(pageCount + 1);
-      })
-      .catch((e) => {
-        console.error(e);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+
+    const currentPageCount = pageCount + 1;
+    try {
+      const agentURL = getAgentURL();
+      const agentResponsesURL = `${agentURL}/responses?pageNumber=${currentPageCount}&limit=5`;
+      const response = await fetch(agentResponsesURL);
+      const data = await response.json();
+      const moreList = data.data;
+      setVideos((prev) => [...prev, ...moreList]);
+      setHasMoreVideos(moreList.length > 0);
+      setPageCount(currentPageCount);
+    } catch (error) {
+      console.error('Failed to fetch videos:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // on initial load
   useEffect(() => {
-    loadMoreVideos();
+    fetchVideos();
   }, []);
 
-  console.log({ hasMoreVideos, data });
+  if (loading) {
+    return (
+      <VideoContainer>
+        <Skeleton avatar paragraph={{ rows: 2 }} active />
+      </VideoContainer>
+    );
+  }
+
+  if (videos?.length === 0) {
+    return (
+      <VideoContainer>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description="No videos to display"
+          />
+        </div>
+      </VideoContainer>
+    );
+  }
 
   return (
     <VideoContainer>
       <InfiniteScroll
-        dataLength={data.length}
-        next={loadMoreVideos}
+        dataLength={videos.length}
+        next={fetchVideos}
         hasMore={hasMoreVideos}
         loader={<Skeleton avatar paragraph={{ rows: 2 }} active />}
         endMessage={<Divider plain>It is all, nothing more!</Divider>}
       >
-        <List
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item key={item.email}>
-              <List.Item.Meta
-                avatar={<Avatar src={item.picture.large} />}
-                title={<a href="https://ant.design">{item.name.last}</a>}
-                description={item.email}
+        <Row>
+          {videos.map((video, index) => (
+            <Col xs={24} sm={12} md={6} lg={12} xl={12}>
+              <VideoCard
+                key={index}
+                id={video.id}
+                videoHash={video.video}
+                imageHash={video.image}
+                prompt={video.prompt}
               />
-              <div>Content</div>
-            </List.Item>
-          )}
-        />
+            </Col>
+          ))}
+        </Row>
       </InfiniteScroll>
     </VideoContainer>
   );
