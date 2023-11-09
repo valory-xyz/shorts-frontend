@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Card, Row, Typography } from 'antd';
 
 import styled from 'styled-components';
-import Inbox from '../Inbox';
+import Inbox from './Inbox';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .ant-card {
-    width: 620px;
+    width: 680px;
     .ant-card-head {
       overflow: auto;
     }

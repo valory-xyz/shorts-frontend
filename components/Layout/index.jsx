@@ -1,9 +1,13 @@
 import { useRouter } from 'next/router';
-import { Layout, Button, ConfigProvider } from 'antd';
+import {
+  Layout, Button, ConfigProvider, Badge, Popover,
+} from 'antd';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
+import { BellOutlined } from '@ant-design/icons';
 
 import { GREEN_THEME } from 'util/theme';
-import Image from 'next/image';
+import Notifications from '../Requests/Notifications';
 import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
@@ -28,6 +32,20 @@ const NavigationBar = ({ children }) => {
               </Button>
             </ConfigProvider>
           )}
+          <Popover
+            defaultOpen
+            title="Notifications"
+            placement="top"
+            // placement="topRight"
+            trigger={['click']}
+            content={Notifications}
+            overlayStyle={{ width: '500px' }}
+          >
+            <Badge dot>
+              <Button icon={<BellOutlined />} />
+            </Badge>
+          </Popover>
+
           <Login />
         </div>
       </Header>

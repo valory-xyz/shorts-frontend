@@ -10,6 +10,10 @@ import VideoCard from './VideoCard';
 
 const VideoContainer = styled.div`
   width: 100%;
+  margin: 20px;
+  .infinite-scroll-component {
+    padding: 0 12px;
+  }
 `;
 
 export const VideoList = () => {
@@ -47,14 +51,6 @@ export const VideoList = () => {
     fetchVideos();
   }, []);
 
-  if (loading) {
-    return (
-      <VideoContainer>
-        <Skeleton avatar paragraph={{ rows: 2 }} active />
-      </VideoContainer>
-    );
-  }
-
   if (videos?.length === 0) {
     return (
       <VideoContainer>
@@ -63,6 +59,7 @@ export const VideoList = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            height: '500px',
           }}
         >
           <Empty
@@ -83,7 +80,7 @@ export const VideoList = () => {
         loader={<Skeleton avatar paragraph={{ rows: 2 }} active />}
         endMessage={<Divider plain>It is all, nothing more!</Divider>}
       >
-        <Row>
+        <Row gutter={[16, 16]}>
           {videos.map((video, index) => (
             <Col xs={24} sm={12} md={6} lg={12} xl={12}>
               <VideoCard
