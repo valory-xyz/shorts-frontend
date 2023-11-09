@@ -4,7 +4,7 @@ import {
   w3mProvider,
 } from '@web3modal/ethereum';
 import { configureChains, createConfig } from 'wagmi';
-import { gnosis, polygonZkEvm, Chain } from 'wagmi/chains';
+import { gnosis, polygonZkEvm } from 'wagmi/chains';
 import { SafeConnector } from 'wagmi/connectors/safe';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { RPC_URLS } from 'common-util/Contracts';

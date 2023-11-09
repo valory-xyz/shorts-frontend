@@ -7,7 +7,11 @@ import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
 import { GREEN_THEME } from 'util/theme';
 import { useHelpers } from 'common-util/hooks';
-import { getMechContract, getAgentMultisig, getAgentURL } from 'common-util/Contracts';
+import {
+  getMechContract,
+  getAgentMultisig,
+  getAgentURL,
+} from 'common-util/Contracts';
 
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
@@ -89,7 +93,7 @@ export const RequestForm = () => {
   };
 
   return (
-    <Card title="Imagine your content ..." style={{ width: 420 }}>
+    <Card title="Imagine your content ..." style={{ width: 500 }}>
       <Form
         form={form}
         name={FORM_NAME}
@@ -100,15 +104,20 @@ export const RequestForm = () => {
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
       >
-
         <Form.Item
           // label="Prompt"
           name="prompt"
-          rules={[{ required: true, message: 'Please write a short prompt to guide your AI content Generatooorr.' }]}
+          rules={[
+            {
+              required: true,
+              message:
+                'Please write a short prompt to guide your AI content Generatooorr.',
+            },
+          ]}
         >
           <Input.TextArea
-            rows={2}
-            placeholder="... write a short prompt to guide your AI content Generatooorr."
+            rows={4}
+            placeholder="Write a short prompt to guide your AI content Generatooorr."
           />
         </Form.Item>
 

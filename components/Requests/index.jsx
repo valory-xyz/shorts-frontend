@@ -18,8 +18,7 @@ const Container = styled.div`
 
 export const Request = () => {
   const [prompt, setPrompt] = useState('');
-  // eslint-disable-next-line no-unused-vars
-  const [account, setAccount] = useState('');
+  const [account, setAccount] = useState(''); // eslint-disable-line
 
   useEffect(() => {
     // Get the state after navigation
@@ -41,9 +40,7 @@ export const Request = () => {
           </Typography.Text>
         )}
       >
-        <Typography.Text>
-          {prompt}
-        </Typography.Text>
+        <Typography.Text>{prompt}</Typography.Text>
       </Card>
       <Row style={{ height: '20px' }} />
       <Card
@@ -56,6 +53,5 @@ export const Request = () => {
         <Inbox />
       </Card>
     </Container>
-
   );
 };

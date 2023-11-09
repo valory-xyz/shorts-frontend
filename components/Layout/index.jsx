@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router';
-import {
-  Layout, Button, ConfigProvider,
-} from 'antd';
+import { Layout, Button, ConfigProvider } from 'antd';
 import PropTypes from 'prop-types';
 
 import { GREEN_THEME } from 'util/theme';
 import Image from 'next/image';
-import Login from '../Login';
+import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
 

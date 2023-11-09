@@ -1,10 +1,11 @@
 import Web3 from 'web3';
 import {
-  AGENT_FACTORY_ADDRESS,
+  // AGENT_FACTORY_ADDRESS,
   AGENT_FACTORY_ABI,
   AGENT_MECH_ABI,
   BLOCKCHAIN_SHORTS_ABI,
-  DEFAULT_MECH_ADDRESS,
+  // DEFAULT_MECH_ADDRESS,
+  AGENT_REGISTRY_ABI,
   AGENT_REGISTRY_ADDRESS_GNOSIS,
   AGENT_FACTORY_ADDRESS_GNOSIS,
   AGENT_MECH_ADDRESS_GNOSIS,
@@ -72,21 +73,21 @@ const getWeb3Details = () => {
   return { web3, address, chainId };
 };
 
-export const getBlockchainShortsAddress = (id) => {
+export const getBlockchainShortsAddress = () => {
   const { chainId } = getWeb3Details();
   const url = SCAN_URLS[chainId];
   const address = ADDRESSES[chainId].blockchainShorts;
   return `${url}token/${address}`;
 };
 
-const getBlockchainShortsContract = () => {
-  const { web3, address } = getWeb3Details();
-  const contract = getContract(BLOCKCHAIN_SHORTS_ABI, address.blockchainShorts, web3);
+const getContract = (abi, contractAddress, web3) => {
+  const contract = new web3.eth.Contract(abi, contractAddress);
   return contract;
 };
 
-const getContract = (abi, contractAddress, web3) => {
-  const contract = new web3.eth.Contract(abi, contractAddress);
+export const getBlockchainShortsContract = () => {
+  const { web3, address } = getWeb3Details();
+  const contract = getContract(BLOCKCHAIN_SHORTS_ABI, address.blockchainShorts, web3);
   return contract;
 };
 
