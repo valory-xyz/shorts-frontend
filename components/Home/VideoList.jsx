@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {
   Col, Divider, Empty, Row, Skeleton,
 } from 'antd';
 import styled from 'styled-components';
+import { uniqBy } from 'lodash';
 
 import { getAgentURL } from 'common-util/Contracts';
 import VideoCard from './VideoCard';
@@ -36,7 +37,7 @@ export const VideoList = () => {
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
       const moreList = data.data;
-      setVideos((prev) => [...prev, ...moreList]);
+      setVideos((prev) => uniqBy([...prev, ...moreList], 'id'));
       setHasMoreVideos(moreList.length > 0);
       setPageCount(currentPageCount);
     } catch (error) {
@@ -77,12 +78,19 @@ export const VideoList = () => {
         dataLength={videos.length}
         next={fetchVideos}
         hasMore={hasMoreVideos}
-        loader={<Skeleton avatar paragraph={{ rows: 2 }} active />}
+        loader={(
+          <Skeleton
+            avatar
+            paragraph={{ rows: 2 }}
+            active
+            style={{ marginTop: '1rem' }}
+          />
+        )}
         endMessage={<Divider plain>It is all, nothing more!</Divider>}
       >
-        <Row gutter={[16, 16]}>
+        <Row gutter={[48, 16]}>
           {videos.map((video, index) => (
-            <Col xs={24} sm={12} md={6} lg={12} xl={12}>
+            <Col xs={24} sm={12} md={12} lg={12} xl={12} key={video.id}>
               <VideoCard
                 key={index}
                 id={video.id}

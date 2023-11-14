@@ -26,74 +26,88 @@ export const RequestForm = () => {
     window.console.warn('Failed:', errorInfo);
   };
 
+  const getRequestData = (formValues) => {
+    // Store the prompt and account in local storage
+    localStorage.setItem('prompt', formValues.prompt);
+    localStorage.setItem('account', account);
+
+    // Prepare the request data
+    const requestData = {
+      address: account,
+      prompt: formValues.prompt,
+      tool: 'short-maker',
+    };
+
+    return requestData;
+  };
+
   const onFinish = async (values) => {
     try {
       setIsLoading(true);
 
-      try {
-        const contract = getMechContract();
-        const agentMultisigAddress = getAgentMultisig();
-        const agentURL = getAgentURL();
-        const price = await contract.methods.price().call();
+      const contract = getMechContract();
+      const agentMultisigAddress = getAgentMultisig();
+      const agentURL = getAgentURL();
+      const price = await contract.methods.price().call();
 
-        await contract.methods
-          .subscribe(agentMultisigAddress)
-          .send({ from: account, value: price })
-          .then(async (result) => {
-            notifySuccess(
-              'Transaction executed',
-              'Upon delivery you will be notified!',
-            );
-            // Prepare the request data
-            const requestData = {
-              address: account,
-              prompt: values.prompt,
-              tool: 'short-maker',
-            };
-            // Perform the HTTP POST request only after confirming the transaction
-            try {
-              const response = await fetch(`${agentURL}/generate`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'text/plain',
-                  // Authorization: `${process.env.NEXT_PUBLIC_AGENT_AUTH}`,
-                },
-                body: JSON.stringify(requestData),
-                // // TOFIX
-                // mode: 'no-cors',
-              });
+      contract.methods
+        .subscribe(agentMultisigAddress)
+        .send({ from: account, value: price })
+        .then(async (result) => {
+          notifySuccess(
+            'Transaction executed',
+            'Upon delivery you will be notified!',
+          );
 
-              // Check if the request was successful
-              if (response.ok) {
-                // const jsonResponse = await response.json();
-              } else {
-                throw new Error('Request to agent failed');
-              }
-            } catch (error) {
-              console.error('Error making the POST request:', error);
-              notifyError('Oops - looks like the agent is down :(');
-            }
-            localStorage.setItem('prompt', values.prompt);
-            localStorage.setItem('account', account);
-            router.push({
-              pathname: `/requests/${result.events.Subscription.returnValues.sender}`,
+          // Perform the HTTP POST request only after confirming the transaction
+          try {
+            const response = await fetch(`${agentURL}/generate`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'text/plain',
+                // Authorization: `${process.env.NEXT_PUBLIC_AGENT_AUTH}`,
+              },
+              body: JSON.stringify(getRequestData(values)),
+              // TODO
+              // mode: 'no-cors',
             });
-          });
-      } catch (e) {
-        console.error(e);
-        notifyError("Couldn't execute transaction");
-      } finally {
-        setIsLoading(false);
-      }
+
+            // console.log({ result });
+            // console.log({ response });
+
+            // Check if the request was successful
+            if (response.ok) {
+              const jsonResponse = await response.json();
+              console.log({ jsonResponse });
+            } else {
+              throw new Error('Request to agent failed');
+            }
+          } catch (error) {
+            console.error('Error making the POST request:', error);
+            notifyError('Oops - looks like the agent is down :(');
+          }
+
+          // Redirect to the requests page
+          const senderAccount = result.events.Subscription.returnValues.sender;
+          router.push({ pathname: `/requests/${senderAccount}` });
+        });
     } catch (e) {
       console.error(e);
+      notifyError("Couldn't execute transaction");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Card title="Imagine your content ..." style={{ width: 500 }}>
+    <Card
+      title="Imagine your content ..."
+      style={{
+        width: 500,
+        boxShadow:
+          '0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09)',
+      }}
+    >
       <Form
         form={form}
         name={FORM_NAME}

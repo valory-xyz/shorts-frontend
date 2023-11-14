@@ -1,8 +1,23 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import PropTypes from 'prop-types';
-import React from 'react';
 import { Card } from 'antd';
+import styled from 'styled-components';
+
 import { getBlockchainShortsAddress } from 'common-util/Contracts';
+
+const EachVideoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const CustomCard = styled(Card)`
+  /* max-width: 500px; */
+  .ant-card-meta-description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 
 const VideoCard = ({
   id,
@@ -15,18 +30,19 @@ const VideoCard = ({
   const scanUrl = getBlockchainShortsAddress(id);
 
   return (
-    <Card
+    <CustomCard
       hoverable
+      style={{ height: '100%' }}
       // cover={<img alt="Video thumbnail" src={imageUrl} />}
     >
       <Card.Meta
         title={(
-          <div>
+          <EachVideoContainer>
             <video width="420" height="320" controls>
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-          </div>
+          </EachVideoContainer>
         )}
         description={(
           <>
@@ -37,7 +53,7 @@ const VideoCard = ({
           </>
         )}
       />
-    </Card>
+    </CustomCard>
   );
 };
 
