@@ -5,13 +5,8 @@ import styled from 'styled-components';
 
 import { getBlockchainShortsAddress } from 'common-util/Contracts';
 
-const EachVideoContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const CustomCard = styled(Card)`
-  /* max-width: 500px; */
+  height: 100%;
   .ant-card-meta-description {
     display: flex;
     flex-direction: column;
@@ -19,22 +14,20 @@ const CustomCard = styled(Card)`
   }
 `;
 
-export const VideoCard = ({
-  id,
-  videoHash,
-  // imageHash,
-  prompt,
-}) => {
+const EachVideoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  video {
+    max-height: 500px;
+  }
+`;
+
+export const VideoCard = ({ id, videoHash, prompt }) => {
   const videoUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${videoHash}`;
-  // const imageUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${imageHash}`;
   const scanUrl = getBlockchainShortsAddress(id);
 
   return (
-    <CustomCard
-      hoverable
-      style={{ height: '100%' }}
-      // cover={<img alt="Video thumbnail" src={imageUrl} />}
-    >
+    <CustomCard hoverable>
       <Card.Meta
         title={(
           <EachVideoContainer>
@@ -58,8 +51,7 @@ export const VideoCard = ({
 };
 
 VideoCard.propTypes = {
-  videoHash: PropTypes.string.isRequired, // or PropTypes.array if it's not required
-  // imageHash: PropTypes.string.isRequired, // or PropTypes.array if it's not required
-  prompt: PropTypes.string.isRequired, // or PropTypes.array if it's not required
+  videoHash: PropTypes.string.isRequired,
+  prompt: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
 };
