@@ -15,14 +15,11 @@ const VideoCard = ({
   const scanUrl = getBlockchainShortsAddress(id);
 
   return (
-    <Card
-      hoverable
-      // cover={<img alt="Video thumbnail" src={imageUrl} />}
-    >
+    <Card>
       <Card.Meta
         title={(
           <div>
-            <video width="420" height="320" controls>
+            <video width="100%" height="100%" controls>
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -30,9 +27,9 @@ const VideoCard = ({
         )}
         description={(
           <>
-            <div>{prompt}</div>
+            <div className="mb-8">{prompt}</div>
             <a href={scanUrl} target="_blank" rel="noopener noreferrer">
-              NFT
+              View NFT ↗
             </a>
           </>
         )}

@@ -93,7 +93,7 @@ export const RequestForm = () => {
   };
 
   return (
-    <Card title="Imagine your content ..." style={{ width: 500 }}>
+    <Card title="Generate a short film" className="mb-12">
       <Form
         form={form}
         name={FORM_NAME}
@@ -111,13 +111,13 @@ export const RequestForm = () => {
             {
               required: true,
               message:
-                'Please write a short prompt to guide your AI content Generatooorr.',
+                'Write a prompt to guide your AI content Generatooorr.',
             },
           ]}
         >
           <Input.TextArea
             rows={4}
-            placeholder="Write a short prompt to guide your AI content Generatooorr."
+            placeholder="Write a prompt to guide your AI content Generatooorr."
           />
         </Form.Item>
 

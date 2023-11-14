@@ -1,4 +1,4 @@
-import { Row, Col, Divider } from 'antd';
+import { Row, Col } from 'antd';
 import styled from 'styled-components';
 
 import { NewRequest } from '../NewRequest';
@@ -10,19 +10,12 @@ const Container = styled.div`
 
 export const HomePage = () => (
   <Container>
-    <Row>
-      <Col xs={24} md={10} style={{ position: 'relative', width: '100%' }}>
-        <div style={{ position: 'fixed' }}>
-          <NewRequest />
-        </div>
+    <Row gutter={24}>
+      <Col xs={24} lg={10}>
+        <NewRequest />
       </Col>
 
-      <Col xs={0} md={1}>
-        <Divider type="vertical" />
-      </Col>
-
-      <Col xs={24} md={13}>
-        <Divider type="vertical" />
+      <Col xs={24} lg={14}>
         <VideoList />
       </Col>
     </Row>
