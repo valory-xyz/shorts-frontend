@@ -7,14 +7,10 @@ import styled from 'styled-components';
 import { uniqBy } from 'lodash';
 
 import { getAgentURL } from 'common-util/Contracts';
-import VideoCard from './VideoCard';
+import { VideoCard } from './VideoCard';
 
 const VideoContainer = styled.div`
   width: 100%;
-  margin: 20px;
-  .infinite-scroll-component {
-    padding: 0 12px;
-  }
 `;
 
 export const VideoList = () => {
@@ -86,7 +82,7 @@ export const VideoList = () => {
             style={{ marginTop: '1rem' }}
           />
         )}
-        endMessage={<Divider plain>It is all, nothing more!</Divider>}
+        endMessage={<Divider plain>No more videos to show</Divider>}
       >
         <Row gutter={[48, 16]}>
           {videos.map((video, index) => (

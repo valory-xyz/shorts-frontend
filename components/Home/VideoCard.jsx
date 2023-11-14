@@ -19,7 +19,7 @@ const CustomCard = styled(Card)`
   }
 `;
 
-const VideoCard = ({
+export const VideoCard = ({
   id,
   videoHash,
   // imageHash,
@@ -38,7 +38,7 @@ const VideoCard = ({
       <Card.Meta
         title={(
           <EachVideoContainer>
-            <video width="420" height="320" controls>
+            <video width="100%" height="100%" controls>
               <source src={videoUrl} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
@@ -46,9 +46,9 @@ const VideoCard = ({
         )}
         description={(
           <>
-            <div>{prompt}</div>
+            <div className="mb-8">{prompt}</div>
             <a href={scanUrl} target="_blank" rel="noopener noreferrer">
-              NFT
+              View NFT ↗
             </a>
           </>
         )}
@@ -63,5 +63,3 @@ VideoCard.propTypes = {
   prompt: PropTypes.string.isRequired, // or PropTypes.array if it's not required
   id: PropTypes.number.isRequired,
 };
-
-export default VideoCard;

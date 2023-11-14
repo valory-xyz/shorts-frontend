@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import {
-  Layout, Button, ConfigProvider, Badge, Popover,
+  Layout, Button, ConfigProvider, Popover,
 } from 'antd';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
@@ -41,9 +41,7 @@ const NavigationBar = ({ children }) => {
             content={Notifications}
             overlayStyle={{ width: '500px' }}
           >
-            <Badge dot>
-              <Button icon={<BellOutlined />} />
-            </Badge>
+            <Button icon={<BellOutlined />} />
           </Popover>
 
           <Login />
