@@ -33,10 +33,8 @@ const NavigationBar = ({ children }) => {
             </ConfigProvider>
           )}
           <Popover
-            // defaultOpen
             title="Notifications"
             placement="top"
-            // placement="topRight"
             trigger={['click']}
             content={Notifications}
             overlayStyle={{ width: '500px' }}

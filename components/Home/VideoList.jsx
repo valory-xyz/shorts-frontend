@@ -29,12 +29,12 @@ export const VideoList = () => {
     const currentPageCount = pageCount + 1;
     try {
       const agentURL = getAgentURL();
-      const agentResponsesURL = `${agentURL}/responses?pageNumber=${currentPageCount}&limit=5`;
+      const agentResponsesURL = `${agentURL}/responses?pageNum=${currentPageCount}&limit=5`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
       const moreList = data.data;
       setVideos((prev) => uniqBy([...prev, ...moreList], 'id'));
-      setHasMoreVideos(moreList.length > 0);
+      setHasMoreVideos(currentPageCount <= data.numPages);
       setPageCount(currentPageCount);
     } catch (error) {
       console.error('Failed to fetch videos:', error);

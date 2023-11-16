@@ -1,6 +1,5 @@
 import {
   useManageSubscription,
-  // useSubscription,
   useW3iAccount,
   useInitWeb3InboxClient,
 } from '@web3inbox/widget-react';
@@ -28,7 +27,7 @@ export default function App() {
 
     // Allow localhost development with "unlimited" mode.
     // This authorizes this dapp to control notification subscriptions for all domains
-    // (including `app.example.com`), not just `window.location.host`
+    // (including `shorts.wtf`), not just `window.location.host`
     isLimited: false,
   });
 
@@ -53,7 +52,7 @@ export default function App() {
     await register((message) => signMessageAsync({ message }));
   }, [signMessageAsync, register, address]);
 
-  const { isSubscribed, isSubscribing, subscribe } = useManageSubscription();
+  const { isSubscribed, isSubscribing, subscribe } = useManageSubscription(account);
 
   const performSubscribe = useCallback(async () => {
     try {
@@ -64,9 +63,6 @@ export default function App() {
       notifyError('Failed to subscribe to notifications');
     }
   }, [subscribe, isRegistered]);
-
-  // eslint-disable-next-line no-unused-vars
-  // const { subscription } = useSubscription();
 
   if (!isReady) {
     return <Text>Loading client...</Text>;

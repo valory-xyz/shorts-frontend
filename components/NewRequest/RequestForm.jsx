@@ -41,6 +41,36 @@ export const RequestForm = () => {
     return requestData;
   };
 
+  const generateVideoTransaction = async (agentURL, values, result) => {
+    // Perform the HTTP POST request only after confirming the transaction
+    try {
+      const response = await fetch(`${agentURL}/generate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+          // Authorization: `${process.env.NEXT_PUBLIC_AGENT_AUTH}`,
+        },
+        body: JSON.stringify(getRequestData(values)),
+        // mode: 'no-cors', // TODO
+      });
+
+      // Check if the request was successful
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        window.console.log({ jsonResponse });
+      } else {
+        throw new Error('Request to agent failed');
+      }
+    } catch (error) {
+      console.error('Error making the POST request:', error);
+      notifyError('Oops - looks like the agent is down :(');
+    }
+
+    // Redirect to the requests page
+    const senderAccount = result.events.Subscription.returnValues.sender;
+    router.push({ pathname: `/requests/${senderAccount}` });
+  };
+
   const onFinish = async (values) => {
     try {
       setIsLoading(true);
@@ -50,47 +80,22 @@ export const RequestForm = () => {
       const agentURL = getAgentURL();
       const price = await contract.methods.price().call();
 
-      contract.methods
+      const result = await contract.methods
         .subscribe(agentMultisigAddress)
-        .send({ from: account, value: price })
-        .then(async (result) => {
-          notifySuccess(
-            'Transaction executed',
-            'Upon delivery you will be notified!',
-          );
+        .send({ from: account, value: price });
 
-          // Perform the HTTP POST request only after confirming the transaction
-          try {
-            const response = await fetch(`${agentURL}/generate`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'text/plain',
-                // Authorization: `${process.env.NEXT_PUBLIC_AGENT_AUTH}`,
-              },
-              body: JSON.stringify(getRequestData(values)),
-              // TODO
-              // mode: 'no-cors',
-            });
+      notifySuccess(
+        <a
+          href={result.transactionHash}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Transaction executed
+        </a>,
+        'Upon delivery you will be notified!',
+      );
 
-            // console.log({ result });
-            // console.log({ response });
-
-            // Check if the request was successful
-            if (response.ok) {
-              const jsonResponse = await response.json();
-              console.log({ jsonResponse });
-            } else {
-              throw new Error('Request to agent failed');
-            }
-          } catch (error) {
-            console.error('Error making the POST request:', error);
-            notifyError('Oops - looks like the agent is down :(');
-          }
-
-          // Redirect to the requests page
-          const senderAccount = result.events.Subscription.returnValues.sender;
-          router.push({ pathname: `/requests/${senderAccount}` });
-        });
+      await generateVideoTransaction(agentURL, values, result);
     } catch (e) {
       console.error(e);
       notifyError("Couldn't execute transaction");
