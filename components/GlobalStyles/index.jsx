@@ -35,11 +35,17 @@ const GlobalStyle = createGlobalStyle`
   .mb-8 {
     margin-bottom: 8px;
   }
+  .mt-0 {
+    margin-top: 0px;
+  }
   .mt-8 {
     margin-top: 8px;
   }
   .mt-12 {
     margin-top: 12px;
+  }
+  .mt-48 {
+    margin-top: 48px !important;
   }
   .mr-12 {
     margin-right: 12px;

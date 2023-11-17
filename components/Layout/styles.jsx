@@ -27,13 +27,14 @@ export const CustomLayout = styled(Layout)`
   }
   .column-1, .column-2 {
     display: flex;
-    align-items: center;
     width: 100%;
   }
   .column-2 {
     gap: 12px;
     justify-content: flex-end;
-
+    ${MEDIA_QUERY.tabletL} {
+      justify-content: flex-start;
+    }
   }
 
   ${MEDIA_QUERY.tabletL} {
