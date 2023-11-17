@@ -1,22 +1,22 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { getBlockchainShortsAddress } from 'common-util/Contracts';
 
+const { Title } = Typography;
+
 const CustomCard = styled(Card)`
   height: 100%;
-  .ant-card-meta-description {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  max-width: 500px;
+  margin: 0 auto;
 `;
 
 const EachVideoContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin-bottom: 8px;
   video {
     max-height: 500px;
   }
@@ -27,7 +27,7 @@ export const VideoCard = ({ id, videoHash, prompt }) => {
   const scanUrl = getBlockchainShortsAddress(id);
 
   return (
-    <CustomCard hoverable>
+    <CustomCard>
       <Card.Meta
         title={(
           <EachVideoContainer>
@@ -39,7 +39,9 @@ export const VideoCard = ({ id, videoHash, prompt }) => {
         )}
         description={(
           <>
-            <div className="mb-8">{prompt}</div>
+            <div className="mb-8">
+              <Title level={5} className="mt-0">{prompt}</Title>
+            </div>
             <a href={scanUrl} target="_blank" rel="noopener noreferrer">
               View NFT ↗
             </a>

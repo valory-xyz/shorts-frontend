@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { BellOutlined } from '@ant-design/icons';
 
 import { GREEN_THEME } from 'util/theme';
+import styled from 'styled-components';
+import { COLOR } from '@autonolas/frontend-library';
 import { Notifications } from '../Requests/Notifications';
 import Login from './Login';
 import Footer from './Footer';
@@ -14,12 +16,17 @@ import { CustomLayout } from './styles';
 
 const { Header, Content } = Layout;
 
+const StyledHeader = styled(Header)`
+  border-bottom: 1px solid ${COLOR.BORDER_GREY};
+  padding: 20px !important;
+`;
+
 const NavigationBar = ({ children }) => {
   const router = useRouter();
 
   return (
     <CustomLayout pathname={router.pathname}>
-      <Header style={{ justifyContent: 'space-between' }}>
+      <StyledHeader>
         <div className="column-1">
           <Image src="/images/logo.png" alt="logo" width={280} height={61} />
         </div>
@@ -44,7 +51,7 @@ const NavigationBar = ({ children }) => {
 
           <Login />
         </div>
-      </Header>
+      </StyledHeader>
 
       <Content className="site-layout">
         <div className="site-layout-background">{children}</div>
