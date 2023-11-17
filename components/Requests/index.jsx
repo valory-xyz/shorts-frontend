@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Typography } from 'antd';
+import { Card, Typography } from 'antd';
 
 import styled from 'styled-components';
 import Inbox from './Inbox';
@@ -37,17 +37,15 @@ export const Request = () => {
 
   return (
     <Container>
-      <Card
-        title={(
-          <Typography.Text>
-            Success! Your prompt is being worked on...
-          </Typography.Text>
-        )}
-      >
-        <Typography.Text>{prompt}</Typography.Text>
+      <Card>
+        <Typography.Title level={4} className="mt-0">
+          Great! Your short film is being generated…
+        </Typography.Title>
+        <Typography.Title level={5} className="mt-0">Your prompt</Typography.Title>
+        <Typography.Text>{prompt || '--'}</Typography.Text>
+        <br />
+        <Inbox />
       </Card>
-      <Row style={{ height: '20px' }} />
-      <Inbox />
     </Container>
   );
 };

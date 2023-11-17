@@ -97,26 +97,29 @@ export default function App() {
   return (
     <>
       {!isRegistered || !isSubscribed ? (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-          <Button
-            type="primary"
-            onClick={performSubscribe}
-            disabled={isRegistering || isSubscribing}
-            loading={isRegistering || isSubscribing}
-          >
-            {isRegistering || isSubscribing
-              ? 'Subscribing...'
-              : 'Subscribe & Notify me'}
-          </Button>
+        <div>
+          <Typography.Title level={5}>Get notified when your film is ready</Typography.Title>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Button
+              type="primary"
+              onClick={performSubscribe}
+              disabled={isRegistering || isSubscribing}
+              loading={isRegistering || isSubscribing}
+            >
+              {isRegistering || isSubscribing
+                ? 'Subscribing...'
+                : 'Subscribe to in-app notifications'}
+            </Button>
 
-          <Popover
-            content={info}
-            title="Stay informed with Wallet Connect notifications!"
-            placement="right"
-            overlayStyle={{ width: '400px' }}
-          >
-            <QuestionCircleOutlined style={{ fontSize: 24 }} />
-          </Popover>
+            <Popover
+              content={info}
+              title="Stay informed with Wallet Connect notifications!"
+              placement="right"
+              overlayStyle={{ width: '400px' }}
+            >
+              <QuestionCircleOutlined style={{ fontSize: 24 }} />
+            </Popover>
+          </div>
         </div>
       ) : (
         <Title level={4}>You have subscribed to notifications!</Title>
