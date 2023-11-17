@@ -86,7 +86,7 @@ export const RequestForm = () => {
 
       notifySuccess(
         <a
-          href={result.transactionHash}
+          href={`https://gnosisscan.io/tx/${result.transactionHash}`}
           target="_blank"
           rel="noopener noreferrer"
         >
