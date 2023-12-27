@@ -1,26 +1,38 @@
 import { useRouter } from 'next/router';
 import {
-  Layout, Button, ConfigProvider,
+  Layout, Button, ConfigProvider, Popover,
 } from 'antd';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
+import { BellOutlined } from '@ant-design/icons';
 
 import { GREEN_THEME } from 'util/theme';
-import Image from 'next/image';
-import Login from '../Login';
+import styled from 'styled-components';
+import { COLOR } from '@autonolas/frontend-library';
+import Link from 'next/link';
+import { Notifications } from '../Requests/Notifications';
+import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
 
 const { Header, Content } = Layout;
+
+const StyledHeader = styled(Header)`
+  border-bottom: 1px solid ${COLOR.BORDER_GREY};
+  padding: 20px !important;
+`;
 
 const NavigationBar = ({ children }) => {
   const router = useRouter();
 
   return (
     <CustomLayout pathname={router.pathname}>
-      <Header style={{ justifyContent: 'space-between' }}>
-        <div className="column-1">
-          <Image src="/images/logo.png" alt="logo" width={280} height={61} />
-        </div>
+      <StyledHeader>
+        <Link href="/">
+          <div className="column-1">
+            <Image src="/images/logo.png" alt="logo" width={280} height={61} />
+          </div>
+        </Link>
 
         <div className="column-2">
           {router.pathname.includes('requests') && (
@@ -30,9 +42,19 @@ const NavigationBar = ({ children }) => {
               </Button>
             </ConfigProvider>
           )}
+          <Popover
+            title="Notifications"
+            placement="top"
+            trigger={['click']}
+            content={Notifications}
+            overlayStyle={{ width: '500px' }}
+          >
+            <Button icon={<BellOutlined />} />
+          </Popover>
+
           <Login />
         </div>
-      </Header>
+      </StyledHeader>
 
       <Content className="site-layout">
         <div className="site-layout-background">{children}</div>

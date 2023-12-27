@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Typography } from 'antd';
+import { Card, Typography } from 'antd';
 
 import styled from 'styled-components';
-import Inbox from '../Inbox';
+import Inbox from './Inbox';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
   .ant-card {
-    width: 620px;
+    width: 680px;
     .ant-card-head {
       overflow: auto;
     }
@@ -18,8 +22,7 @@ const Container = styled.div`
 
 export const Request = () => {
   const [prompt, setPrompt] = useState('');
-  // eslint-disable-next-line no-unused-vars
-  const [account, setAccount] = useState('');
+  const [account, setAccount] = useState(''); // eslint-disable-line
 
   useEffect(() => {
     // Get the state after navigation
@@ -34,28 +37,15 @@ export const Request = () => {
 
   return (
     <Container>
-      <Card
-        title={(
-          <Typography.Text>
-            Success! Your prompt is being worked on ...
-          </Typography.Text>
-        )}
-      >
-        <Typography.Text>
-          {prompt}
-        </Typography.Text>
-      </Card>
-      <Row style={{ height: '20px' }} />
-      <Card
-        title={(
-          <Typography.Text>
-            Stay informed with Wallet Connect notifications!
-          </Typography.Text>
-        )}
-      >
+      <Card>
+        <Typography.Title level={4} className="mt-0">
+          Great! Your short film is being generated…
+        </Typography.Title>
+        <Typography.Title level={5} className="mt-0">Your prompt</Typography.Title>
+        <Typography.Text>{prompt || '--'}</Typography.Text>
+        <br />
         <Inbox />
       </Card>
     </Container>
-
   );
 };

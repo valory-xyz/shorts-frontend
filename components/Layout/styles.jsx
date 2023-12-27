@@ -9,10 +9,7 @@ export const CustomLayout = styled(Layout)`
     margin-top: 64px;
   }
   .site-layout-background {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: calc(100vh - 140px);
+    min-height: calc(100vh - 240px);
   }
   .mech-tabs {
     .ant-tabs-extra-content {
@@ -30,13 +27,14 @@ export const CustomLayout = styled(Layout)`
   }
   .column-1, .column-2 {
     display: flex;
-    align-items: center;
     width: 100%;
   }
   .column-2 {
     gap: 12px;
     justify-content: flex-end;
-
+    ${MEDIA_QUERY.tabletL} {
+      justify-content: flex-start;
+    }
   }
 
   ${MEDIA_QUERY.tabletL} {
