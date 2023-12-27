@@ -1,16 +1,14 @@
 import { useRouter } from 'next/router';
 import {
-  Layout, Button, ConfigProvider, Popover,
+  Layout, Button, ConfigProvider,
 } from 'antd';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
-import { BellOutlined } from '@ant-design/icons';
 
 import { GREEN_THEME } from 'util/theme';
 import styled from 'styled-components';
 import { COLOR } from '@autonolas/frontend-library';
 import Link from 'next/link';
-import { Notifications } from '../Requests/Notifications';
 import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
@@ -22,6 +20,14 @@ const StyledHeader = styled(Header)`
   padding: 20px !important;
 `;
 
+const Banner = styled.div`
+  background-color: ${COLOR.BLACK};
+  color: ${COLOR.WHITE};
+  padding: 15px;
+  text-align: center;
+  margin-top: 64px;
+`;
+
 const NavigationBar = ({ children }) => {
   const router = useRouter();
 
@@ -30,31 +36,28 @@ const NavigationBar = ({ children }) => {
       <StyledHeader>
         <Link href="/">
           <div className="column-1">
-            <Image src="/images/logo.png" alt="logo" width={280} height={61} />
+            <Image
+              src="/images/logo.png"
+              alt="logo"
+              width={280}
+              height={61}
+            />
           </div>
         </Link>
 
         <div className="column-2">
           {router.pathname.includes('requests') && (
-            <ConfigProvider theme={GREEN_THEME}>
-              <Button type="primary" onClick={() => router.push('/')}>
-                New request
-              </Button>
-            </ConfigProvider>
+          <ConfigProvider theme={GREEN_THEME}>
+            <Button type="primary" onClick={() => router.push('/')}>
+              New request
+            </Button>
+          </ConfigProvider>
           )}
-          <Popover
-            title="Notifications"
-            placement="top"
-            trigger={['click']}
-            content={Notifications}
-            overlayStyle={{ width: '500px' }}
-          >
-            <Button icon={<BellOutlined />} />
-          </Popover>
 
           <Login />
         </div>
       </StyledHeader>
+      <Banner>This product is in beta</Banner>
 
       <Content className="site-layout">
         <div className="site-layout-background">{children}</div>

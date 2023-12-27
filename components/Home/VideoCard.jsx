@@ -40,7 +40,7 @@ export const VideoCard = ({ id, videoHash, prompt }) => {
         description={(
           <>
             <div className="mb-8">
-              <Title level={5} className="mt-0">{prompt}</Title>
+              <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false, symbol: '...' }} title={prompt}>{prompt}</Title>
             </div>
             <a href={scanUrl} target="_blank" rel="noopener noreferrer">
               View NFT ↗

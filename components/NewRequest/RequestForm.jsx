@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Form, Input, Button, Card, ConfigProvider,
+  Form,
+  Input,
+  Button,
+  Card,
+  ConfigProvider,
+  Typography,
+  Alert,
 } from 'antd';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
@@ -12,15 +19,36 @@ import {
   getAgentMultisig,
   getAgentURL,
 } from 'common-util/Contracts';
+import { setQueueTime } from 'store/setup/actions';
+
+const { Text } = Typography;
 
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
+const QUEUE_THRESHOLD = 9000;
 
 export const RequestForm = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { account } = useHelpers();
+  const { account, queueTime } = useHelpers();
+  const dispatch = useDispatch();
+
+  const updateQueueTime = async () => {
+    const response = await fetch(process.env.NEXT_PUBLIC_QUEUE_TIME_ENDPOINT);
+    const data = await response.json();
+    dispatch(setQueueTime(data.queue_time_in_seconds));
+  };
+
+  useEffect(() => {
+    updateQueueTime();
+
+    const interval = setInterval(() => {
+      updateQueueTime();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const onFinishFailed = (errorInfo) => {
     window.console.warn('Failed:', errorInfo);
@@ -72,6 +100,11 @@ export const RequestForm = () => {
   };
 
   const onFinish = async (values) => {
+    if (queueTime > QUEUE_THRESHOLD) {
+      notifyError('The queue is too long. Please try again later.');
+      return;
+    }
+
     try {
       setIsLoading(true);
 
@@ -126,7 +159,7 @@ export const RequestForm = () => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          // label="Prompt"
+          className="mb-12"
           name="prompt"
           rules={[
             {
@@ -141,19 +174,39 @@ export const RequestForm = () => {
           />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className="mb-8">
           <ConfigProvider theme={GREEN_THEME}>
             <Button
               form={FORM_ID}
               htmlType="submit"
               type="primary"
-              disabled={!account}
+              disabled={!account || queueTime > QUEUE_THRESHOLD}
               loading={isLoading}
             >
-              Go
+              Mint
             </Button>
           </ConfigProvider>
         </Form.Item>
+        {queueTime && (
+          <Text type="secondary">
+            Estimated queue time:
+            {' '}
+            {queueTime < 60
+              ? 'no queue rn 🍀'
+              : `${
+                queueTime >= 3600
+                  ? `${Math.floor(queueTime / 3600)} hours `
+                  : ''
+              }${Math.floor((queueTime % 3600) / 60)} minutes`}
+          </Text>
+        )}
+        {queueTime > QUEUE_THRESHOLD && (
+          <Alert
+            className="mt-8"
+            type="warning"
+            message="Minting is paused – the queue is too long. Please check back later."
+          />
+        )}
       </Form>
     </Card>
   );

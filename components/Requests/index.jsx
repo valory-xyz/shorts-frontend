@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Card, Typography } from 'antd';
 
 import styled from 'styled-components';
-import Inbox from './Inbox';
+import Link from 'next/link';
+
+const { Title, Text } = Typography;
 
 const Container = styled.div`
   display: flex;
@@ -38,13 +40,18 @@ export const Request = () => {
   return (
     <Container>
       <Card>
-        <Typography.Title level={4} className="mt-0">
-          Great! Your short film is being generated…
-        </Typography.Title>
-        <Typography.Title level={5} className="mt-0">Your prompt</Typography.Title>
-        <Typography.Text>{prompt || '--'}</Typography.Text>
-        <br />
-        <Inbox />
+        <Title level={4} className="mt-0">
+          Great! Your short film is being generated
+        </Title>
+        <Text className="mb-8">
+          Check the
+          {' '}
+          <Link href="/">video list</Link>
+          {' '}
+          in roughly 30 minutes to see it.
+        </Text>
+        <Title level={5} className="mt-0">Your prompt</Title>
+        <Text>{prompt || '--'}</Text>
       </Card>
     </Container>
   );
