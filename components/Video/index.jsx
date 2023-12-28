@@ -6,7 +6,7 @@ export const Video = ({ videoHash }) => {
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <video width="100%" height="100%" controls>
+      <video width="100%" style={{ aspectRatio: '1 / 1' }} controls>
         <source src={videoUrl} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
