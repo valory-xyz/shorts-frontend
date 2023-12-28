@@ -61,7 +61,7 @@ export const VideoList = () => {
         >
           <Empty
             image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description="No videos to display"
+            description="No shorts to display"
           />
         </div>
       </VideoContainer>

@@ -4,6 +4,8 @@ import { Card, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { getBlockchainShortsAddress } from 'common-util/Contracts';
+import { Video } from 'components/Video';
+import Link from 'next/link';
 
 const { Title } = Typography;
 
@@ -23,28 +25,36 @@ const EachVideoContainer = styled.div`
 `;
 
 export const VideoCard = ({ id, videoHash, prompt }) => {
-  const videoUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${videoHash}`;
-  const scanUrl = getBlockchainShortsAddress(id);
+  const explorerUrl = getBlockchainShortsAddress(id);
 
   return (
     <CustomCard>
       <Card.Meta
         title={(
           <EachVideoContainer>
-            <video width="100%" height="100%" controls>
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <Video videoHash={videoHash} />
           </EachVideoContainer>
         )}
         description={(
           <>
             <div className="mb-8">
-              <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false, symbol: '...' }} title={prompt}>{prompt}</Title>
+              <Link href={`/short/${id}`}>
+                <Title level={5} className="mt-0">{prompt}</Title>
+              </Link>
             </div>
-            <a href={scanUrl} target="_blank" rel="noopener noreferrer">
+            <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
               View NFT ↗
             </a>
+            {/* {' '}
+            ·
+            {' '}
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(prompt.split(' ').slice(0, 5).join(' '))}... created at https://shorts.wtf%0A&url=${videoUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Share on Twitter
+            </a> */}
           </>
         )}
       />
