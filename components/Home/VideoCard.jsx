@@ -4,6 +4,10 @@ import { Card, Typography } from 'antd';
 import styled from 'styled-components';
 
 import { getBlockchainShortsAddress } from 'common-util/Contracts';
+import { Video } from 'components/Video';
+import Link from 'next/link';
+import { generateShareUrl, videoShape } from 'components/Short';
+import { TwitterOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
@@ -22,28 +26,43 @@ const EachVideoContainer = styled.div`
   }
 `;
 
-export const VideoCard = ({ id, videoHash, prompt }) => {
-  const videoUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}/${videoHash}`;
-  const scanUrl = getBlockchainShortsAddress(id);
+export const VideoCard = ({ video }) => {
+  const { id, videoHash, prompt } = video;
+
+  const explorerUrl = getBlockchainShortsAddress(id);
+  const shareUrl = generateShareUrl(video);
 
   return (
     <CustomCard>
       <Card.Meta
         title={(
           <EachVideoContainer>
-            <video width="100%" height="100%" controls>
-              <source src={videoUrl} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <Video videoHash={videoHash} />
           </EachVideoContainer>
         )}
         description={(
           <>
             <div className="mb-8">
-              <Title level={5} className="mt-0">{prompt}</Title>
+              <Link href={`/short/${id}`}>
+                <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false }}>{prompt}</Title>
+              </Link>
             </div>
-            <a href={scanUrl} target="_blank" rel="noopener noreferrer">
-              View NFT ↗
+            <Link href={`/short/${id}`}>
+              View
+            </Link>
+            {' '}
+            ·
+            {' '}
+            <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
+              NFT ↗
+            </a>
+            {' '}
+            ·
+            {' '}
+            <a href={shareUrl} target="_blank" rel="noopener noreferrer">
+              <TwitterOutlined />
+              {' '}
+              Share
             </a>
           </>
         )}
@@ -53,7 +72,9 @@ export const VideoCard = ({ id, videoHash, prompt }) => {
 };
 
 VideoCard.propTypes = {
-  videoHash: PropTypes.string.isRequired,
-  prompt: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  video: PropTypes.shape(videoShape),
+};
+
+VideoCard.defaultProps = {
+  video: null,
 };
