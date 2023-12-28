@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { FrownTwoTone, TwitterOutlined } from '@ant-design/icons';
 import { COLOR } from '@autonolas/frontend-library';
 import {
-  Button,
-  Col, Result, Row, Skeleton, Typography,
+  Button, Col, Result, Row, Skeleton, Typography,
 } from 'antd';
 
 import { Video } from 'components/Video';
@@ -15,6 +14,7 @@ export const generateShareUrl = (video) => {
   const truncatedTitle = video?.prompt
     ? `${video.prompt.substring(0, 50)}...`
     : 'Short Video';
+
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     `"${truncatedTitle}" created using shorts.wtf\n\n🎥 Watch now: https://shorts.wtf/short/${video?.id}`,
   )}`;
@@ -27,10 +27,7 @@ const ShareButton = ({ video }) => {
   };
 
   return (
-    <Button
-      icon={<TwitterOutlined />}
-      onClick={handleShare}
-    >
+    <Button icon={<TwitterOutlined />} onClick={handleShare}>
       Share
     </Button>
   );
@@ -77,12 +74,14 @@ const Short = ({ video, loading, errorMessage }) => {
   return (
     <Row align={expanded ? 'top' : 'middle'} gutter={48}>
       <Col md={12}>
-        <div style={{ width: '100%' }}>
-          {loading ? <Skeleton active paragraph={false} /> : <Video videoHash={video?.video} />}
+        <div style={{ width: '100%' }} className="mb-12">
+          <Video videoHash={video?.video} />
         </div>
       </Col>
       <Col md={12}>
-        {loading ? <Skeleton active /> : (
+        {loading ? (
+          <Skeleton active />
+        ) : (
           <>
             <Typography.Title
               level={4}
@@ -102,7 +101,9 @@ const Short = ({ video, loading, errorMessage }) => {
               {' '}
               ·
               {' '}
-              <a href={explorerUrl} target="_blank" rel="noopener noreferrer">NFT ↗</a>
+              <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
+                NFT ↗
+              </a>
             </Typography.Text>
             <br />
             <br />
