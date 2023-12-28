@@ -35,7 +35,7 @@ const ShareButton = ({ video }) => {
 
 ShareButton.propTypes = {
   video: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     prompt: PropTypes.string,
   }),
 };
@@ -116,7 +116,7 @@ const Short = ({ video, loading, errorMessage }) => {
 };
 
 export const videoShape = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   video: PropTypes.string,
   prompt: PropTypes.string,
 };

@@ -76,7 +76,7 @@ const getWeb3Details = () => {
 export const getBlockchainShortsAddress = (id) => {
   const { chainId } = getWeb3Details();
   const url = SCAN_URLS[chainId];
-  const address = ADDRESSES[chainId].blockchainShorts;
+  const address = ADDRESSES[chainId]?.blockchainShorts;
   return `${url}nft/${address}/${id}`;
 };
 

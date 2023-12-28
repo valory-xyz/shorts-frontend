@@ -47,9 +47,13 @@ export const VideoList = () => {
   };
 
   // on initial load
-  useEffect(async () => {
-    await fetchVideos();
-    setInitialLoadComplete(true);
+  useEffect(() => {
+    const initFetchVideos = async () => {
+      await fetchVideos();
+      setInitialLoadComplete(true);
+    };
+
+    initFetchVideos();
   }, []);
 
   if (videos?.length === 0 && !loading) {

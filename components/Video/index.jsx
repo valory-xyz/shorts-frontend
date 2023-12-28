@@ -21,5 +21,9 @@ export const Video = ({ videoHash }) => {
 };
 
 Video.propTypes = {
-  videoHash: PropTypes.string.isRequired,
+  videoHash: PropTypes.string,
+};
+
+Video.defaultProps = {
+  videoHash: '',
 };

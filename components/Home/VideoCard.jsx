@@ -27,7 +27,7 @@ const EachVideoContainer = styled.div`
 `;
 
 export const VideoCard = ({ video }) => {
-  const { id, videoHash, prompt } = video;
+  const { id, video: videoHash, prompt } = video;
 
   const explorerUrl = getBlockchainShortsAddress(id);
   const shareUrl = generateShareUrl(video);
