@@ -42,39 +42,36 @@ const ShortPage = () => {
     ? `${video.prompt.substring(0, 50)}...`
     : 'Short Video';
   const imageUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}${video?.image}`;
+  const title = `${truncatedTitle} | Shorts.WTF`;
+  const description = 'Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf.';
 
   return (
     <>
       <Head>
-        <title>{`${truncatedTitle} | Shorts.WTF`}</title>
+        {/* <!-- Primary Meta Tags --> */}
+        <title>{title}</title>
+        <meta name="title" content={`${truncatedTitle} | Shorts.WTF`} />
+        <meta name="description" content={description} />
+
+        {/* <!-- Open Graph / Facebook --> */}
+        <meta property="og:type" content="website" />
         <meta
-          name="description"
-          content="Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
+          property="og:url"
+          content="https://shorts-frontend-git-feat-video-show-page-autonolas.vercel.app"
         />
-        <meta
-          property="og:title"
-          content={`${truncatedTitle} | created using Shorts.WTF`}
-        />
-        <meta
-          property="og:description"
-          content="Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
-        />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
         <meta property="og:image" content={imageUrl} />
-        <meta property="og:url" content={`https://shorts.wtf/short/${id}`} />
-        <meta property="og:type" content="video.movie" />
-        <meta property="og:site_name" content="Shorts.WTF" />
-        <meta name="twitter:card" content="summary_large_image" />
+
+        {/* <!-- Twitter --> */}
+        <meta property="twitter:card" content="summary_large_image" />
         <meta
-          name="twitter:title"
-          content={`${truncatedTitle} | created using shorts.wtf`}
+          property="twitter:url"
+          content="https://shorts-frontend-git-feat-video-show-page-autonolas.vercel.app"
         />
-        <meta
-          name="twitter:description"
-          content="Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
-        />
-        <meta name="twitter:image" content={imageUrl} />
-        <meta name="twitter:site" content="@shorts.wtf" />
-        <meta name="twitter:creator" content="@shorts.wtf" />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content={imageUrl} />
       </Head>
       <Short video={video} errorMessage={errorMessage} loading={loading} />
     </>
