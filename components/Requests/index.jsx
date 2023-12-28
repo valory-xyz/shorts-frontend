@@ -3,6 +3,7 @@ import { Card, Typography } from 'antd';
 
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useHelpers } from 'common-util/hooks';
 
 const { Title, Text } = Typography;
 
@@ -26,6 +27,8 @@ export const Request = () => {
   const [prompt, setPrompt] = useState('');
   const [account, setAccount] = useState(''); // eslint-disable-line
 
+  const { queueTimeInHms, updateQueueTime } = useHelpers();
+
   useEffect(() => {
     // Get the state after navigation
     const storedPrompt = localStorage.getItem('prompt');
@@ -35,6 +38,10 @@ export const Request = () => {
       setPrompt(storedPrompt);
       setAccount(storedAccount);
     }
+  }, []);
+
+  useEffect(() => {
+    updateQueueTime();
   }, []);
 
   return (
@@ -48,7 +55,11 @@ export const Request = () => {
           {' '}
           <Link href="/">video list</Link>
           {' '}
-          in roughly 30 minutes to see it.
+          in roughly
+          {' '}
+          {queueTimeInHms}
+          {' '}
+          to see it.
         </Text>
         <Title level={5} className="mt-0">Your prompt</Title>
         <Text>{prompt || '--'}</Text>

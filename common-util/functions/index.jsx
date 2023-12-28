@@ -43,3 +43,17 @@ export const getIpfsResponse = async (hash, filePath) => {
 
 // show last element of agentHashes array
 export const getAgentHash = (agentHashes = []) => (agentHashes.length === 0 ? '' : agentHashes[agentHashes.length - 1]);
+
+/**
+ * Converts seconds into a human-readable format of hours and minutes.
+ * If the total seconds are less than an hour, only minutes are displayed.
+ * @param {number} seconds - The number of seconds to convert.
+ * @returns {string} - A string representing the time in hours and minutes.
+ */
+export const secondsToHms = (seconds) => {
+  if (seconds === undefined || seconds === null) return '-- minutes';
+
+  return `${seconds >= 3600 ? `${Math.floor(seconds / 3600)} hours ` : ''}${Math.floor(
+    (seconds % 3600) / 60,
+  )} minutes`;
+};

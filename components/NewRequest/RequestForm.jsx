@@ -7,8 +7,8 @@ import {
   ConfigProvider,
   Typography,
   Alert,
+  Tooltip,
 } from 'antd';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { notifyError, notifySuccess } from '@autonolas/frontend-library';
 
@@ -19,26 +19,24 @@ import {
   getAgentMultisig,
   getAgentURL,
 } from 'common-util/Contracts';
-import { setQueueTime } from 'store/setup/actions';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
 
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
-const QUEUE_THRESHOLD = 9000;
 
 export const RequestForm = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { account, queueTime } = useHelpers();
-  const dispatch = useDispatch();
-
-  const updateQueueTime = async () => {
-    const response = await fetch(process.env.NEXT_PUBLIC_QUEUE_TIME_ENDPOINT);
-    const data = await response.json();
-    dispatch(setQueueTime(data.queue_time_in_seconds));
-  };
+  const {
+    account,
+    queueTimeInSeconds,
+    updateQueueTime,
+    queueTimeInHms,
+    isQueueTimeAboveThreshold,
+  } = useHelpers();
 
   useEffect(() => {
     updateQueueTime();
@@ -100,7 +98,7 @@ export const RequestForm = () => {
   };
 
   const onFinish = async (values) => {
-    if (queueTime > QUEUE_THRESHOLD) {
+    if (isQueueTimeAboveThreshold) {
       notifyError('The queue is too long. Please try again later.');
       return;
     }
@@ -135,6 +133,12 @@ export const RequestForm = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const getQueueTimeMessage = () => {
+    if (queueTimeInSeconds == null) return queueTimeInHms;
+
+    return queueTimeInSeconds < 60 ? 'no queue rn 🍀' : queueTimeInHms;
   };
 
   return (
@@ -180,27 +184,23 @@ export const RequestForm = () => {
               form={FORM_ID}
               htmlType="submit"
               type="primary"
-              disabled={!account || queueTime > QUEUE_THRESHOLD}
+              disabled={!account || isQueueTimeAboveThreshold}
               loading={isLoading}
             >
               Mint
             </Button>
           </ConfigProvider>
         </Form.Item>
-        {queueTime && (
-          <Text type="secondary">
-            Estimated queue time:
-            {' '}
-            {queueTime < 60
-              ? 'no queue rn 🍀'
-              : `${
-                queueTime >= 3600
-                  ? `${Math.floor(queueTime / 3600)} hours `
-                  : ''
-              }${Math.floor((queueTime % 3600) / 60)} minutes`}
-          </Text>
-        )}
-        {queueTime > QUEUE_THRESHOLD && (
+        <Text type="secondary">
+          Estimated queue time:
+          {' '}
+          {getQueueTimeMessage()}
+          {' '}
+          <Tooltip title="If you mint now, this is how long you can expect to wait for delivery">
+            <QuestionCircleOutlined />
+          </Tooltip>
+        </Text>
+        {isQueueTimeAboveThreshold && (
           <Alert
             className="mt-8"
             type="warning"
