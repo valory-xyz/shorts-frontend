@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { getBlockchainShortsAddress } from 'common-util/Contracts';
 import { Video } from 'components/Video';
 import Link from 'next/link';
+import { generateShareUrl, videoShape } from 'components/Short';
+import { TwitterOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
@@ -24,8 +26,11 @@ const EachVideoContainer = styled.div`
   }
 `;
 
-export const VideoCard = ({ id, videoHash, prompt }) => {
+export const VideoCard = ({ video }) => {
+  const { id, videoHash, prompt } = video;
+
   const explorerUrl = getBlockchainShortsAddress(id);
+  const shareUrl = generateShareUrl(video);
 
   return (
     <CustomCard>
@@ -39,22 +44,26 @@ export const VideoCard = ({ id, videoHash, prompt }) => {
           <>
             <div className="mb-8">
               <Link href={`/short/${id}`}>
-                <Title level={5} className="mt-0">{prompt}</Title>
+                <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false }}>{prompt}</Title>
               </Link>
             </div>
-            <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
-              View NFT ↗
-            </a>
-            {/* {' '}
+            <Link href={`/short/${id}`}>
+              View
+            </Link>
+            {' '}
             ·
             {' '}
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(prompt.split(' ').slice(0, 5).join(' '))}... created at https://shorts.wtf%0A&url=${videoUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Share on Twitter
-            </a> */}
+            <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
+              NFT ↗
+            </a>
+            {' '}
+            ·
+            {' '}
+            <a href={shareUrl} target="_blank" rel="noopener noreferrer">
+              <TwitterOutlined />
+              {' '}
+              Share
+            </a>
           </>
         )}
       />
@@ -63,7 +72,9 @@ export const VideoCard = ({ id, videoHash, prompt }) => {
 };
 
 VideoCard.propTypes = {
-  videoHash: PropTypes.string.isRequired,
-  prompt: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  video: PropTypes.shape(videoShape),
+};
+
+VideoCard.defaultProps = {
+  video: null,
 };
