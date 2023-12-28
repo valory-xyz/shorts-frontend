@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  Form, Input, Button, Card, ConfigProvider,
+  Form,
+  Input,
+  Button,
+  Card,
+  ConfigProvider,
+  Typography,
+  Alert,
+  Tooltip,
 } from 'antd';
 import { useRouter } from 'next/router';
 import { notifyError, notifySuccess } from '@autonolas/frontend-library';
@@ -12,6 +19,9 @@ import {
   getAgentMultisig,
   getAgentURL,
 } from 'common-util/Contracts';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+
+const { Text } = Typography;
 
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
@@ -20,7 +30,23 @@ export const RequestForm = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { account } = useHelpers();
+  const {
+    account,
+    queueTimeInSeconds,
+    updateQueueTime,
+    queueTimeInHms,
+    isQueueTimeAboveThreshold,
+  } = useHelpers();
+
+  useEffect(() => {
+    updateQueueTime();
+
+    const interval = setInterval(() => {
+      updateQueueTime();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const onFinishFailed = (errorInfo) => {
     window.console.warn('Failed:', errorInfo);
@@ -72,6 +98,11 @@ export const RequestForm = () => {
   };
 
   const onFinish = async (values) => {
+    if (isQueueTimeAboveThreshold) {
+      notifyError('The queue is too long. Please try again later.');
+      return;
+    }
+
     try {
       setIsLoading(true);
 
@@ -104,6 +135,12 @@ export const RequestForm = () => {
     }
   };
 
+  const getQueueTimeMessage = () => {
+    if (queueTimeInSeconds == null) return queueTimeInHms;
+
+    return queueTimeInSeconds < 60 ? 'no queue rn 🍀' : queueTimeInHms;
+  };
+
   return (
     <Card
       title="Generate a short film"
@@ -126,7 +163,7 @@ export const RequestForm = () => {
         onFinishFailed={onFinishFailed}
       >
         <Form.Item
-          // label="Prompt"
+          className="mb-12"
           name="prompt"
           rules={[
             {
@@ -141,19 +178,35 @@ export const RequestForm = () => {
           />
         </Form.Item>
 
-        <Form.Item>
+        <Form.Item className="mb-8">
           <ConfigProvider theme={GREEN_THEME}>
             <Button
               form={FORM_ID}
               htmlType="submit"
               type="primary"
-              disabled={!account}
+              disabled={!account || isQueueTimeAboveThreshold}
               loading={isLoading}
             >
-              Go
+              Mint
             </Button>
           </ConfigProvider>
         </Form.Item>
+        <Text type="secondary">
+          Estimated queue time:
+          {' '}
+          {getQueueTimeMessage()}
+          {' '}
+          <Tooltip title="If you mint now, this is how long you can expect to wait for delivery">
+            <QuestionCircleOutlined />
+          </Tooltip>
+        </Text>
+        {isQueueTimeAboveThreshold && (
+          <Alert
+            className="mt-8"
+            type="warning"
+            message="Minting is paused – the queue is too long. Please check back later."
+          />
+        )}
       </Form>
     </Card>
   );

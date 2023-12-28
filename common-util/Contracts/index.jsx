@@ -92,7 +92,9 @@ export const getBlockchainShortsContract = () => {
 };
 
 export const getAgentURL = (defaultChainId = null) => {
-  const { chainId } = defaultChainId ? { chainId: defaultChainId } : getWeb3Details();
+  const { chainId } = defaultChainId
+    ? { chainId: defaultChainId }
+    : getWeb3Details();
   return AGENT_URLS[chainId];
 };
 

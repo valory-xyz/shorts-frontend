@@ -24,3 +24,8 @@ export const setLogout = () => ({
   type: syncTypes.SET_LOGOUT,
   data: {},
 });
+
+export const setQueueTime = (queueTime) => ({
+  type: syncTypes.SET_QUEUE_TIME,
+  data: { queueTime },
+});

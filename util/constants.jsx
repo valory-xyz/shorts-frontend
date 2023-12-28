@@ -7,3 +7,6 @@ export const HASH_PREFIXES = {
 };
 
 export const GATEWAY_URL = 'https://gateway.autonolas.tech/ipfs/';
+
+// QUEUE_THRESHOLD represents the limit above which special handling for queueing may be required
+export const QUEUE_THRESHOLD = 9000;

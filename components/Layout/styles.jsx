@@ -6,7 +6,6 @@ export const CustomLayout = styled(Layout)`
   margin-bottom: 8rem;
   .site-layout {
     padding: 24px 48px;
-    margin-top: 64px;
   }
   .site-layout-background {
     min-height: calc(100vh - 240px);

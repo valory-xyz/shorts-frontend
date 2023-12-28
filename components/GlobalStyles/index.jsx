@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 0px;
   }
   .mb-8 {
-    margin-bottom: 8px;
+    margin-bottom: 8px !important;
   }
   .mt-0 {
     margin-top: 0px;

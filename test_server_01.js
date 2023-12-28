@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3001;
+const PORT = 3010;
 
 // Example "database" of videos
 const videoDatabase = [
@@ -11,7 +11,7 @@ const videoDatabase = [
     id: 1,
     video: 'QmSqX9ynWMvsiinfHPKhyjt5AjjFzXUi2VbGnZ7yJSzB4q',
     image: 'bafybeig64atqaladigoc3ds4arltdu63wkdrk3gesjfvnfdmz35amv7faq',
-    prompt: 'Yada yada yada yada yada yada yada yada',
+    prompt: 'Yada yada yada yada yada yada yada yada Yada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yadaYada yada yada yada yada yada yada yada',
   },
   // ... more videos
 ];
@@ -41,6 +41,13 @@ app.get('/responses', (req, res) => {
   // Normally, you would fetch this data from your database or another service.
   // The following line simulates this by sending the hardcoded videoDatabase array.
   res.status(200).json({ data: videoDatabase });
+});
+
+// New endpoint to mock a service that can be consumed in RequestForm
+app.get('/queueTime', (req, res) => {
+  // Mock queue time
+  const queue_time_in_seconds = Math.floor(Math.random() * 20000); // Random number between 0 and 10000
+  res.status(200).json({ queue_time_in_seconds });
 });
 
 // Start the server

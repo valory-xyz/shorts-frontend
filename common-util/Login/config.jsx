@@ -38,8 +38,8 @@ export const projectId = process.env.NEXT_PUBLIC_WALLET_PROJECT_ID;
 
 export const SUPPORTED_CHAINS = [
   gnosis,
-  polygonZkEvm,
-  neon,
+  // polygonZkEvm,
+  // neon,
 ];
 
 const { publicClient, webSocketPublicClient, chains } = configureChains(

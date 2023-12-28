@@ -24,7 +24,6 @@ const ShortPage = () => {
       const agentResponsesURL = `${agentURL}/responses?id=${id}`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
-      // TODO: remove [0] once filtering is in place?
       setVideo(data.data[0]);
     } catch (error) {
       setErrorMessage(error);

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Card, Typography } from 'antd';
 
 import styled from 'styled-components';
-import Inbox from './Inbox';
+import Link from 'next/link';
+import { useHelpers } from 'common-util/hooks';
+
+const { Title, Text } = Typography;
 
 const Container = styled.div`
   display: flex;
@@ -24,6 +27,8 @@ export const Request = () => {
   const [prompt, setPrompt] = useState('');
   const [account, setAccount] = useState(''); // eslint-disable-line
 
+  const { queueTimeInHms, updateQueueTime } = useHelpers();
+
   useEffect(() => {
     // Get the state after navigation
     const storedPrompt = localStorage.getItem('prompt');
@@ -35,16 +40,29 @@ export const Request = () => {
     }
   }, []);
 
+  useEffect(() => {
+    updateQueueTime();
+  }, []);
+
   return (
     <Container>
       <Card>
-        <Typography.Title level={4} className="mt-0">
-          Great! Your short film is being generated…
-        </Typography.Title>
-        <Typography.Title level={5} className="mt-0">Your prompt</Typography.Title>
-        <Typography.Text>{prompt || '--'}</Typography.Text>
-        <br />
-        <Inbox />
+        <Title level={4} className="mt-0">
+          Great! Your short film is being generated
+        </Title>
+        <Text className="mb-8">
+          Check the
+          {' '}
+          <Link href="/">video list</Link>
+          {' '}
+          in roughly
+          {' '}
+          {queueTimeInHms}
+          {' '}
+          to see it.
+        </Text>
+        <Title level={5} className="mt-0">Your prompt</Title>
+        <Text>{prompt || '--'}</Text>
       </Card>
     </Container>
   );

@@ -35,7 +35,7 @@ const ShareButton = ({ video }) => {
 
 ShareButton.propTypes = {
   video: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     prompt: PropTypes.string,
   }),
 };
@@ -75,7 +75,7 @@ const Short = ({ video, loading, errorMessage }) => {
     <Row align={expanded ? 'top' : 'middle'} gutter={48}>
       <Col md={12}>
         <div style={{ width: '100%' }} className="mb-12">
-          <Video videoHash={video?.video} />
+          {loading ? <Skeleton active /> : <Video videoHash={video?.video} />}
         </div>
       </Col>
       <Col md={12}>
@@ -116,7 +116,7 @@ const Short = ({ video, loading, errorMessage }) => {
 };
 
 export const videoShape = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   video: PropTypes.string,
   prompt: PropTypes.string,
 };
