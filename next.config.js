@@ -37,6 +37,15 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/:all*(svg|jpg|jpeg|png|gif|ico|css|js)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, must-revalidate',
+          },
+        ],
+      },
     ];
   },
 };
