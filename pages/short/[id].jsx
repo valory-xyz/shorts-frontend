@@ -46,23 +46,23 @@ const ShortPage = () => {
   return (
     <>
       <Head>
-        <title>{`${truncatedTitle} | shorts.wtf`}</title>
+        <title>{`${truncatedTitle} | Shorts.WTF`}</title>
         <meta
           name="description"
-          content="shorts.wtf is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
+          content="Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
         />
         <meta
           property="og:title"
-          content={`${truncatedTitle} | created using shorts.wtf`}
+          content={`${truncatedTitle} | created using Shorts.WTF`}
         />
         <meta
           property="og:description"
-          content="shorts.wtf is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
+          content="Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
         />
         <meta property="og:image" content={imageUrl} />
         <meta property="og:url" content={`https://shorts.wtf/short/${id}`} />
         <meta property="og:type" content="video.movie" />
-        <meta property="og:site_name" content="shorts.wtf" />
+        <meta property="og:site_name" content="Shorts.WTF" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
@@ -70,7 +70,7 @@ const ShortPage = () => {
         />
         <meta
           name="twitter:description"
-          content="shorts.wtf is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
+          content="Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf."
         />
         <meta name="twitter:image" content={imageUrl} />
         <meta name="twitter:site" content="@shorts.wtf" />

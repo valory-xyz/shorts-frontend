@@ -69,12 +69,12 @@ const Short = ({ video, loading, errorMessage }) => {
               ? `${video.prompt.substring(0, 50)}...`
               : 'Short Video';
             const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              `${truncatedTitle} created using shorts.wtf\n\nhttps://shorts.wtf/short/${video?.id}`,
+              `"${truncatedTitle}" created using shorts.wtf\n\n🎥 Watch now: https://shorts.wtf/short/${video?.id}`,
             )}`;
             window.open(tweetUrl, '_blank');
           }}
         >
-          Tweet this
+          Share
         </Button>
       </Col>
     </Row>
