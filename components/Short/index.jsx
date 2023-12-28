@@ -75,7 +75,7 @@ const Short = ({ video, loading, errorMessage }) => {
     <Row align={expanded ? 'top' : 'middle'} gutter={48}>
       <Col md={12}>
         <div style={{ width: '100%' }} className="mb-12">
-          <Video videoHash={video?.video} />
+          {loading ? <Skeleton active /> : <Video videoHash={video?.video} />}
         </div>
       </Col>
       <Col md={12}>
