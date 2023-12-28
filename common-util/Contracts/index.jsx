@@ -73,11 +73,11 @@ const getWeb3Details = () => {
   return { web3, address, chainId };
 };
 
-export const getBlockchainShortsAddress = () => {
+export const getBlockchainShortsAddress = (id) => {
   const { chainId } = getWeb3Details();
   const url = SCAN_URLS[chainId];
-  const address = ADDRESSES[chainId].blockchainShorts;
-  return `${url}token/${address}`;
+  const address = ADDRESSES[chainId]?.blockchainShorts;
+  return `${url}nft/${address}/${id}`;
 };
 
 const getContract = (abi, contractAddress, web3) => {

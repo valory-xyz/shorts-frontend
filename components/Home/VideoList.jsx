@@ -82,18 +82,16 @@ export const VideoList = () => {
             style={{ marginTop: '1rem' }}
           />
         )}
-        endMessage={<Divider plain className="mt-48">No more videos to show</Divider>}
+        endMessage={(
+          <Divider plain className="mt-48">
+            No more videos to show
+          </Divider>
+        )}
       >
         <Row gutter={[48, 16]}>
-          {videos.map((video, index) => (
+          {videos.map((video) => (
             <Col xs={24} sm={12} md={12} lg={12} xl={12} key={video.id}>
-              <VideoCard
-                key={index}
-                id={video.id}
-                videoHash={video.video}
-                imageHash={video.image}
-                prompt={video.prompt}
-              />
+              <VideoCard video={video} />
             </Col>
           ))}
         </Row>

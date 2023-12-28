@@ -8,6 +8,44 @@ import {
 } from 'antd';
 
 import { Video } from 'components/Video';
+import { getBlockchainShortsAddress } from 'common-util/Contracts';
+import { useRouter } from 'next/router';
+
+export const generateShareUrl = (video) => {
+  const truncatedTitle = video?.prompt
+    ? `${video.prompt.substring(0, 50)}...`
+    : 'Short Video';
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    `"${truncatedTitle}" created using shorts.wtf\n\n🎥 Watch now: https://shorts.wtf/short/${video?.id}`,
+  )}`;
+};
+
+const ShareButton = ({ video }) => {
+  const handleShare = () => {
+    const tweetUrl = generateShareUrl(video);
+    window.open(tweetUrl, '_blank');
+  };
+
+  return (
+    <Button
+      icon={<TwitterOutlined />}
+      onClick={handleShare}
+    >
+      Share
+    </Button>
+  );
+};
+
+ShareButton.propTypes = {
+  video: PropTypes.shape({
+    id: PropTypes.string,
+    prompt: PropTypes.string,
+  }),
+};
+
+ShareButton.defaultProps = {
+  video: null,
+};
 
 const Error = ({ errorMessage }) => (
   <Result
@@ -27,6 +65,10 @@ Error.defaultProps = {
 
 const Short = ({ video, loading, errorMessage }) => {
   const [expanded, setExpanded] = useState(false);
+  const router = useRouter();
+  const { id } = router.query;
+
+  const explorerUrl = getBlockchainShortsAddress(id);
 
   if (errorMessage) {
     return <Error errorMessage={errorMessage} />;
@@ -57,23 +99,14 @@ const Short = ({ video, loading, errorMessage }) => {
               ID:
               {' '}
               {video?.id}
+              {' '}
+              ·
+              {' '}
+              <a href={explorerUrl} target="_blank" rel="noopener noreferrer">NFT ↗</a>
             </Typography.Text>
             <br />
             <br />
-            <Button
-              icon={<TwitterOutlined />}
-              onClick={() => {
-                const truncatedTitle = video?.prompt
-                  ? `${video.prompt.substring(0, 50)}...`
-                  : 'Short Video';
-                const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `"${truncatedTitle}" created using shorts.wtf\n\n🎥 Watch now: https://shorts.wtf/short/${video?.id}`,
-                )}`;
-                window.open(tweetUrl, '_blank');
-              }}
-            >
-              Share
-            </Button>
+            <ShareButton video={video} />
           </>
         )}
       </Col>
@@ -81,12 +114,14 @@ const Short = ({ video, loading, errorMessage }) => {
   );
 };
 
+export const videoShape = {
+  id: PropTypes.string,
+  video: PropTypes.string,
+  prompt: PropTypes.string,
+};
+
 Short.propTypes = {
-  video: PropTypes.shape({
-    id: PropTypes.string,
-    video: PropTypes.string,
-    prompt: PropTypes.string,
-  }),
+  video: PropTypes.shape(videoShape),
   loading: PropTypes.bool,
   errorMessage: PropTypes.string,
 };
