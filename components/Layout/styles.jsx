@@ -32,7 +32,7 @@ export const CustomLayout = styled(Layout)`
     gap: 12px;
     justify-content: flex-end;
     ${MEDIA_QUERY.tabletL} {
-      justify-content: flex-start;
+      justify-content: center;
     }
   }
 

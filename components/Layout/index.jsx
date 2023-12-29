@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import { GREEN_THEME } from 'util/theme';
 import styled from 'styled-components';
-import { COLOR } from '@autonolas/frontend-library';
+import { COLOR, MEDIA_QUERY } from '@autonolas/frontend-library';
 import Link from 'next/link';
 import Login from './Login';
 import Footer from './Footer';
@@ -26,6 +26,10 @@ const Banner = styled.div`
   padding: 15px;
   text-align: center;
   margin-top: 64px;
+  margin-bottom: 24px;
+  ${MEDIA_QUERY.tablet} {
+    margin-top: 0;
+  }
 `;
 
 const NavigationBar = ({ children }) => {
