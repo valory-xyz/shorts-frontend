@@ -20,6 +20,7 @@ import {
   getAgentURL,
 } from 'common-util/Contracts';
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import { PoweredByOlas } from 'components/PoweredByOlas';
 
 const { Text } = Typography;
 
@@ -161,6 +162,7 @@ export const RequestForm = () => {
         id={FORM_ID}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
+        className="mb-12"
       >
         <Form.Item
           className="mb-12"
@@ -208,6 +210,7 @@ export const RequestForm = () => {
           />
         )}
       </Form>
+      <PoweredByOlas />
     </Card>
   );
 };
