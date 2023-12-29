@@ -43,6 +43,7 @@ const ShortPage = () => {
   const imageUrl = `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}${video?.image}`;
   const title = `${truncatedTitle} | Shorts.WTF`;
   const description = 'Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf.';
+  const url = `https://shorts.wtf/short/${id}`;
 
   return (
     <>
@@ -56,7 +57,7 @@ const ShortPage = () => {
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content="https://shorts-frontend-git-feat-video-show-page-autonolas.vercel.app"
+          content={url}
         />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
@@ -66,7 +67,7 @@ const ShortPage = () => {
         <meta property="twitter:card" content="summary_large_image" />
         <meta
           property="twitter:url"
-          content="https://shorts-frontend-git-feat-video-show-page-autonolas.vercel.app"
+          content={url}
         />
         <meta property="twitter:title" content={title} />
         <meta property="twitter:description" content={description} />
