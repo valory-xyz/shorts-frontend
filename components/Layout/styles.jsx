@@ -138,5 +138,4 @@ export const ContractsInfoContainer = styled.div`
 
 export const FooterContainer = styled.div`
   margin-bottom: 8rem;
-  text-align: center;
 `;
