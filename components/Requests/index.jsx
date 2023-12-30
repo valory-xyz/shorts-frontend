@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Typography } from 'antd';
+import {
+  Button, Card, ConfigProvider, Typography,
+} from 'antd';
 
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useHelpers } from 'common-util/hooks';
+import { GREEN_THEME } from 'util/theme';
+import { useRouter } from 'next/router';
 
 const { Title, Text } = Typography;
 
@@ -27,6 +31,8 @@ export const Request = () => {
   const [prompt, setPrompt] = useState('');
   const [account, setAccount] = useState(''); // eslint-disable-line
 
+  const router = useRouter();
+
   const { queueTimeInHms, updateQueueTime } = useHelpers();
 
   useEffect(() => {
@@ -46,7 +52,7 @@ export const Request = () => {
 
   return (
     <Container>
-      <Card>
+      <Card className="mb-12">
         <Title level={4} className="mt-0">
           Great! Your short film is being generated
         </Title>
@@ -64,6 +70,11 @@ export const Request = () => {
         <Title level={5} className="mt-0">Your prompt</Title>
         <Text>{prompt || '--'}</Text>
       </Card>
+      <ConfigProvider theme={GREEN_THEME}>
+        <Button type="primary" onClick={() => router.push('/')}>
+          Mint another
+        </Button>
+      </ConfigProvider>
     </Container>
   );
 };

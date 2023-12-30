@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router';
 import {
-  Layout, Button, ConfigProvider,
+  Layout,
 } from 'antd';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 
-import { GREEN_THEME } from 'util/theme';
 import styled from 'styled-components';
 import { COLOR, MEDIA_QUERY } from '@autonolas/frontend-library';
 import Link from 'next/link';
@@ -50,14 +49,6 @@ const NavigationBar = ({ children }) => {
         </Link>
 
         <div className="column-2">
-          {router.pathname.includes('requests') && (
-          <ConfigProvider theme={GREEN_THEME}>
-            <Button type="primary" onClick={() => router.push('/')}>
-              New request
-            </Button>
-          </ConfigProvider>
-          )}
-
           <Login />
         </div>
       </StyledHeader>
