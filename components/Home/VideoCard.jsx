@@ -38,19 +38,28 @@ export const VideoCard = ({ video }) => {
       <Card.Meta
         title={(
           <EachVideoContainer>
-            <Video videoHash={videoHash} imageHash={imageHash} />
+            <Video
+              videoHash={videoHash}
+              imageHash={imageHash}
+              // videos before id 13 don't have images
+              showImage={!id || id > 12}
+            />
           </EachVideoContainer>
         )}
         description={(
           <div className="p-16">
             <div className="mb-8">
               <Link href={`/short/${id}`}>
-                <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false }}>{prompt}</Title>
+                <Title
+                  level={5}
+                  className="mt-0"
+                  ellipsis={{ rows: 2, expandable: false }}
+                >
+                  {prompt}
+                </Title>
               </Link>
             </div>
-            <Link href={`/short/${id}`}>
-              View
-            </Link>
+            <Link href={`/short/${id}`}>View</Link>
             {/* {' '}
             ·
             {' '}
