@@ -65,6 +65,8 @@ const Short = ({ video, loading, errorMessage }) => {
   const router = useRouter();
   const { id } = router.query;
 
+  const { video: videoHash, image: imageHash } = video || { video: undefined, image: undefined };
+
   const explorerUrl = getBlockchainShortsAddress(id);
 
   if (errorMessage) {
@@ -75,7 +77,7 @@ const Short = ({ video, loading, errorMessage }) => {
     <Row align={expanded ? 'top' : 'middle'} gutter={48}>
       <Col md={12}>
         <div style={{ width: '100%' }} className="mb-12">
-          {loading ? <Skeleton active /> : <Video videoHash={video?.video} />}
+          {loading ? <Skeleton active /> : <Video videoHash={videoHash} imageHash={imageHash} />}
         </div>
       </Col>
       <Col md={12}>

@@ -20,28 +20,29 @@ const CustomCard = styled(Card)`
 const EachVideoContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
   video {
     max-height: 500px;
   }
 `;
 
 export const VideoCard = ({ video }) => {
-  const { id, video: videoHash, prompt } = video;
+  const {
+    id, video: videoHash, prompt, image: imageHash,
+  } = video;
 
   const explorerUrl = getBlockchainShortsAddress(id);
   const shareUrl = generateShareUrl(video);
 
   return (
-    <CustomCard>
+    <CustomCard bodyStyle={{ padding: 0 }}>
       <Card.Meta
         title={(
           <EachVideoContainer>
-            <Video videoHash={videoHash} />
+            <Video videoHash={videoHash} imageHash={imageHash} />
           </EachVideoContainer>
         )}
         description={(
-          <>
+          <div className="p-16">
             <div className="mb-8">
               <Link href={`/short/${id}`}>
                 <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false }}>{prompt}</Title>
@@ -64,8 +65,9 @@ export const VideoCard = ({ video }) => {
               {' '}
               Share
             </a>
-          </>
+          </div>
         )}
+        className="mb-0"
       />
     </CustomCard>
   );
