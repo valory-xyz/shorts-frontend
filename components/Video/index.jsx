@@ -52,6 +52,7 @@ export const Video = ({ videoHash, imageHash }) => {
             layout="fill"
             objectFit="cover"
             onClick={handleVideoClick}
+            alt={imageUrl}
           />
           <PlayButton>
             <PlayCircleFilled style={{ fontSize: '3rem', color: COLOR.WHITE }} />
