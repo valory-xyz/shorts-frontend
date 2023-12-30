@@ -40,7 +40,7 @@ export const Video = ({ videoHash, imageHash, showImage = true }) => {
       {showVideo ? (
         <>
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <StyledVideo controls autoPlay>
+          <StyledVideo controls autoPlay={showImage}>
             <source src={videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </StyledVideo>
