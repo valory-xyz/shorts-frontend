@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 12px;
   }
   .mb-0 {
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
   }
   .mb-8 {
     margin-bottom: 8px !important;
@@ -55,6 +55,9 @@ const GlobalStyle = createGlobalStyle`
   }
   .p-0 {
     padding: 0px !important;
+  }
+  .p-16 {
+    padding: 16px !important;
   }
   .ant-alert {
     border-radius: 5px;
