@@ -10,7 +10,6 @@ const StyledVideoContainer = styled.div`
   aspect-ratio: 1 / 1;
   position: relative;
   cursor: pointer;
-  background-color: black; /* Ensure background is black for when image fails to load */
 `;
 
 const StyledVideo = styled.video`
@@ -25,8 +24,8 @@ const PlayButton = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export const Video = ({ videoHash, imageHash }) => {
-  const [showVideo, setShowVideo] = useState(false);
+export const Video = ({ videoHash, imageHash, showImage = true }) => {
+  const [showVideo, setShowVideo] = useState(!showImage);
 
   const createUrl = (hash) => `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}${hash}`;
   const videoUrl = createUrl(videoHash);
@@ -54,10 +53,6 @@ export const Video = ({ videoHash, imageHash }) => {
             objectFit="cover"
             onClick={handleVideoClick}
             alt="Video thumbnail"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.style.display = 'none';
-            }}
           />
           <PlayButton>
             <PlayCircleFilled style={{ fontSize: '3rem', color: COLOR.WHITE }} />
@@ -71,4 +66,9 @@ export const Video = ({ videoHash, imageHash }) => {
 Video.propTypes = {
   videoHash: PropTypes.string.isRequired,
   imageHash: PropTypes.string.isRequired,
+  showImage: PropTypes.bool,
+};
+
+Video.defaultProps = {
+  showImage: true,
 };
