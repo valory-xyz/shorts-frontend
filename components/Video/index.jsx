@@ -10,6 +10,7 @@ const StyledVideoContainer = styled.div`
   aspect-ratio: 1 / 1;
   position: relative;
   cursor: pointer;
+  background-color: black; /* Ensure background is black for when image fails to load */
 `;
 
 const StyledVideo = styled.video`
@@ -52,7 +53,11 @@ export const Video = ({ videoHash, imageHash }) => {
             layout="fill"
             objectFit="cover"
             onClick={handleVideoClick}
-            alt={imageUrl}
+            alt="Video thumbnail"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.style.display = 'none';
+            }}
           />
           <PlayButton>
             <PlayCircleFilled style={{ fontSize: '3rem', color: COLOR.WHITE }} />
