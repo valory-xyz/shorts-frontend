@@ -7,8 +7,8 @@ import {
 } from 'antd';
 
 import { Video } from 'components/Video';
-import { getBlockchainShortsAddress } from 'common-util/Contracts';
-import { useRouter } from 'next/router';
+// import { getBlockchainShortsAddress } from 'common-util/Contracts';
+// import { useRouter } from 'next/router';
 
 export const generateShareUrl = (video) => {
   const truncatedTitle = video?.prompt
@@ -62,10 +62,15 @@ Error.defaultProps = {
 
 const Short = ({ video, loading, errorMessage }) => {
   const [expanded, setExpanded] = useState(false);
-  const router = useRouter();
-  const { id } = router.query;
+  // const router = useRouter();
+  // const { id } = router.query;
 
-  const explorerUrl = getBlockchainShortsAddress(id);
+  const { video: videoHash, image: imageHash } = video || {
+    video: undefined,
+    image: undefined,
+  };
+
+  // const explorerUrl = getBlockchainShortsAddress(id);
 
   if (errorMessage) {
     return <Error errorMessage={errorMessage} />;
@@ -75,7 +80,15 @@ const Short = ({ video, loading, errorMessage }) => {
     <Row align={expanded ? 'top' : 'middle'} gutter={48}>
       <Col md={12}>
         <div style={{ width: '100%' }} className="mb-12">
-          {loading ? <Skeleton active /> : <Video videoHash={video?.video} />}
+          {loading ? (
+            <Skeleton active />
+          ) : (
+            <Video
+              videoHash={videoHash}
+              imageHash={imageHash}
+              showImage={false}
+            />
+          )}
         </div>
       </Col>
       <Col md={12}>
@@ -98,12 +111,12 @@ const Short = ({ video, loading, errorMessage }) => {
               ID:
               {' '}
               {video?.id}
-              {' '}
+              {/* {' '}
               ·
               {' '}
               <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
                 NFT ↗
-              </a>
+              </a> */}
             </Typography.Text>
             <br />
             <br />
