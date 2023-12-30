@@ -28,7 +28,7 @@ export const Disclaimer = () => (
       </li>
 
       <li>
-        THIS APP IS PROVIDED "AS IS" AND "AS AVAILABLE," AT YOUR OWN RISK, AND
+        THIS APP IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE,&quot; AT YOUR OWN RISK, AND
         WITHOUT WARRANTIES OF ANY KIND. Valory AG will not be liable for any
         loss, whether such loss is direct, indirect, special or consequential,
         suffered by any party as a result of their use of this app.
