@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, Typography } from 'antd';
 import styled from 'styled-components';
 
-// import { getBlockchainShortsAddress } from 'common-util/Contracts';
+import { getBlockchainShortsAddress } from 'common-util/Contracts';
 import { Video } from 'components/Video';
 import Link from 'next/link';
 import { generateShareUrl, videoShape } from 'components/Short';
@@ -30,7 +30,7 @@ export const VideoCard = ({ video }) => {
     id, video: videoHash, prompt, image: imageHash,
   } = video;
 
-  // const explorerUrl = getBlockchainShortsAddress(id);
+  const explorerUrl = getBlockchainShortsAddress(id);
   const shareUrl = generateShareUrl(video);
 
   return (
@@ -51,12 +51,12 @@ export const VideoCard = ({ video }) => {
             <Link href={`/short/${id}`}>
               View
             </Link>
-            {/* {' '}
+            {' '}
             ·
             {' '}
             <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
               NFT ↗
-            </a> */}
+            </a>
             {' '}
             ·
             {' '}
