@@ -61,7 +61,7 @@ const NavigationBar = ({ children }) => {
           <Login />
         </div>
       </StyledHeader>
-      <Banner>This product is in beta</Banner>
+      <Banner>This product is in Research Beta</Banner>
 
       <Content className="site-layout">
         <div className="site-layout-background">{children}</div>
