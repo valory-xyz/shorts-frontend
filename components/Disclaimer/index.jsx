@@ -39,7 +39,7 @@ export const Disclaimer = () => (
         <ol className="custom-list">
           <li>
             Stable Video Diffusion, which is licensed under the Stable Video
-            Diffusion Research License, Copyright (c) Stability AI Ltd. All Rights
+            Diffusion Research License, Copyright © Stability AI Ltd. All Rights
             Reserved.
           </li>
           <li>
