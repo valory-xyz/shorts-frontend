@@ -125,13 +125,12 @@ export const RequestForm = () => {
       return;
     }
 
-    const contract = getMechContract();
-    const agentMultisigAddress = getAgentMultisig();
-    const agentURL = getAgentURL();
-
     try {
       setIsLoading(true);
 
+      const contract = getMechContract();
+      const agentMultisigAddress = getAgentMultisig();
+      const agentURL = getAgentURL();
       const price = await contract.methods.price().call();
 
       const subscriptionFn = contract.methods.subscribe(agentMultisigAddress);
