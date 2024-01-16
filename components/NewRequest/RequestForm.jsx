@@ -27,6 +27,27 @@ const { Text } = Typography;
 const FORM_NAME = 'ipfs_creation_form_for_mech';
 const FORM_ID = 'myForm';
 
+const ESTIMATED_GAS_LIMIT = 500_000;
+const BUFFER_FACTOR = 1.2;
+
+const getEstimatedGasLimit = async (fn, account) => {
+  if (!account) {
+    throw new Error('Invalid account passed to estimate gas limit');
+  }
+
+  try {
+    const estimatedGas = await fn.estimateGas({ from: account });
+    // round up to nearest 1000 and add a buffer
+    return Math.floor(estimatedGas * BUFFER_FACTOR);
+  } catch (error) {
+    window.console.warn(
+      `Error occured on estimating gas, defaulting to ${ESTIMATED_GAS_LIMIT}`,
+    );
+  }
+
+  return ESTIMATED_GAS_LIMIT;
+};
+
 export const RequestForm = () => {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -104,17 +125,22 @@ export const RequestForm = () => {
       return;
     }
 
+    const contract = getMechContract();
+    const agentMultisigAddress = getAgentMultisig();
+    const agentURL = getAgentURL();
+
     try {
       setIsLoading(true);
 
-      const contract = getMechContract();
-      const agentMultisigAddress = getAgentMultisig();
-      const agentURL = getAgentURL();
       const price = await contract.methods.price().call();
 
-      const result = await contract.methods
-        .subscribe(agentMultisigAddress)
-        .send({ from: account, value: price });
+      const subscriptionFn = contract.methods.subscribe(agentMultisigAddress);
+      const estimatedGas = await getEstimatedGasLimit(subscriptionFn, account);
+      const result = await subscriptionFn.send({
+        from: account,
+        gasLimit: estimatedGas,
+        value: price,
+      });
 
       notifySuccess(
         <a
