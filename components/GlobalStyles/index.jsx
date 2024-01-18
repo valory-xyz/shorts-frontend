@@ -44,11 +44,17 @@ const GlobalStyle = createGlobalStyle`
   .mt-12 {
     margin-top: 12px;
   }
+  .mt-24 {
+    margin-top: 24px;
+  }
   .mt-48 {
     margin-top: 48px !important;
   }
   .mr-12 {
     margin-right: 12px;
+  }
+  .mr-24 {
+    margin-right: 24px;
   }
   .pl-0 {
     padding-left: 0px !important;
