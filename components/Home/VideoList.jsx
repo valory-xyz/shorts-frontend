@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import styled from 'styled-components';
 import { uniqBy } from 'lodash';
+import { useNetwork } from 'wagmi';
 
 import { getAgentURL } from 'common-util/Contracts';
 import { VideoCard } from './VideoCard';
@@ -19,6 +20,8 @@ export const VideoList = () => {
   const [videos, setVideos] = useState([]);
   const [hasMoreVideos, setHasMoreVideos] = useState(true);
   const [pageCount, setPageCount] = useState(0);
+
+  const { chain } = useNetwork();
 
   const fetchVideos = async () => {
     if (loading) {
@@ -35,7 +38,7 @@ export const VideoList = () => {
       const agentResponsesURL = `${agentURL}/responses?pageNum=${currentPageCount}&limit=5`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
-      const moreList = data.data;
+      const moreList = chain ? data.data.filter((item) => item.chainId === chain) : data.data;
       setVideos((prev) => uniqBy([...prev, ...moreList], 'id'));
       setHasMoreVideos(currentPageCount <= data.numPages);
       setPageCount(currentPageCount);
@@ -55,6 +58,12 @@ export const VideoList = () => {
 
     initFetchVideos();
   }, []);
+
+  useEffect(() => {
+    if (chain) {
+      setVideos((prev) => prev.filter((item) => item.chainId === chain));
+    }
+  }, [chain]);
 
   if (videos?.length === 0 && !loading) {
     return (

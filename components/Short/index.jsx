@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FrownTwoTone, TwitterOutlined } from '@ant-design/icons';
 import { COLOR } from '@autonolas/frontend-library';
@@ -7,9 +7,8 @@ import {
 } from 'antd';
 
 import { Video } from 'components/Video';
-import { getBlockchainShortsAddress } from 'common-util/Contracts';
+import { CHAIN_NAMES, getBlockchainShortsAddress } from 'common-util/Contracts';
 import { useRouter } from 'next/router';
-import { useNetwork } from 'wagmi';
 
 export const generateShareUrl = (video) => {
   const truncatedTitle = video?.prompt
@@ -63,23 +62,15 @@ Error.defaultProps = {
 
 const Short = ({ video, loading, errorMessage }) => {
   const [expanded, setExpanded] = useState(false);
-  const [chainName, setChainName] = useState(null);
   const router = useRouter();
   const { id } = router.query;
 
-  const { video: videoHash, image: imageHash } = video || {
+  const { video: videoHash, image: imageHash, chainId } = video || {
     video: undefined,
     image: undefined,
   };
 
-  const explorerUrl = getBlockchainShortsAddress(id);
-  const { chain } = useNetwork();
-
-  useEffect(() => {
-    if (chain) {
-      setChainName(chain.name);
-    }
-  }, [chain]);
+  const explorerUrl = getBlockchainShortsAddress(id, chainId);
 
   if (errorMessage) {
     return <Error errorMessage={errorMessage} />;
@@ -123,11 +114,11 @@ const Short = ({ video, loading, errorMessage }) => {
               {' '}
               ·
               {' '}
-              {chainName ? (
+              {chainId ? (
                 <span>
                   Chain:
                   {' '}
-                  {chainName}
+                  {CHAIN_NAMES[chainId]}
                   {' '}
                   ·
                   {' '}

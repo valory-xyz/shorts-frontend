@@ -46,6 +46,13 @@ export const SCAN_URLS = {
   8453: base.blockExplorers.default.url,
 };
 
+export const CHAIN_NAMES = {
+  100: gnosis.name,
+  245_022_934: neonMainnet.name,
+  1_101: polygonZkEvm.name,
+  8453: base.name,
+};
+
 export const AGENT_URLS = {
   100: process.env.NEXT_PUBLIC_AGENT_GNOSIS_URL,
   245_022_934: process.env.NEXT_PUBLIC_AGENT_NEON_URL,
@@ -91,8 +98,7 @@ const getWeb3Details = () => {
   return { web3, address, chainId };
 };
 
-export const getBlockchainShortsAddress = (id) => {
-  const { chainId } = getWeb3Details();
+export const getBlockchainShortsAddress = (id, chainId) => {
   const url = SCAN_URLS[chainId];
   const address = ADDRESSES[chainId]?.blockchainShorts;
   return `${url}nft/${address}/${id}`;
