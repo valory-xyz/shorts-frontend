@@ -21,25 +21,43 @@ import {
   BLOCKCHAIN_SHORTS_ADDRESS_GNOSIS,
   BLOCKCHAIN_SHORTS_ADDRESS_NEON,
   BLOCKCHAIN_SHORTS_ADDRESS_ZKEVM_POLYGON,
+  AGENT_REGISTRY_ADDRESS_BASE,
+  AGENT_FACTORY_ADDRESS_BASE,
+  AGENT_MECH_ADDRESS_BASE,
+  AGENT_MULTISIG_ADDRESS_BASE,
+  BLOCKCHAIN_SHORTS_ADDRESS_BASE,
 } from 'common-util/AbiAndAddresses';
 import { getChainId, getProvider } from 'common-util/functions';
+import {
+  base, gnosis, neonMainnet, polygonZkEvm,
+} from 'viem/chains';
 
 export const RPC_URLS = {
   100: process.env.NEXT_PUBLIC_GNOSIS_URL,
   245_022_934: process.env.NEXT_PUBLIC_NEON_URL,
   1_101: process.env.NEXT_PUBLIC_ZKEVM_POLYGON_URL,
+  8453: process.env.NEXT_PUBLIC_BASE_URL,
 };
 
 export const SCAN_URLS = {
-  100: 'https://gnosisscan.io/',
-  245_022_934: 'https://neonscan.org/',
-  1_101: 'https://zkevm.polygonscan.com/',
+  100: gnosis.blockExplorers.etherscan.url,
+  245_022_934: neonMainnet.blockExplorers.default.url,
+  1_101: polygonZkEvm.blockExplorers.default.url,
+  8453: base.blockExplorers.default.url,
+};
+
+export const CHAIN_NAMES = {
+  100: gnosis.name,
+  245_022_934: neonMainnet.name,
+  1_101: polygonZkEvm.name,
+  8453: base.name,
 };
 
 export const AGENT_URLS = {
   100: process.env.NEXT_PUBLIC_AGENT_GNOSIS_URL,
   245_022_934: process.env.NEXT_PUBLIC_AGENT_NEON_URL,
   1_101: process.env.NEXT_PUBLIC_AGENT_ZKEVM_POLYGON_URL,
+  8453: process.env.NEXT_PUBLIC_AGENT_BASE_URL,
 };
 
 export const ADDRESSES = {
@@ -64,6 +82,13 @@ export const ADDRESSES = {
     agentMultisig: AGENT_MULTISIG_ADDRESS_ZKEVM_POLYGON,
     blockchainShorts: BLOCKCHAIN_SHORTS_ADDRESS_ZKEVM_POLYGON,
   },
+  8453: {
+    agentRegistry: AGENT_REGISTRY_ADDRESS_BASE,
+    agentFactory: AGENT_FACTORY_ADDRESS_BASE,
+    defaultMech: AGENT_MECH_ADDRESS_BASE,
+    agentMultisig: AGENT_MULTISIG_ADDRESS_BASE,
+    blockchainShorts: BLOCKCHAIN_SHORTS_ADDRESS_BASE,
+  },
 };
 
 const getWeb3Details = () => {
@@ -73,8 +98,7 @@ const getWeb3Details = () => {
   return { web3, address, chainId };
 };
 
-export const getBlockchainShortsAddress = (id) => {
-  const { chainId } = getWeb3Details();
+export const getBlockchainShortsAddress = (id, chainId) => {
   const url = SCAN_URLS[chainId];
   const address = ADDRESSES[chainId]?.blockchainShorts;
   return `${url}nft/${address}/${id}`;

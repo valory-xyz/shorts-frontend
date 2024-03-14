@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import styled from 'styled-components';
 import { uniqBy } from 'lodash';
+import { useNetwork } from 'wagmi';
 
 import { getAgentURL } from 'common-util/Contracts';
 import { VideoCard } from './VideoCard';
@@ -18,10 +19,16 @@ export const VideoList = () => {
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [videos, setVideos] = useState([]);
   const [hasMoreVideos, setHasMoreVideos] = useState(true);
-  const [pageCount, setPageCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
+
+  const { chain } = useNetwork();
+
+  const increasePageCount = () => {
+    setPageCount((prev) => prev + 1);
+  };
 
   const fetchVideos = async () => {
-    if (loading) {
+    if (loading || !hasMoreVideos) {
       return;
     }
 
@@ -29,32 +36,37 @@ export const VideoList = () => {
       setLoading(true);
     }
 
-    const currentPageCount = pageCount + 1;
     try {
       const agentURL = getAgentURL();
-      const agentResponsesURL = `${agentURL}/responses?pageNum=${currentPageCount}&limit=5`;
+      const agentResponsesURL = `${agentURL}/responses?pageNum=${pageCount}&limit=5`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
-      const moreList = data.data;
+      let moreList = data.data;
+
+      if (chain) {
+        moreList = data.data.filter((item) => item.chainId === chain.id);
+      }
+
+      // If no videos for the selected chain in the current portion,
+      // continue fetching the next portion until videos are found
+      if ((pageCount < data.numPages) && moreList.length === 0) {
+        increasePageCount();
+        return;
+      }
+
       setVideos((prev) => uniqBy([...prev, ...moreList], 'id'));
-      setHasMoreVideos(currentPageCount <= data.numPages);
-      setPageCount(currentPageCount);
+      setHasMoreVideos(pageCount < data.numPages);
     } catch (error) {
       console.error('Failed to fetch videos:', error);
     } finally {
       setLoading(false);
+      setInitialLoadComplete(true);
     }
   };
 
-  // on initial load
   useEffect(() => {
-    const initFetchVideos = async () => {
-      await fetchVideos();
-      setInitialLoadComplete(true);
-    };
-
-    initFetchVideos();
-  }, []);
+    fetchVideos();
+  }, [pageCount]);
 
   if (videos?.length === 0 && !loading) {
     return (
@@ -80,7 +92,7 @@ export const VideoList = () => {
     <VideoContainer>
       <InfiniteScroll
         dataLength={videos.length}
-        next={fetchVideos}
+        next={increasePageCount}
         hasMore={hasMoreVideos}
         loader={(<Skeleton active />)}
         endMessage={(

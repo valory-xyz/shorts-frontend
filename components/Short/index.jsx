@@ -7,7 +7,7 @@ import {
 } from 'antd';
 
 import { Video } from 'components/Video';
-import { getBlockchainShortsAddress } from 'common-util/Contracts';
+import { CHAIN_NAMES, getBlockchainShortsAddress } from 'common-util/Contracts';
 import { useRouter } from 'next/router';
 
 export const generateShareUrl = (video) => {
@@ -65,12 +65,12 @@ const Short = ({ video, loading, errorMessage }) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { video: videoHash, image: imageHash } = video || {
+  const { video: videoHash, image: imageHash, chainId } = video || {
     video: undefined,
     image: undefined,
   };
 
-  const explorerUrl = getBlockchainShortsAddress(id);
+  const explorerUrl = getBlockchainShortsAddress(id, chainId);
 
   if (errorMessage) {
     return <Error errorMessage={errorMessage} />;
@@ -114,6 +114,17 @@ const Short = ({ video, loading, errorMessage }) => {
               {' '}
               ·
               {' '}
+              {chainId ? (
+                <span>
+                  Chain:
+                  {' '}
+                  {CHAIN_NAMES[chainId]}
+                  {' '}
+                  ·
+                  {' '}
+                </span>
+              )
+                : null}
               <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
                 NFT ↗
               </a>
