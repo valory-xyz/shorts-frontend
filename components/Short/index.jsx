@@ -108,23 +108,8 @@ const Short = ({ video, loading, errorMessage }) => {
               {video?.prompt}
             </Typography.Title>
             <Typography.Text type="secondary">
-              ID:
-              {' '}
-              {video?.id}
-              {' '}
-              ·
-              {' '}
-              {chainId ? (
-                <span>
-                  Chain:
-                  {' '}
-                  {CHAIN_NAMES[chainId]}
-                  {' '}
-                  ·
-                  {' '}
-                </span>
-              )
-                : null}
+              {`ID: ${video?.id} ·`}
+              {chainId ? ` Chain: ${CHAIN_NAMES[chainId]} · ` : null}
               <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
                 NFT ↗
               </a>

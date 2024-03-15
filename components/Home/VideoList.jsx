@@ -41,11 +41,7 @@ export const VideoList = () => {
       const agentResponsesURL = `${agentURL}/responses?pageNum=${pageCount}&limit=5`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
-      let moreList = data.data;
-
-      if (chain) {
-        moreList = data.data.filter((item) => item.chainId === chain.id);
-      }
+      const moreList = chain ? data.data.filter((item) => item.chainId === chain.id) : data.data;
 
       // If no videos for the selected chain in the current portion,
       // continue fetching the next portion until videos are found

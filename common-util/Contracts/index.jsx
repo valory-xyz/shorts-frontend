@@ -30,7 +30,7 @@ import {
 import { getChainId, getProvider } from 'common-util/functions';
 import {
   base, gnosis, neonMainnet, polygonZkEvm,
-} from 'viem/chains';
+} from 'wagmi/chains';
 
 export const RPC_URLS = {
   100: process.env.NEXT_PUBLIC_GNOSIS_URL,
