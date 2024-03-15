@@ -27,10 +27,10 @@ const EachVideoContainer = styled.div`
 
 export const VideoCard = ({ video }) => {
   const {
-    id, video: videoHash, prompt, image: imageHash,
+    id, video: videoHash, prompt, image: imageHash, chainId,
   } = video;
 
-  const explorerUrl = getBlockchainShortsAddress(id);
+  const explorerUrl = getBlockchainShortsAddress(id, chainId);
   const shareUrl = generateShareUrl(video);
 
   return (
