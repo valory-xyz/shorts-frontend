@@ -11,6 +11,8 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import { notifyError, notifySuccess } from '@autonolas/frontend-library';
+import Image from 'next/image';
+import styled from 'styled-components';
 
 import { GREEN_THEME } from 'util/theme';
 import { useHelpers } from 'common-util/hooks';
@@ -29,6 +31,17 @@ const FORM_ID = 'myForm';
 
 const ESTIMATED_GAS_LIMIT = 500_000;
 const BUFFER_FACTOR = 1.2;
+
+const FlexContainer = styled.div`
+  display: flex;
+  justify-content: start;
+  align-items: bottom;
+  margin-top: 24px;
+`;
+
+const PoweredByOlasContainer = styled.div`
+  margin-right: 24px;
+`;
 
 const getEstimatedGasLimit = async (fn, account) => {
   if (!account) {
@@ -235,7 +248,14 @@ export const RequestForm = () => {
           />
         )}
       </Form>
-      <PoweredByOlas />
+      <FlexContainer>
+        <PoweredByOlasContainer>
+          <PoweredByOlas />
+        </PoweredByOlasContainer>
+        <a href="https://stability.ai" target="_blank" rel="noopener noreferrer">
+          <Image src="/images/powered-by-stability-ai.png" alt="Powered by Stability.ai" width={125} height={41} />
+        </a>
+      </FlexContainer>
     </Card>
   );
 };
