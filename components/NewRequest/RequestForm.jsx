@@ -219,10 +219,7 @@ export const RequestForm = () => {
           </ConfigProvider>
         </Form.Item>
         <Text type="secondary">
-          Estimated queue time:
-          {' '}
-          {getQueueTimeMessage()}
-          {' '}
+          Estimated queue time: {getQueueTimeMessage()}{' '}
           <Tooltip title="If you mint now, this is how long you can expect to wait for delivery">
             <QuestionCircleOutlined />
           </Tooltip>

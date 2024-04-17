@@ -14,6 +14,23 @@ module.exports = {
   images: {
     domains: ['gateway.autonolas.tech'],
   },
+  redirects: async () => [
+    {
+      source: '/',
+      destination: `/gnosis`,
+      permanent: false,
+    },
+    {
+      source: '/short/:id',
+      destination: `/gnosis/short/:id`,
+      permanent: false,
+    },
+    {
+      source: '/requests/:id',
+      destination: `/gnosis/requests/:id`,
+      permanent: false,
+    },
+  ],
   async headers() {
     return [
       {

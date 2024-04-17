@@ -3,9 +3,7 @@ import {
   useW3iAccount,
   useInitWeb3InboxClient,
 } from '@web3inbox/widget-react';
-import {
-  Button, Col, Popover, Row, Typography,
-} from 'antd';
+import { Button, Col, Popover, Row, Typography } from 'antd';
 import { useCallback, useEffect } from 'react';
 import { useSignMessage, useAccount } from 'wagmi';
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -31,9 +29,8 @@ export default function App() {
     isLimited: false,
   });
 
-  const {
-    account, setAccount, isRegistered, isRegistering, register,
-  } = useW3iAccount();
+  const { account, setAccount, isRegistered, isRegistering, register } =
+    useW3iAccount();
 
   useEffect(() => {
     if (!address) return;
@@ -52,7 +49,8 @@ export default function App() {
     await register((message) => signMessageAsync({ message }));
   }, [signMessageAsync, register, address]);
 
-  const { isSubscribed, isSubscribing, subscribe } = useManageSubscription(account);
+  const { isSubscribed, isSubscribing, subscribe } =
+    useManageSubscription(account);
 
   const performSubscribe = useCallback(async () => {
     try {
@@ -98,7 +96,9 @@ export default function App() {
     <>
       {!isRegistered || !isSubscribed ? (
         <div>
-          <Typography.Title level={5}>Get notified when your film is ready</Typography.Title>
+          <Typography.Title level={5}>
+            Get notified when your film is ready
+          </Typography.Title>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <Button
               type="primary"

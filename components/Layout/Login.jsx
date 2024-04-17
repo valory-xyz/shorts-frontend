@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useAccount, useNetwork, useBalance } from 'wagmi';
+import { useAccount, useBalance, usePublicClient } from 'wagmi';
 import {
   setUserAccount as setUserAccountFn,
   setUserBalance as setUserBalanceFn,
@@ -11,6 +11,9 @@ import {
 } from 'store/setup/actions';
 import { LoginV2 as LoginComponent } from 'common-util/Login';
 
+import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
+import { useRouter } from 'next/router';
+
 const Login = ({
   setUserAccount,
   setUserBalance,
@@ -18,8 +21,11 @@ const Login = ({
   setErrorMessage,
   setLogout,
 }) => {
+  const router = useRouter();
   const { address } = useAccount();
-  const { chain } = useNetwork();
+  const { chain } = usePublicClient({
+    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[`${router.query.network}`],
+  });
   const chainId = chain?.id;
   const { data } = useBalance({ address, chainId: chain?.id });
 

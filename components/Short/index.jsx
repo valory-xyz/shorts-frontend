@@ -2,21 +2,22 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FrownTwoTone, TwitterOutlined } from '@ant-design/icons';
 import { COLOR } from '@autonolas/frontend-library';
-import {
-  Button, Col, Result, Row, Skeleton, Typography,
-} from 'antd';
+import { Button, Col, Result, Row, Skeleton, Typography } from 'antd';
 
 import { Video } from 'components/Video';
 import { CHAIN_NAMES, getBlockchainShortsAddress } from 'common-util/Contracts';
 import { useRouter } from 'next/router';
+import { SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID } from 'common-util/constants/supported-chains';
 
 export const generateShareUrl = (video) => {
+  const chainSlug = SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID[video?.chainId];
+
   const truncatedTitle = video?.prompt
     ? `${video.prompt.substring(0, 50)}...`
     : 'Short Video';
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    `"${truncatedTitle}" created using shorts.wtf\n\n🎥 Watch now: https://shorts.wtf/short/${video?.id}`,
+    `"${truncatedTitle}" created using shorts.wtf\n\n🎥 Watch now: https://shorts.wtf/${chainSlug}/short/${video?.id}`,
   )}`;
 };
 
@@ -65,7 +66,11 @@ const Short = ({ video, loading, errorMessage }) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { video: videoHash, image: imageHash, chainId } = video || {
+  const {
+    video: videoHash,
+    image: imageHash,
+    chainId,
+  } = video || {
     video: undefined,
     image: undefined,
   };

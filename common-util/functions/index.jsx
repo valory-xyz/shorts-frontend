@@ -7,25 +7,29 @@ import {
   getIsValidChainId as getIsValidChainIdFn,
   sendTransaction as sendTransactionFn,
 } from '@autonolas/frontend-library';
-import { SUPPORTED_CHAINS } from 'common-util/Login';
+import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
 
 export const getProvider = () => getProviderFn(SUPPORTED_CHAINS, RPC_URLS);
 
-export const getIsValidChainId = (chainId) => getIsValidChainIdFn(SUPPORTED_CHAINS, chainId);
+export const getIsValidChainId = (chainId) =>
+  getIsValidChainIdFn(SUPPORTED_CHAINS, chainId);
 
 export const getChainIdOrDefaultToMainnet = (chainId) => {
   const x = getChainIdOrDefaultToMainnetFn(SUPPORTED_CHAINS, chainId);
   return x;
 };
 
-export const getChainId = (chainId = null) => getChainIdFn(SUPPORTED_CHAINS, chainId);
+export const getChainId = (chainId = null) =>
+  getChainIdFn(SUPPORTED_CHAINS, chainId);
 
-export const sendTransaction = (fn, account) => sendTransactionFn(fn, account, {
-  supportedChains: SUPPORTED_CHAINS,
-  rpcUrls: RPC_URLS,
-});
+export const sendTransaction = (fn, account) =>
+  sendTransactionFn(fn, account, {
+    supportedChains: SUPPORTED_CHAINS,
+    rpcUrls: RPC_URLS,
+  });
 
-export const getSupportedNetworks = () => Object.keys(ADDRESSES).map((e) => Number(e));
+export const getSupportedNetworks = () =>
+  Object.keys(ADDRESSES).map((e) => Number(e));
 
 export const getIpfsResponse = async (hash, filePath) => {
   try {
@@ -42,7 +46,8 @@ export const getIpfsResponse = async (hash, filePath) => {
 };
 
 // show last element of agentHashes array
-export const getAgentHash = (agentHashes = []) => (agentHashes.length === 0 ? '' : agentHashes[agentHashes.length - 1]);
+export const getAgentHash = (agentHashes = []) =>
+  agentHashes.length === 0 ? '' : agentHashes[agentHashes.length - 1];
 
 /**
  * Converts seconds into a human-readable format of hours and minutes.

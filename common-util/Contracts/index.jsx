@@ -28,9 +28,7 @@ import {
   BLOCKCHAIN_SHORTS_ADDRESS_BASE,
 } from 'common-util/AbiAndAddresses';
 import { getChainId, getProvider } from 'common-util/functions';
-import {
-  base, gnosis, neonMainnet, polygonZkEvm,
-} from 'wagmi/chains';
+import { base, gnosis, neonMainnet, polygonZkEvm } from 'wagmi/chains';
 
 export const RPC_URLS = {
   100: process.env.NEXT_PUBLIC_GNOSIS_URL,
@@ -55,9 +53,9 @@ export const CHAIN_NAMES = {
 
 export const AGENT_URLS = {
   100: process.env.NEXT_PUBLIC_AGENT_GNOSIS_URL,
-  245_022_934: process.env.NEXT_PUBLIC_AGENT_NEON_URL,
-  1_101: process.env.NEXT_PUBLIC_AGENT_ZKEVM_POLYGON_URL,
   8453: process.env.NEXT_PUBLIC_AGENT_BASE_URL,
+  1_101: process.env.NEXT_PUBLIC_AGENT_ZKEVM_POLYGON_URL,
+  245_022_934: process.env.NEXT_PUBLIC_AGENT_NEON_URL,
 };
 
 export const ADDRESSES = {
@@ -111,11 +109,15 @@ const getContract = (abi, contractAddress, web3) => {
 
 export const getBlockchainShortsContract = () => {
   const { web3, address } = getWeb3Details();
-  const contract = getContract(BLOCKCHAIN_SHORTS_ABI, address.blockchainShorts, web3);
+  const contract = getContract(
+    BLOCKCHAIN_SHORTS_ABI,
+    address.blockchainShorts,
+    web3,
+  );
   return contract;
 };
 
-export const getAgentURL = (defaultChainId = null) => {
+export const getAgentURL = (defaultChainId = 100) => {
   const { chainId } = defaultChainId
     ? { chainId: defaultChainId }
     : getWeb3Details();

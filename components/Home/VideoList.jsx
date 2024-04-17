@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {
-  Col, Divider, Empty, Row, Skeleton,
-} from 'antd';
+import { Col, Divider, Empty, Row, Skeleton } from 'antd';
 import styled from 'styled-components';
 import { uniqBy } from 'lodash';
-import { useNetwork } from 'wagmi';
+import { usePublicClient } from 'wagmi';
 
 import { getAgentURL } from 'common-util/Contracts';
+import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
+import { useRouter } from 'next/router';
 import { VideoCard } from './VideoCard';
 
 const VideoContainer = styled.div`
@@ -15,13 +15,16 @@ const VideoContainer = styled.div`
 `;
 
 export const VideoList = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [videos, setVideos] = useState([]);
   const [hasMoreVideos, setHasMoreVideos] = useState(true);
   const [pageCount, setPageCount] = useState(1);
 
-  const { chain } = useNetwork();
+  const { chain } = usePublicClient({
+    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[`${router.query.network}`],
+  });
 
   const increasePageCount = () => {
     setPageCount((prev) => prev + 1);
@@ -41,11 +44,14 @@ export const VideoList = () => {
       const agentResponsesURL = `${agentURL}/responses?pageNum=${pageCount}&limit=5`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
-      const moreList = chain ? data.data.filter((item) => item.chainId === chain.id) : data.data;
+      const moreList =
+        chain.id === undefined
+          ? data.data
+          : data.data.filter((video) => video.chainId === chain.id);
 
       // If no videos for the selected chain in the current portion,
       // continue fetching the next portion until videos are found
-      if ((pageCount < data.numPages) && moreList.length === 0) {
+      if (pageCount < data.numPages && moreList.length === 0) {
         increasePageCount();
         return;
       }
@@ -90,12 +96,12 @@ export const VideoList = () => {
         dataLength={videos.length}
         next={increasePageCount}
         hasMore={hasMoreVideos}
-        loader={(<Skeleton active />)}
-        endMessage={(
+        loader={<Skeleton active />}
+        endMessage={
           <Divider plain className="mt-48">
             No more shorts to show
           </Divider>
-        )}
+        }
       >
         <Row gutter={[48, 16]}>
           {videos.map((video) => (

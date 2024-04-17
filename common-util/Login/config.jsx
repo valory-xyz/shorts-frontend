@@ -4,9 +4,11 @@ import {
   w3mProvider,
 } from '@web3modal/ethereum';
 import { configureChains, createConfig } from 'wagmi';
-import { gnosis, base } from 'wagmi/chains';
 import { SafeConnector } from 'wagmi/connectors/safe';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
+import { publicProvider } from 'wagmi/providers/public';
+
+import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
+
 import { RPC_URLS } from 'common-util/Contracts';
 
 export const neon = {
@@ -27,7 +29,8 @@ export const neon = {
     default: { name: 'NeonScan', url: 'https://neonscan.org/' },
   },
   contracts: {
-    multicall3: { // replace
+    multicall3: {
+      // replace
       address: '0xca11bde05977b3631167028862be2a173976ca11',
       blockCreated: 11_907_934,
     },
@@ -36,17 +39,10 @@ export const neon = {
 
 export const projectId = process.env.NEXT_PUBLIC_WALLET_PROJECT_ID;
 
-export const SUPPORTED_CHAINS = [
-  gnosis,
-  base,
-  // polygonZkEvm,
-  // neon,
-];
-
 const { publicClient, webSocketPublicClient, chains } = configureChains(
   SUPPORTED_CHAINS,
   [
-    jsonRpcProvider({
+    publicProvider({
       rpc: (chain) => ({
         http: RPC_URLS[chain.id],
       }),
@@ -58,6 +54,7 @@ const { publicClient, webSocketPublicClient, chains } = configureChains(
 export const wagmiConfig = createConfig({
   autoConnect: true,
   logger: { warn: null },
+  chains,
   connectors: [
     ...w3mConnectors({
       projectId,

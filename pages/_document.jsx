@@ -1,6 +1,4 @@
-import Document, {
-  Head, Html, Main, NextScript,
-} from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { StyleProvider, createCache, extractStyle } from '@ant-design/cssinjs';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -19,13 +17,14 @@ MyDocument.getInitialProps = async (ctx) => {
   const originalRenderPage = ctx.renderPage;
   const sheet = new ServerStyleSheet();
 
-  ctx.renderPage = () => originalRenderPage({
-    enhanceApp: (App) => (props) => (
-      <StyleProvider cache={cache}>
-        {sheet.collectStyles(<App {...props} />)}
-      </StyleProvider>
-    ),
-  });
+  ctx.renderPage = () =>
+    originalRenderPage({
+      enhanceApp: (App) => (props) => (
+        <StyleProvider cache={cache}>
+          {sheet.collectStyles(<App {...props} />)}
+        </StyleProvider>
+      ),
+    });
 
   try {
     const initialProps = await Document.getInitialProps(ctx);

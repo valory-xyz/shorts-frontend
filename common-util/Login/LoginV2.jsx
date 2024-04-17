@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Web3Modal, Web3Button, Web3NetworkSwitch } from '@web3modal/react';
-import { useAccount, useNetwork, useBalance } from 'wagmi';
+import { useAccount, useBalance, usePublicClient } from 'wagmi';
 import { COLOR } from '@autonolas/frontend-library';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
@@ -11,6 +11,8 @@ import {
   getChainIdOrDefaultToMainnet,
 } from 'common-util/functions';
 import { useScreen } from 'common-util/hooks';
+import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
+import { useRouter } from 'next/router';
 import { projectId, ethereumClient } from './config';
 
 const LoginContainer = styled.div`
@@ -25,17 +27,18 @@ export const LoginV2 = ({
   onDisconnect: onDisconnectCb,
   theme = 'light',
 }) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   const { address } = useAccount();
-  const { chain } = useNetwork();
+  const { chain } = usePublicClient({
+    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[`${router.query.network}`],
+  });
   const { data } = useBalance({ address });
   const { isMobile } = useScreen();
 
-  const chainId = chain?.id;
-
   useEffect(() => {
     // if chainId is undefined, the wallet is not connected & default to mainnet
-    if (chainId === undefined) {
+    if (chain.id === undefined) {
       /**
        * wait for 100ms to get the chainId & set it to redux to avoid race condition
        * and dependent components are loaded once the chainId is set
@@ -45,10 +48,10 @@ export const LoginV2 = ({
         dispatch(setChainId(tempChainId));
       }, 100);
     } else {
-      const tempChainId = getChainIdOrDefaultToMainnet(chainId);
+      const tempChainId = getChainIdOrDefaultToMainnet(chain.id);
       dispatch(setChainId(tempChainId));
     }
-  }, [chainId]);
+  }, [chain.id]);
 
   const { connector } = useAccount({
     onConnect: ({ address: currentAddress }) => {
@@ -56,7 +59,7 @@ export const LoginV2 = ({
         onConnectCb({
           address: address || currentAddress,
           balance: data?.formatted,
-          chainId,
+          chainId: chain.id,
         });
       }
     },
@@ -70,8 +73,9 @@ export const LoginV2 = ({
       try {
         // This is the initial `provider` that is returned when
         // using web3Modal to connect. Can be MetaMask or WalletConnect.
-        const modalProvider = connector?.options?.getProvider?.()
-          || (await connector?.getProvider?.());
+        const modalProvider =
+          connector?.options?.getProvider?.() ||
+          (await connector?.getProvider?.());
 
         if (modalProvider) {
           // *******************************************************

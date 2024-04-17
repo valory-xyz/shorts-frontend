@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  Layout, Button, ConfigProvider,
-} from 'antd';
+import { Layout, Button, ConfigProvider } from 'antd';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 
@@ -40,22 +38,17 @@ const NavigationBar = ({ children }) => {
       <StyledHeader>
         <Link href="/">
           <div className="column-1">
-            <Image
-              src="/images/logo.png"
-              alt="logo"
-              width={280}
-              height={61}
-            />
+            <Image src="/images/logo.png" alt="logo" width={280} height={61} />
           </div>
         </Link>
 
         <div className="column-2">
           {router.pathname.includes('requests') && (
-          <ConfigProvider theme={GREEN_THEME}>
-            <Button type="primary" onClick={() => router.push('/')}>
-              New request
-            </Button>
-          </ConfigProvider>
+            <ConfigProvider theme={GREEN_THEME}>
+              <Button type="primary" onClick={() => router.push('/')}>
+                New request
+              </Button>
+            </ConfigProvider>
           )}
 
           <Login />
