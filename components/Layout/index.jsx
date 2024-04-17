@@ -36,7 +36,7 @@ const NavigationBar = ({ children }) => {
   const router = useRouter();
 
   return (
-    <CustomLayout pathname={router.pathname}>
+    <CustomLayout>
       <StyledHeader>
         <Link href="/">
           <div className="column-1">
@@ -44,19 +44,22 @@ const NavigationBar = ({ children }) => {
           </div>
         </Link>
 
-        <Select
-          style={{ width: 200 }}
-          value={router.query.network}
-          onChange={(value) => {
-            router.push(`/${value}`);
-          }}
-        >
-          {SUPPORTED_CHAINS.map((chain) => (
-            <Select.Option key={chain.network} value={chain.network}>
-              {chain.name}
-            </Select.Option>
-          ))}
-        </Select>
+        {router.isReady && (
+          <Select
+            style={{ width: 200 }}
+            placeholder="Select Network"
+            value={router.query.network}
+            onSelect={(value) => {
+              if (router.query.network !== value) router.push(`/${value}`);
+            }}
+          >
+            {SUPPORTED_CHAINS.map((chain) => (
+              <Select.Option key={chain.network} value={chain.network}>
+                {chain.name}
+              </Select.Option>
+            ))}
+          </Select>
+        )}
 
         <div className="column-2">
           {router.pathname.includes('requests') && (

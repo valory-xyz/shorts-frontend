@@ -31,8 +31,8 @@ const EachVideoContainer = styled.div`
 
 export const VideoCard = ({ video }) => {
   const { id, video: videoHash, prompt, image: imageHash, chainId } = video;
-  const chainSlug =
-    SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID[chainId] ?? DEFAULT_CHAIN.network;
+
+  const chainSlug = SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID[chainId];
 
   const explorerUrl = getBlockchainShortsAddress(id, chainId);
   const shareUrl = generateShareUrl(video);
@@ -58,7 +58,7 @@ export const VideoCard = ({ video }) => {
                 </Title>
               </Link>
             </div>
-            <Link href={`${chainSlug}/short/${id}`}>View</Link> ·{' '}
+            <Link href={`/${chainSlug}/short/${id}`}>View</Link> ·{' '}
             <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
               NFT ↗
             </a>{' '}

@@ -7,14 +7,12 @@ import {
   DEFAULT_CHAIN,
   SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG,
 } from 'common-util/constants/supported-chains';
-import { useRouter } from 'next/router';
 import { RequestForm } from './RequestForm';
 
-export const NewRequest = () => {
-  const router = useRouter();
+export const NewRequest = ({ network }) => {
   const [dataList, setDataList] = useState([]);
   const { chain } = usePublicClient({
-    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[`${router.query.network}`],
+    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network],
   });
 
   const { data: agentHashes, isLoading } = useContractRead({

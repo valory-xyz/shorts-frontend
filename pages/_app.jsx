@@ -11,17 +11,14 @@ import { wagmiConfig } from 'common-util/Login/config';
 import Layout from 'components/Layout';
 import GlobalStyle from 'components/GlobalStyles';
 import { THEME_CONFIG } from '@autonolas/frontend-library';
-import { useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import initStore from '../store';
 
 const MyApp = ({ Component, pageProps }) => {
-  const isMounted = useRef(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    isMounted.current = true;
-    return () => {
-      isMounted.current = false;
-    };
+    setIsMounted(true);
   }, []);
 
   return (
@@ -31,7 +28,7 @@ const MyApp = ({ Component, pageProps }) => {
         <title>Shorts.WTF</title>
         <meta name="title" content="Shorts.WTF" />
       </Head>
-      {isMounted.current && (
+      {isMounted && (
         <ConfigProvider theme={THEME_CONFIG}>
           <WagmiConfigProvider config={wagmiConfig}>
             <Layout>
@@ -52,11 +49,11 @@ const MyApp = ({ Component, pageProps }) => {
 //   return { pageProps };
 // };
 
-// MyApp.propTypes = {
-//   Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
-//     .isRequired,
-//   pageProps: PropTypes.shape({}).isRequired,
-// };
+MyApp.propTypes = {
+  Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
+    .isRequired,
+  pageProps: PropTypes.shape({}).isRequired,
+};
 
 const wrapper = createWrapper(initStore);
 export default wrapper.withRedux(MyApp);

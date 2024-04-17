@@ -44,6 +44,11 @@ export const SCAN_URLS = {
   8453: base.blockExplorers.default.url,
 };
 
+export const SCAN_NFT_ROUTES = {
+  100: '/nft',
+  8453: '/token', // basescan does not currently support /nft route
+};
+
 export const CHAIN_NAMES = {
   100: gnosis.name,
   245_022_934: neonMainnet.name,
@@ -98,8 +103,9 @@ const getWeb3Details = () => {
 
 export const getBlockchainShortsAddress = (id, chainId) => {
   const url = SCAN_URLS[chainId];
+  const route = SCAN_NFT_ROUTES[chainId];
   const address = ADDRESSES[chainId]?.blockchainShorts;
-  return `${url}nft/${address}/${id}`;
+  return `${url}${route}/${address}/${id}`;
 };
 
 const getContract = (abi, contractAddress, web3) => {

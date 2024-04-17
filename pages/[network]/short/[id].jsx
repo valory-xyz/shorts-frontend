@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState, useCallback } from 'react';
 import Head from 'next/head';
 
 import Short from 'components/Short';
@@ -8,9 +7,25 @@ import { usePublicClient } from 'wagmi';
 import { useSupportedChains } from 'common-util/hooks/useSupportedChains';
 import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
 
-const ShortPage = () => {
-  const router = useRouter();
-  const { id, network } = router.query;
+export const getServerSideProps = async ({ query }) => {
+  const { network, id } = query;
+  if (!{ network } || !id) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {
+      network,
+      id,
+    },
+  };
+};
+
+const ShortPage = ({ network, id }) => {
   const {
     chain: { id: chainId },
   } = usePublicClient({
@@ -23,7 +38,7 @@ const ShortPage = () => {
 
   const chainSlug = getChainSlug(chainId);
 
-  const fetchVideo = async () => {
+  const fetchVideo = useCallback(async () => {
     if (loading) {
       return;
     }
@@ -42,11 +57,13 @@ const ShortPage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id, loading]);
 
   useEffect(() => {
+    if (video) return;
+    if (loading) return;
     fetchVideo();
-  }, []);
+  }, [loading, video]);
 
   const truncatedTitle = video?.prompt
     ? `${video.prompt.substring(0, 50)}...`
