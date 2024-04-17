@@ -8,10 +8,7 @@ import { Video } from 'components/Video';
 import Link from 'next/link';
 import { generateShareUrl, videoShape } from 'components/Short';
 import { TwitterOutlined } from '@ant-design/icons';
-import {
-  SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID,
-  DEFAULT_CHAIN,
-} from 'common-util/constants/supported-chains';
+import { SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID } from 'common-util/constants/supported-chains';
 
 const { Title } = Typography;
 

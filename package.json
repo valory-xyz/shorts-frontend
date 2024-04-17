@@ -3,7 +3,7 @@
     "dev": "next",
     "build": "CI= next build",
     "start": "next start",
-    "lint": "eslint ./",
+    "lint": "next lint",
     "test": "jest",
     "testw": "jest --watch",
     "testc": "jest --coverage --verbose",
