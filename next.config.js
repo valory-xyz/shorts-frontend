@@ -16,11 +16,6 @@ module.exports = {
   },
   redirects: async () => [
     {
-      source: '/',
-      destination: `/gnosis`,
-      permanent: false,
-    },
-    {
       source: '/short/:id',
       destination: `/gnosis/short/:id`,
       permanent: false,

@@ -23,3 +23,19 @@ export const SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG = SUPPORTED_CHAINS.reduce(
   }),
   {},
 );
+
+export const SUPPORTED_CHAIN_BY_CHAIN_ID = SUPPORTED_CHAINS.reduce(
+  (acc, chain) => ({
+    ...acc,
+    [chain.id]: chain,
+  }),
+  {},
+);
+
+export const SUPPORTED_CHAIN_BY_CHAIN_SLUG = SUPPORTED_CHAINS.reduce(
+  (acc, chain) => ({
+    ...acc,
+    [chain.network]: chain,
+  }),
+  {},
+);

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Layout, Button, ConfigProvider } from 'antd';
+import { Layout, Button, ConfigProvider, Select } from 'antd';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 
@@ -7,6 +7,7 @@ import { GREEN_THEME } from 'util/theme';
 import styled from 'styled-components';
 import { COLOR, MEDIA_QUERY } from '@autonolas/frontend-library';
 import Link from 'next/link';
+import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
 import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
@@ -16,6 +17,7 @@ const { Header, Content } = Layout;
 const StyledHeader = styled(Header)`
   border-bottom: 1px solid ${COLOR.BORDER_GREY};
   padding: 20px !important;
+  gap: 10px;
 `;
 
 const Banner = styled.div`
@@ -41,6 +43,20 @@ const NavigationBar = ({ children }) => {
             <Image src="/images/logo.png" alt="logo" width={280} height={61} />
           </div>
         </Link>
+
+        <Select
+          style={{ width: 200 }}
+          value={router.query.network}
+          onChange={(value) => {
+            router.push(`/${value}`);
+          }}
+        >
+          {SUPPORTED_CHAINS.map((chain) => (
+            <Select.Option key={chain.network} value={chain.network}>
+              {chain.name}
+            </Select.Option>
+          ))}
+        </Select>
 
         <div className="column-2">
           {router.pathname.includes('requests') && (

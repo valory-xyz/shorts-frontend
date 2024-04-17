@@ -23,7 +23,7 @@ export const VideoList = () => {
   const [pageCount, setPageCount] = useState(1);
 
   const { chain } = usePublicClient({
-    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[`${router.query.network}`],
+    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[router?.query?.network],
   });
 
   const increasePageCount = () => {
@@ -45,7 +45,7 @@ export const VideoList = () => {
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
       const moreList =
-        chain.id === undefined
+        chain?.id === undefined
           ? data.data
           : data.data.filter((video) => video.chainId === chain.id);
 

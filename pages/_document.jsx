@@ -12,37 +12,37 @@ const MyDocument = () => (
   </Html>
 );
 
-MyDocument.getInitialProps = async (ctx) => {
-  const cache = createCache();
-  const originalRenderPage = ctx.renderPage;
-  const sheet = new ServerStyleSheet();
+// MyDocument.getInitialProps = async (ctx) => {
+//   const cache = createCache();
+//   const originalRenderPage = ctx.renderPage;
+//   const sheet = new ServerStyleSheet();
 
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => (
-        <StyleProvider cache={cache}>
-          {sheet.collectStyles(<App {...props} />)}
-        </StyleProvider>
-      ),
-    });
+//   ctx.renderPage = () =>
+//     originalRenderPage({
+//       enhanceApp: (App) => (props) => (
+//         <StyleProvider cache={cache}>
+//           {sheet.collectStyles(<App {...props} />)}
+//         </StyleProvider>
+//       ),
+//     });
 
-  try {
-    const initialProps = await Document.getInitialProps(ctx);
-    const style = extractStyle(cache, true);
-    return {
-      ...initialProps,
-      styles: (
-        <>
-          {initialProps.styles}
-          {/* eslint-disable-next-line react/no-danger */}
-          <style dangerouslySetInnerHTML={{ __html: style }} />
-          {sheet.getStyleElement()}
-        </>
-      ),
-    };
-  } finally {
-    sheet.seal();
-  }
-};
+//   try {
+//     const initialProps = await Document.getInitialProps(ctx);
+//     const style = extractStyle(cache, true);
+//     return {
+//       ...initialProps,
+//       styles: (
+//         <>
+//           {initialProps.styles}
+//           {/* eslint-disable-next-line react/no-danger */}
+//           <style dangerouslySetInnerHTML={{ __html: style }} />
+//           {sheet.getStyleElement()}
+//         </>
+//       ),
+//     };
+//   } finally {
+//     sheet.seal();
+//   }
+// };
 
 export default MyDocument;
