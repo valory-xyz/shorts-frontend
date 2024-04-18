@@ -27,7 +27,8 @@ const PlayButton = styled.div`
 export const Video = ({ videoHash, imageHash, showImage = true }) => {
   const [showVideo, setShowVideo] = useState(!showImage);
 
-  const createUrl = (hash) => `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}${hash}`;
+  const createUrl = (hash) =>
+    `https://${process.env.NEXT_PUBLIC_REGISTRY_URL}${hash}`;
   const videoUrl = createUrl(videoHash);
   const imageUrl = createUrl(imageHash);
 
@@ -55,7 +56,9 @@ export const Video = ({ videoHash, imageHash, showImage = true }) => {
             alt="Video thumbnail"
           />
           <PlayButton>
-            <PlayCircleFilled style={{ fontSize: '3rem', color: COLOR.WHITE }} />
+            <PlayCircleFilled
+              style={{ fontSize: '3rem', color: COLOR.WHITE }}
+            />
           </PlayButton>
         </>
       )}

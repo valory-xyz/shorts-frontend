@@ -6,14 +6,36 @@ module.exports = {
   compiler: {
     styledComponents: true,
   },
-  pages: {
-    '*': {
-      maxChunkSize: 30000,
-    },
-  },
   images: {
-    domains: ['gateway.autonolas.tech'],
+    remotePatterns: [{ hostname: 'gateway.autonolas.tech' }],
   },
+  webpack: (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.snapshot = {
+      ...(config.snapshot ?? {}),
+      // Add all node_modules but @next module to managedPaths
+      // Allows for hot refresh of changes to @next module
+      managedPaths: [/^(.+?[\\/]node_modules[\\/])(?!@next)/], // josh: not sure why this stops infinite reload, but it works, will investigate later
+    };
+    return config;
+  },
+  redirects: async () => [
+    {
+      source: '/short/:id',
+      destination: `/gnosis/short/:id`,
+      permanent: false,
+    },
+    {
+      source: '/requests/:id',
+      destination: `/gnosis/requests/:id`,
+      permanent: false,
+    },
+    {
+      source: '/',
+      destination: '/gnosis',
+      permanent: true,
+    },
+  ],
   async headers() {
     return [
       {
@@ -34,15 +56,6 @@ module.exports = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=31536000; includeSubDomains',
-          },
-        ],
-      },
-      {
-        source: '/:all*(svg|jpg|jpeg|png|gif|ico|css|js|mov|mp4)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, must-revalidate',
           },
         ],
       },

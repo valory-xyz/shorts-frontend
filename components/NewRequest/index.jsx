@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { getAgentHash, getIpfsResponse } from 'common-util/functions';
 import { useContractRead } from 'wagmi';
-import {
-  AGENT_REGISTRY_ABI,
-  AGENT_REGISTRY_ADDRESS_GNOSIS,
-} from 'common-util/AbiAndAddresses';
+
+import { getAgentHash, getIpfsResponse } from 'common-util/functions';
+import { AGENT_REGISTRY_ABI } from 'common-util/AbiAndAddresses';
+import { REGISTRIES } from 'common-util/constants/registries';
+import { DEFAULT_CHAIN } from 'common-util/constants/supported-chains';
 import { RequestForm } from './RequestForm';
 
-export const NewRequest = () => {
+export const NewRequest = ({ chainId }) => {
   const [dataList, setDataList] = useState([]);
 
   const { data: agentHashes, isLoading } = useContractRead({
     abi: AGENT_REGISTRY_ABI,
-    address: AGENT_REGISTRY_ADDRESS_GNOSIS,
+    address: REGISTRIES[chainId ?? DEFAULT_CHAIN.id],
     functionName: 'getHashes',
     args: [],
   });

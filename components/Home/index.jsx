@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-
 import { NewRequest } from '../NewRequest';
 import { VideoList } from './VideoList';
 
@@ -12,9 +11,11 @@ const Container = styled.div`
   gap: 2rem;
 `;
 
-export const HomePage = () => (
-  <Container>
-    <NewRequest />
-    <VideoList />
-  </Container>
-);
+export const HomePage = ({ chainId }) => {
+  return (
+    <Container key={chainId ?? 'none'}>
+      <NewRequest chainId={chainId} />
+      <VideoList chainId={chainId} />
+    </Container>
+  );
+};

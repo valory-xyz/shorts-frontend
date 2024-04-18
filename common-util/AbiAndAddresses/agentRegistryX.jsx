@@ -1,386 +1,178 @@
-export const AGENT_REGISTRY_ADDRESS_GNOSIS = '0x84B4DA67B37B1EA1dea9c7044042C1d2297b80a0';
-export const AGENT_REGISTRY_ADDRESS_NEON = '0x9338b5153AE39BB89f50468E608eD9d764B755fD';
-export const AGENT_REGISTRY_ADDRESS_ZKEVM_POLYGON = '0xE3607b00E75f6405248323A9417ff6b39B244b50';
-export const AGENT_REGISTRY_ADDRESS_BASE = '0x88DE734655184a09B70700aE4F72364d1ad23728';
+export const AGENT_REGISTRY_ADDRESS_GNOSIS =
+  '0x84B4DA67B37B1EA1dea9c7044042C1d2297b80a0';
+export const AGENT_REGISTRY_ADDRESS_NEON =
+  '0x9338b5153AE39BB89f50468E608eD9d764B755fD';
+export const AGENT_REGISTRY_ADDRESS_ZKEVM_POLYGON =
+  '0xE3607b00E75f6405248323A9417ff6b39B244b50';
+export const AGENT_REGISTRY_ADDRESS_BASE =
+  '0x88DE734655184a09B70700aE4F72364d1ad23728';
 
 export const AGENT_REGISTRY_ABI = [
   {
     inputs: [
-      {
-        internalType: 'string',
-        name: '_name',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_symbol',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_baseURI',
-        type: 'string',
-      },
+      { internalType: 'string', name: '_name', type: 'string' },
+      { internalType: 'string', name: '_symbol', type: 'string' },
+      { internalType: 'string', name: '_baseURI', type: 'string' },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'operator',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'operator', type: 'address' }],
     name: 'AgentInstanceRegistered',
     type: 'error',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'serviceId', type: 'uint256' }],
     name: 'AgentInstancesSlotsFilled',
     type: 'error',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'agentId', type: 'uint256' }],
     name: 'AgentNotFound',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'agentId', type: 'uint256' },
+      { internalType: 'uint256', name: 'serviceId', type: 'uint256' },
     ],
     name: 'AgentNotInService',
     type: 'error',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'componentId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'componentId', type: 'uint256' }],
     name: 'ComponentNotFound',
     type: 'error',
   },
-  {
-    inputs: [],
-    name: 'HashExists',
-    type: 'error',
-  },
+  { inputs: [], name: 'HashExists', type: 'error' },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'sent',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'expected',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'sent', type: 'uint256' },
+      { internalType: 'uint256', name: 'expected', type: 'uint256' },
+      { internalType: 'uint256', name: 'serviceId', type: 'uint256' },
     ],
     name: 'IncorrectAgentBondingValue',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'sent',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'expected',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'sent', type: 'uint256' },
+      { internalType: 'uint256', name: 'expected', type: 'uint256' },
+      { internalType: 'uint256', name: 'serviceId', type: 'uint256' },
     ],
     name: 'IncorrectRegistrationDepositValue',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'manager',
-        type: 'address',
-      },
+      { internalType: 'address', name: 'sender', type: 'address' },
+      { internalType: 'address', name: 'manager', type: 'address' },
     ],
     name: 'ManagerOnly',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'provided',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'expected',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'provided', type: 'address' },
+      { internalType: 'address', name: 'expected', type: 'address' },
+      { internalType: 'uint256', name: 'serviceId', type: 'uint256' },
     ],
     name: 'OnlyOwnServiceMultisig',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'operator',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'operator', type: 'address' },
+      { internalType: 'uint256', name: 'serviceId', type: 'uint256' },
     ],
     name: 'OperatorHasNoInstances',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'sender', type: 'address' },
+      { internalType: 'address', name: 'owner', type: 'address' },
+      { internalType: 'uint256', name: 'agentId', type: 'uint256' },
     ],
     name: 'OperatorOnly',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'provided',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'max',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'provided', type: 'uint256' },
+      { internalType: 'uint256', name: 'max', type: 'uint256' },
     ],
     name: 'Overflow',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
+      { internalType: 'address', name: 'sender', type: 'address' },
+      { internalType: 'address', name: 'owner', type: 'address' },
     ],
     name: 'OwnerOnly',
     type: 'error',
   },
+  { inputs: [], name: 'Paused', type: 'error' },
+  { inputs: [], name: 'ReentrancyGuard', type: 'error' },
   {
-    inputs: [],
-    name: 'Paused',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'ReentrancyGuard',
-    type: 'error',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'serviceId', type: 'uint256' }],
     name: 'ServiceMustBeInactive',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'token',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'token', type: 'address' },
+      { internalType: 'address', name: 'from', type: 'address' },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'value', type: 'uint256' },
     ],
     name: 'TransferFailed',
     type: 'error',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'multisig',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'multisig', type: 'address' }],
     name: 'UnauthorizedMultisig',
     type: 'error',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'agentId', type: 'uint256' }],
     name: 'WrongAgentId',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'numValues1',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'numValues2',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'numValues1', type: 'uint256' },
+      { internalType: 'uint256', name: 'numValues2', type: 'uint256' },
     ],
     name: 'WrongArrayLength',
     type: 'error',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'serviceId', type: 'uint256' }],
     name: 'WrongOperator',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'state',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'serviceId',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'state', type: 'uint256' },
+      { internalType: 'uint256', name: 'serviceId', type: 'uint256' },
     ],
     name: 'WrongServiceState',
     type: 'error',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'currentThreshold',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'minThreshold',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxThreshold',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'currentThreshold', type: 'uint256' },
+      { internalType: 'uint256', name: 'minThreshold', type: 'uint256' },
+      { internalType: 'uint256', name: 'maxThreshold', type: 'uint256' },
     ],
     name: 'WrongThreshold',
     type: 'error',
   },
-  {
-    inputs: [],
-    name: 'ZeroAddress',
-    type: 'error',
-  },
-  {
-    inputs: [],
-    name: 'ZeroValue',
-    type: 'error',
-  },
+  { inputs: [], name: 'ZeroAddress', type: 'error' },
+  { inputs: [], name: 'ZeroValue', type: 'error' },
   {
     anonymous: false,
     inputs: [
@@ -396,12 +188,7 @@ export const AGENT_REGISTRY_ABI = [
         name: 'spender',
         type: 'address',
       },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
+      { indexed: true, internalType: 'uint256', name: 'id', type: 'uint256' },
     ],
     name: 'Approval',
     type: 'event',
@@ -421,12 +208,7 @@ export const AGENT_REGISTRY_ABI = [
         name: 'operator',
         type: 'address',
       },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'approved',
-        type: 'bool',
-      },
+      { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'ApprovalForAll',
     type: 'event',
@@ -492,24 +274,9 @@ export const AGENT_REGISTRY_ABI = [
   {
     anonymous: false,
     inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      { indexed: true, internalType: 'uint256', name: 'id', type: 'uint256' },
     ],
     name: 'Transfer',
     type: 'event',
@@ -536,41 +303,21 @@ export const AGENT_REGISTRY_ABI = [
   {
     inputs: [],
     name: 'CID_PREFIX',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'VERSION',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'id', type: 'uint256' },
     ],
     name: 'approve',
     outputs: [],
@@ -578,58 +325,28 @@ export const AGENT_REGISTRY_ABI = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
     name: 'balanceOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'baseURI',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newManager',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'newManager', type: 'address' }],
     name: 'changeManager',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: 'newOwner', type: 'address' }],
     name: 'changeOwner',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -637,213 +354,91 @@ export const AGENT_REGISTRY_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'agentOwner',
-        type: 'address',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'agentHash',
-        type: 'bytes32',
-      },
+      { internalType: 'address', name: 'agentOwner', type: 'address' },
+      { internalType: 'bytes32', name: 'agentHash', type: 'bytes32' },
     ],
     name: 'create',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: 'agentId', type: 'uint256' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'unitId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'unitId', type: 'uint256' }],
     name: 'exists',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     name: 'getApproved',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'agentId', type: 'uint256' }],
     name: 'getHashes',
     outputs: [
-      {
-        internalType: 'uint256',
-        name: 'numHashes',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes32[]',
-        name: 'agentHashes',
-        type: 'bytes32[]',
-      },
+      { internalType: 'uint256', name: 'numHashes', type: 'uint256' },
+      { internalType: 'bytes32[]', name: 'agentHashes', type: 'bytes32[]' },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: '', type: 'address' },
     ],
     name: 'isApprovedForAll',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'manager',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' },
     ],
     name: 'mapAgentIdHashes',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
+    outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'name',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'owner',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'id', type: 'uint256' }],
     name: 'ownerOf',
-    outputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-    ],
+    outputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'from', type: 'address' },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'id', type: 'uint256' },
     ],
     name: 'safeTransferFrom',
     outputs: [],
@@ -852,26 +447,10 @@ export const AGENT_REGISTRY_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
+      { internalType: 'address', name: 'from', type: 'address' },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'id', type: 'uint256' },
+      { internalType: 'bytes', name: 'data', type: 'bytes' },
     ],
     name: 'safeTransferFrom',
     outputs: [],
@@ -880,16 +459,8 @@ export const AGENT_REGISTRY_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'operator',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: 'approved',
-        type: 'bool',
-      },
+      { internalType: 'address', name: 'operator', type: 'address' },
+      { internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'setApprovalForAll',
     outputs: [],
@@ -897,118 +468,52 @@ export const AGENT_REGISTRY_ABI = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: 'bURI',
-        type: 'string',
-      },
-    ],
+    inputs: [{ internalType: 'string', name: 'bURI', type: 'string' }],
     name: 'setBaseURI',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes4',
-        name: 'interfaceId',
-        type: 'bytes4',
-      },
-    ],
+    inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
     name: 'supportsInterface',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'symbol',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'id', type: 'uint256' }],
     name: 'tokenByIndex',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'unitId',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: 'unitId', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'unitId',
-        type: 'uint256',
-      },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'unitId', type: 'uint256' }],
     name: 'tokenURI',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
     name: 'totalSupply',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'id',
-        type: 'uint256',
-      },
+      { internalType: 'address', name: 'from', type: 'address' },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'id', type: 'uint256' },
     ],
     name: 'transferFrom',
     outputs: [],
@@ -1017,25 +522,11 @@ export const AGENT_REGISTRY_ABI = [
   },
   {
     inputs: [
-      {
-        internalType: 'uint256',
-        name: 'agentId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'agentHash',
-        type: 'bytes32',
-      },
+      { internalType: 'uint256', name: 'agentId', type: 'uint256' },
+      { internalType: 'bytes32', name: 'agentHash', type: 'bytes32' },
     ],
     name: 'updateHash',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: 'success',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: 'success', type: 'bool' }],
     stateMutability: 'nonpayable',
     type: 'function',
   },

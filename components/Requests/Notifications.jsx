@@ -22,14 +22,14 @@ export const Notifications = () => {
       renderItem={(notification, index) => (
         <List.Item key={`notification-${index}`}>
           <List.Item.Meta
-            avatar={(
+            avatar={
               <>
                 {new Date(notification.publishedAt).toLocaleString(
                   [],
                   dateFormat,
                 )}
               </>
-            )}
+            }
             title={
               <a href="https://ant.design">{notification.message.title}</a>
             }

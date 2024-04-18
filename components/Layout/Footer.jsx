@@ -1,6 +1,4 @@
-import {
-  Footer as CommonFooter,
-} from '@autonolas/frontend-library';
+import { Footer as CommonFooter } from '@autonolas/frontend-library';
 import Link from 'next/link';
 
 import { Typography } from 'antd';
@@ -8,9 +6,7 @@ import { FooterContainer } from './styles';
 
 const FooterContent = () => (
   <Typography.Text>
-    © Valory 2023 ·
-    {' '}
-    <Link href="/disclaimer">Disclaimer</Link>
+    © Valory 2023 · <Link href="/disclaimer">Disclaimer</Link>
   </Typography.Text>
 );
 

@@ -6,8 +6,9 @@
   "parser": "@babel/eslint-parser",
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
     "airbnb",
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
     "plugin:jest/all"
   ],
   "settings": {
@@ -22,8 +23,17 @@
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react", "jsx-a11y", "import", "jest"],
+  "plugins": ["prettier"],
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": true,
+        "trailingComma": "all",
+        "singleQuote": true,
+        "endOfLine": "auto"
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "off",
@@ -51,5 +61,12 @@
     "react/jsx-no-useless-fragment": [2, { "allowExpressions": true }],
     "no-untyped-mock-factory": "off",
     "jest/no-untyped-mock-factory": "off"
-  }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "public/",
+    "test_server*.js"
+  ]
 }

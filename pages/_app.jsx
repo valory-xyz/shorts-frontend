@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { createWrapper } from 'next-redux-wrapper';
 import { ConfigProvider } from 'antd';
@@ -13,29 +14,31 @@ import GlobalStyle from 'components/GlobalStyles';
 import { THEME_CONFIG } from '@autonolas/frontend-library';
 import initStore from '../store';
 
-const MyApp = ({ Component, pageProps }) => (
-  <>
-    <GlobalStyle />
-    <Head>
-      <title>Shorts.WTF</title>
-      <meta name="title" content="Shorts.WTF" />
-    </Head>
-    <ConfigProvider theme={THEME_CONFIG}>
-      <WagmiConfigProvider config={wagmiConfig}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </WagmiConfigProvider>
-    </ConfigProvider>
-  </>
-);
+const MyApp = ({ Component, pageProps }) => {
+  const [isMounted, setIsMounted] = useState(false);
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const pageProps = Component.getInitialProps
-    ? await Component.getInitialProps(ctx)
-    : {};
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-  return { pageProps };
+  return (
+    <>
+      <GlobalStyle />
+      <Head>
+        <title>Shorts.WTF</title>
+        <meta name="title" content="Shorts.WTF" />
+      </Head>
+      {isMounted && (
+        <ConfigProvider theme={THEME_CONFIG}>
+          <WagmiConfigProvider config={wagmiConfig}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </WagmiConfigProvider>
+        </ConfigProvider>
+      )}
+    </>
+  );
 };
 
 MyApp.propTypes = {

@@ -24,7 +24,8 @@ export const CustomLayout = styled(Layout)`
       }
     }
   }
-  .column-1, .column-2 {
+  .column-1,
+  .column-2 {
     display: flex;
     width: 100%;
   }

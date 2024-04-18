@@ -13,7 +13,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 2rem;
   .ant-card {
-    maxWidth: 680px;
+    max-width: 680px;
     .ant-card-head {
       overflow: auto;
     }
@@ -51,17 +51,12 @@ export const Request = () => {
           Great! Your short film is being generated
         </Title>
         <Text className="mb-8">
-          Check the
-          {' '}
-          <Link href="/">video list</Link>
-          {' '}
-          in roughly
-          {' '}
-          {queueTimeInHms}
-          {' '}
+          Check the <Link href="/">video list</Link> in roughly {queueTimeInHms}{' '}
           to see it.
         </Text>
-        <Title level={5} className="mt-0">Your prompt</Title>
+        <Title level={5} className="mt-0">
+          Your prompt
+        </Title>
         <Text>{prompt || '--'}</Text>
       </Card>
     </Container>

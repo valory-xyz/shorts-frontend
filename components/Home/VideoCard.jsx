@@ -8,6 +8,7 @@ import { Video } from 'components/Video';
 import Link from 'next/link';
 import { generateShareUrl, videoShape } from 'components/Short';
 import { TwitterOutlined } from '@ant-design/icons';
+import { SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID } from 'common-util/constants/supported-chains';
 
 const { Title } = Typography;
 
@@ -26,9 +27,9 @@ const EachVideoContainer = styled.div`
 `;
 
 export const VideoCard = ({ video }) => {
-  const {
-    id, video: videoHash, prompt, image: imageHash, chainId,
-  } = video;
+  const { id, video: videoHash, prompt, image: imageHash, chainId } = video;
+
+  const chainSlug = SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID[chainId];
 
   const explorerUrl = getBlockchainShortsAddress(id, chainId);
   const shareUrl = generateShareUrl(video);
@@ -36,37 +37,34 @@ export const VideoCard = ({ video }) => {
   return (
     <CustomCard bodyStyle={{ padding: 0 }}>
       <Card.Meta
-        title={(
+        title={
           <EachVideoContainer>
             <Video videoHash={videoHash} imageHash={imageHash} />
           </EachVideoContainer>
-        )}
-        description={(
+        }
+        description={
           <div className="p-16">
             <div className="mb-8">
               <Link href={`/short/${id}`}>
-                <Title level={5} className="mt-0" ellipsis={{ rows: 2, expandable: false }}>{prompt}</Title>
+                <Title
+                  level={5}
+                  className="mt-0"
+                  ellipsis={{ rows: 2, expandable: false }}
+                >
+                  {prompt}
+                </Title>
               </Link>
             </div>
-            <Link href={`/short/${id}`}>
-              View
-            </Link>
-            {' '}
-            ·
-            {' '}
+            <Link href={`/${chainSlug}/short/${id}`}>View</Link> ·{' '}
             <a href={explorerUrl} target="_blank" rel="noopener noreferrer">
               NFT ↗
-            </a>
-            {' '}
+            </a>{' '}
             ·
-            {' '}
             <a href={shareUrl} target="_blank" rel="noopener noreferrer">
-              <TwitterOutlined />
-              {' '}
-              Share
+              <TwitterOutlined /> Share
             </a>
           </div>
-        )}
+        }
         className="mb-0"
       />
     </CustomCard>
