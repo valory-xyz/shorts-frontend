@@ -30,6 +30,11 @@ module.exports = {
       destination: `/gnosis/requests/:id`,
       permanent: false,
     },
+    {
+      source: '/',
+      destination: '/gnosis',
+      permanent: true,
+    },
   ],
   async headers() {
     return [

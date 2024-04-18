@@ -4,7 +4,7 @@ import { uniqBy } from 'lodash';
 import { getAgentURL } from 'common-util/Contracts';
 
 export const useVideoList = (chainId) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [videos, setVideos] = useState([]);
   const [hasMoreVideos, setHasMoreVideos] = useState(true);
@@ -15,7 +15,8 @@ export const useVideoList = (chainId) => {
   };
 
   const fetchVideos = useCallback(async () => {
-    if (loading || !hasMoreVideos) {
+    if (!hasMoreVideos) {
+      setLoading(false);
       return;
     }
 
@@ -48,11 +49,11 @@ export const useVideoList = (chainId) => {
       setLoading(false);
       setInitialLoadComplete(true);
     }
-  }, [chainId, hasMoreVideos, initialLoadComplete, loading, pageCount]);
+  }, [chainId, hasMoreVideos, initialLoadComplete, pageCount]);
 
   useEffect(() => {
     fetchVideos();
-  }, [pageCount]);
+  }, [pageCount, fetchVideos]);
 
   return {
     loading,

@@ -52,7 +52,7 @@ export const LoginV2 = ({
       const tempChainId = getChainIdOrDefaultToMainnet(chain.id);
       dispatch(setChainId(tempChainId));
     }
-  }, [chain.id]);
+  }, [chain.id, dispatch]);
 
   const { connector } = useAccount({
     onConnect: ({ address: currentAddress }) => {

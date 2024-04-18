@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Layout, Button, ConfigProvider, Select } from 'antd';
 import PropTypes from 'prop-types';
@@ -7,7 +8,10 @@ import styled from 'styled-components';
 import { COLOR, MEDIA_QUERY } from '@autonolas/frontend-library';
 
 import { GREEN_THEME } from 'util/theme';
-import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
+import {
+  DEFAULT_CHAIN,
+  SUPPORTED_CHAINS,
+} from 'common-util/constants/supported-chains';
 import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
@@ -39,6 +43,13 @@ const NavigationBar = ({ children }) => {
     router.push(`/${value}`);
   };
 
+  const defaultChain = useMemo(() => {
+    if (router.query.network) {
+      return router.query.network;
+    }
+    return DEFAULT_CHAIN.network;
+  }, [router.query.network]);
+
   return (
     <CustomLayout>
       <StyledHeader>
@@ -50,11 +61,11 @@ const NavigationBar = ({ children }) => {
 
         {router.isReady && (
           <Select
-            key={router.query.network}
-            style={{ width: 200 }}
             placeholder="Select Network"
-            defaultValue={router.query.network}
+            key={defaultChain}
+            defaultValue={defaultChain}
             onChange={handleSelect}
+            style={{ minWidth: 200 }}
           >
             {SUPPORTED_CHAINS.map((chain) => (
               <Select.Option key={chain.network} value={chain.network}>

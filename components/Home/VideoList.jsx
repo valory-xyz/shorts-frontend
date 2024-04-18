@@ -9,6 +9,24 @@ const VideoContainer = styled.div`
   width: 100%;
 `;
 
+const InfiniteScrollLoader = () => (
+  <Row gutter={[48, 16]}>
+    {[1, 2, 3].map((count) => (
+      <Col
+        key={count}
+        xs={24}
+        sm={12}
+        md={12}
+        lg={12}
+        xl={12}
+        style={{ padding: '0 96px' }}
+      >
+        <Skeleton active />
+      </Col>
+    ))}
+  </Row>
+);
+
 export const VideoList = ({ chainId }) => {
   const { videos, loading, hasMoreVideos, increasePageCount } =
     useVideoList(chainId);
@@ -39,7 +57,7 @@ export const VideoList = ({ chainId }) => {
         dataLength={videos.length}
         next={increasePageCount}
         hasMore={hasMoreVideos}
-        loader={<Skeleton active />}
+        loader={<InfiniteScrollLoader />}
         endMessage={
           <Divider plain className="mt-48">
             No more shorts to show
@@ -48,7 +66,15 @@ export const VideoList = ({ chainId }) => {
       >
         <Row gutter={[48, 16]}>
           {videos.map((video) => (
-            <Col xs={24} sm={12} md={12} lg={12} xl={12} key={video.id}>
+            <Col
+              key={video.id}
+              xs={24}
+              sm={12}
+              md={12}
+              lg={12}
+              xl={12}
+              style={{ padding: '0 96px' }}
+            >
               {loading ? <Skeleton active /> : <VideoCard video={video} />}
             </Col>
           ))}
