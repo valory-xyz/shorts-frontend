@@ -2,13 +2,22 @@
  * @type {import('next').NextConfig}
  */
 module.exports = {
-  basePath: '',
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
   },
   images: {
     remotePatterns: [{ hostname: 'gateway.autonolas.tech' }],
+  },
+  webpack: (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.snapshot = {
+      ...(config.snapshot ?? {}),
+      // Add all node_modules but @next module to managedPaths
+      // Allows for hot refresh of changes to @next module
+      managedPaths: [/^(.+?[\\/]node_modules[\\/])(?!@next)/], // josh: not sure why this stops infinite reload, but it works, will investigate later
+    };
+    return config;
   },
   redirects: async () => [
     {
@@ -42,15 +51,6 @@ module.exports = {
           {
             key: 'Strict-Transport-Security',
             value: 'max-age=31536000; includeSubDomains',
-          },
-        ],
-      },
-      {
-        source: '/:all*(svg|jpg|jpeg|png|gif|ico|css|js|mov|mp4)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, must-revalidate',
           },
         ],
       },

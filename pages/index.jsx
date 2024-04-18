@@ -1,3 +1,7 @@
 import { HomePage } from 'components/Home';
 
-export default HomePage;
+const IndexHomepage = () => {
+  return <HomePage key="index" />;
+};
+
+export default IndexHomepage;

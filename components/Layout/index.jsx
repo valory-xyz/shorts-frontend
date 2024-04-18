@@ -35,6 +35,10 @@ const Banner = styled.div`
 const NavigationBar = ({ children }) => {
   const router = useRouter();
 
+  const handleSelect = (value) => {
+    router.push(`/${value}`);
+  };
+
   return (
     <CustomLayout>
       <StyledHeader>
@@ -50,9 +54,7 @@ const NavigationBar = ({ children }) => {
             style={{ width: 200 }}
             placeholder="Select Network"
             defaultValue={router.query.network}
-            onSelect={(value) => {
-              if (router.query.network !== value) router.push(`/${value}`);
-            }}
+            onChange={handleSelect}
           >
             {SUPPORTED_CHAINS.map((chain) => (
               <Select.Option key={chain.network} value={chain.network}>

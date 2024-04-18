@@ -41,14 +41,6 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-// MyApp.getInitialProps = async ({ Component, ctx }) => {
-//   const pageProps = Component.getInitialProps
-//     ? await Component.getInitialProps(ctx)
-//     : {};
-
-//   return { pageProps };
-// };
-
 MyApp.propTypes = {
   Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
     .isRequired,
