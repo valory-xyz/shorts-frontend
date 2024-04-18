@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { getAgentURL } from 'common-util/Contracts';
 import { uniqBy } from 'lodash';
+
+import { getAgentURL } from 'common-util/Contracts';
 
 export const useVideoList = (chainId) => {
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ export const useVideoList = (chainId) => {
       const moreList =
         chainId === undefined
           ? data.data // show all the data
-          : data.data.filter((video) => video.chainId === chainId); // show chain specfic data
+          : data.data.filter((video) => video.chainId === chainId); // show chain specific data
 
       // If no videos for the selected chain in the current portion,
       // continue fetching the next portion until videos are found

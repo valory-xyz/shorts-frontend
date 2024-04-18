@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getAgentHash, getIpfsResponse } from 'common-util/functions';
 import { useContractRead } from 'wagmi';
+
+import { getAgentHash, getIpfsResponse } from 'common-util/functions';
 import { AGENT_REGISTRY_ABI } from 'common-util/AbiAndAddresses';
 import { REGISTRIES } from 'common-util/constants/registries';
 import { DEFAULT_CHAIN } from 'common-util/constants/supported-chains';

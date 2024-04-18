@@ -7,7 +7,7 @@ import { Button, Col, Result, Row, Skeleton, Typography } from 'antd';
 import { Video } from 'components/Video';
 import { CHAIN_NAMES, getBlockchainShortsAddress } from 'common-util/Contracts';
 import { useRouter } from 'next/router';
-import { SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID } from 'common-util/constants/supported-chains';
+import { DEFAULT_CHAIN, SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID } from 'common-util/constants/supported-chains';
 
 export const generateShareUrl = (video) => {
   const chainSlug = SUPPORTED_CHAIN_SLUG_BY_CHAIN_ID[video?.chainId];
@@ -73,6 +73,7 @@ const Short = ({ video, loading, errorMessage }) => {
   } = video || {
     video: undefined,
     image: undefined,
+    chainId: DEFAULT_CHAIN.id,
   };
 
   const explorerUrl = getBlockchainShortsAddress(id, chainId);

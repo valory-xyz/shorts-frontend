@@ -2,11 +2,11 @@ import { useRouter } from 'next/router';
 import { Layout, Button, ConfigProvider, Select } from 'antd';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
-
-import { GREEN_THEME } from 'util/theme';
+import Link from 'next/link';
 import styled from 'styled-components';
 import { COLOR, MEDIA_QUERY } from '@autonolas/frontend-library';
-import Link from 'next/link';
+
+import { GREEN_THEME } from 'util/theme';
 import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
 import Login from './Login';
 import Footer from './Footer';

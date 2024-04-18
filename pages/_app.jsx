@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { createWrapper } from 'next-redux-wrapper';
 import { ConfigProvider } from 'antd';
@@ -11,7 +12,6 @@ import { wagmiConfig } from 'common-util/Login/config';
 import Layout from 'components/Layout';
 import GlobalStyle from 'components/GlobalStyles';
 import { THEME_CONFIG } from '@autonolas/frontend-library';
-import { useState, useEffect } from 'react';
 import initStore from '../store';
 
 const MyApp = ({ Component, pageProps }) => {

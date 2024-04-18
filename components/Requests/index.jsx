@@ -13,7 +13,7 @@ const Container = styled.div`
   align-items: center;
   margin-top: 2rem;
   .ant-card {
-    maxwidth: 680px;
+    max-width: 680px;
     .ant-card-head {
       overflow: auto;
     }

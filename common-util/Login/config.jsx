@@ -8,7 +8,6 @@ import { SafeConnector } from 'wagmi/connectors/safe';
 import { publicProvider } from 'wagmi/providers/public';
 
 import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
-
 import { RPC_URLS } from 'common-util/Contracts';
 
 export const neon = {

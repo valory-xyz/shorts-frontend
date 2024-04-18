@@ -4,6 +4,8 @@ import { Web3Modal, Web3Button, Web3NetworkSwitch } from '@web3modal/react';
 import { useAccount, useBalance, usePublicClient } from 'wagmi';
 import { COLOR } from '@autonolas/frontend-library';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+
 import styled from 'styled-components';
 import { setChainId } from 'store/setup/actions';
 import {
@@ -12,7 +14,6 @@ import {
 } from 'common-util/functions';
 import { useScreen } from 'common-util/hooks';
 import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
-import { useRouter } from 'next/router';
 import { projectId, ethereumClient } from './config';
 
 const LoginContainer = styled.div`
