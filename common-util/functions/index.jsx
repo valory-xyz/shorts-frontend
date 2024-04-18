@@ -7,7 +7,10 @@ import {
   getIsValidChainId as getIsValidChainIdFn,
   sendTransaction as sendTransactionFn,
 } from '@autonolas/frontend-library';
-import { SUPPORTED_CHAINS } from 'common-util/constants/supported-chains';
+import {
+  SUPPORTED_CHAINS,
+  SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG,
+} from 'common-util/constants/supported-chains';
 
 export const getProvider = () => getProviderFn(SUPPORTED_CHAINS, RPC_URLS);
 
@@ -61,4 +64,8 @@ export const secondsToHms = (seconds) => {
   return `${seconds >= 3600 ? `${Math.floor(seconds / 3600)} hours ` : ''}${Math.floor(
     (seconds % 3600) / 60,
   )} minutes`;
+};
+export const validateNetworkQuery = ({ network, strict = false }) => {
+  if (!network && !strict) return true;
+  return SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network] !== undefined;
 };

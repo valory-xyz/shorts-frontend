@@ -3,13 +3,14 @@ import Head from 'next/head';
 
 import Short from 'components/Short';
 import { getAgentURL } from 'common-util/Contracts';
-import { usePublicClient } from 'wagmi';
 import { useSupportedChains } from 'common-util/hooks/useSupportedChains';
 import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
 
+import { validateNetworkQuery } from 'common-util/functions';
+
 export const getServerSideProps = async ({ query }) => {
   const { network, id } = query;
-  if (!{ network } || !id) {
+  if (!validateNetworkQuery({ network, strict: true })) {
     return {
       redirect: {
         destination: '/',
@@ -19,18 +20,13 @@ export const getServerSideProps = async ({ query }) => {
   }
   return {
     props: {
-      network,
       id,
+      chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network],
     },
   };
 };
 
-const ShortPage = ({ network, id }) => {
-  const {
-    chain: { id: chainId },
-  } = usePublicClient({
-    chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[`${network}`],
-  });
+const ShortPage = ({ id, chainId }) => {
   const { getChainSlug } = useSupportedChains();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');

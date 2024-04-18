@@ -46,9 +46,10 @@ const NavigationBar = ({ children }) => {
 
         {router.isReady && (
           <Select
+            key={router.query.network}
             style={{ width: 200 }}
             placeholder="Select Network"
-            value={router.query.network}
+            defaultValue={router.query.network}
             onSelect={(value) => {
               if (router.query.network !== value) router.push(`/${value}`);
             }}

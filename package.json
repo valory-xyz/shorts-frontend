@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "^20.10.1"
+  },
   "scripts": {
     "dev": "next",
     "build": "CI= next build",

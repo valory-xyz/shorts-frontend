@@ -1,14 +1,11 @@
 import { HomePage } from 'components/Home';
 import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
 
-const validateNetworkQuery = (network) => {
-  if (!network) return true;
-  return SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network] !== undefined;
-};
+import { validateNetworkQuery } from 'common-util/functions';
 
 export const getServerSideProps = async ({ query }) => {
   const { network } = query;
-  if (!validateNetworkQuery(network)) {
+  if (!validateNetworkQuery({ network })) {
     return {
       redirect: {
         destination: '/',
