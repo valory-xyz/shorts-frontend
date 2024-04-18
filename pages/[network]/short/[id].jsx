@@ -3,45 +3,44 @@ import Head from 'next/head';
 
 import Short from 'components/Short';
 import { getAgentURL } from 'common-util/Contracts';
-import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
 import { useRouter } from 'next/router';
+import { useHelpers } from 'common-util/hooks';
 
-const ShortPage = () => {
+const ShortContent = () => {
   const router = useRouter();
-  const { network } = router.query;
-  const id = Number(router.query.id) ?? 0;
-  const chainId = SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network];
-  const [loading, setLoading] = useState(false);
+  const { chainId } = useHelpers();
+
+  const { id: queryId, network } = router.query;
+  const id = Number(queryId);
+
+  const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [video, setVideo] = useState(null);
 
   const fetchVideo = useCallback(async () => {
-    if (loading) {
-      return;
-    }
-
-    setLoading(true);
-
     try {
       const agentURL = getAgentURL();
       const agentResponsesURL = `${agentURL}/responses?id=${id}`;
       const response = await fetch(agentResponsesURL);
-      const data = await response.json();
-      setVideo(data.data.find((v) => v.chainId === chainId));
+      const jsonResponse = await response.json();
+      const currentChainVideo = jsonResponse.data.find(
+        (v) => v.chainId === chainId,
+      );
+      if (!currentChainVideo) {
+        throw new Error('Video not found');
+      }
+      setVideo(currentChainVideo);
     } catch (error) {
-      setErrorMessage(error);
+      setErrorMessage(error?.message || 'Failed to fetch video');
       console.error('Failed to fetch video:', error);
     } finally {
       setLoading(false);
     }
-  }, [id, chainId, loading]);
+  }, [id, chainId]);
 
   useEffect(() => {
-    if (!id) return;
-    if (video) return;
-    if (loading) return;
     fetchVideo();
-  }, [loading, video, id, fetchVideo]);
+  }, [fetchVideo]);
 
   const truncatedTitle = video?.prompt
     ? `${video.prompt.substring(0, 50)}...`
@@ -81,6 +80,19 @@ const ShortPage = () => {
       <Short video={video} errorMessage={errorMessage} loading={loading} />
     </>
   );
+};
+
+const ShortPage = () => {
+  const router = useRouter();
+  const { network } = router.query;
+  const id = Number(router.query.id);
+  const { chainId } = useHelpers();
+
+  if (!network || !id || !chainId) {
+    return null;
+  }
+
+  return <ShortContent />;
 };
 
 export default ShortPage;

@@ -79,5 +79,13 @@ export const useHandleRoute = () => {
     }
   }, [path, networkNameFromUrl, router]);
 
-  return { updateChainId };
+  const onHomeClick = () => {
+    if (networkNameFromUrl) {
+      router.push(`/${networkNameFromUrl}`);
+    } else {
+      router.push(`/${DEFAULT_CHAIN_NETWORK}`);
+    }
+  };
+
+  return { onHomeClick, updateChainId };
 };
