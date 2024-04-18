@@ -3,31 +3,14 @@ import Head from 'next/head';
 
 import Short from 'components/Short';
 import { getAgentURL } from 'common-util/Contracts';
-import {
-  SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG,
-  SUPPORTED_CHAIN_SLUGS,
-} from 'common-util/constants/supported-chains';
+import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
 import { useRouter } from 'next/router';
 
-export const getServerSideProps = async ({ params }) => {
-  const { network } = params;
-  if (!SUPPORTED_CHAIN_SLUGS.includes(network)) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      network,
-      chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network],
-    },
-  };
-};
-
-const ShortPage = ({ network, chainId }) => {
+const ShortPage = () => {
   const router = useRouter();
+  const { network } = router.query;
   const id = Number(router.query.id) ?? 0;
+  const chainId = SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network];
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [video, setVideo] = useState(null);
@@ -68,6 +51,10 @@ const ShortPage = ({ network, chainId }) => {
   const description =
     'Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf.';
   const url = `https://shorts.wtf/${network}/short/${id}`;
+
+  if (!network || !id) {
+    return null;
+  }
 
   return (
     <>
