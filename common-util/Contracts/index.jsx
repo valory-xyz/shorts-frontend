@@ -44,9 +44,14 @@ export const SCAN_URLS = {
   8453: base.blockExplorers.default.url,
 };
 
-export const SCAN_NFT_ROUTES = {
+export const SCAN_ROUTES = {
   100: '/nft',
   8453: '/token', // basescan does not currently support /nft route
+};
+
+export const SCAN_SUPPORTS_NFT_ID = {
+  100: true,
+  8453: false,
 };
 
 export const CHAIN_NAMES = {
@@ -103,9 +108,10 @@ const getWeb3Details = () => {
 
 export const getBlockchainShortsAddress = (id, chainId) => {
   const url = SCAN_URLS[chainId];
-  const route = SCAN_NFT_ROUTES[chainId];
+  const route = SCAN_ROUTES[chainId];
   const address = ADDRESSES[chainId]?.blockchainShorts;
-  return `${url}${route}/${address}/${id}`;
+  const idSuffix = SCAN_SUPPORTS_NFT_ID[chainId] ? `/${id}` : '';
+  return `${url}${route}/${address}${idSuffix}`;
 };
 
 const getContract = (abi, contractAddress, web3) => {
