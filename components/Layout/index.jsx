@@ -12,6 +12,7 @@ import {
   DEFAULT_CHAIN,
   SUPPORTED_CHAINS,
 } from 'common-util/constants/supported-chains';
+import { useHandleRoute } from 'common-util/hooks/useHandleRoute';
 import Login from './Login';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
@@ -38,6 +39,8 @@ const Banner = styled.div`
 
 const NavigationBar = ({ children }) => {
   const router = useRouter();
+
+  useHandleRoute();
 
   const handleSelect = (value) => {
     router.push(`/${value}`);

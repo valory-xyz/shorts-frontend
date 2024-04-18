@@ -3,6 +3,8 @@ import { gnosis, base } from '@wagmi/core/chains';
 export const SUPPORTED_CHAINS = [gnosis, base];
 
 export const DEFAULT_CHAIN = SUPPORTED_CHAINS[0];
+export const DEFAULT_CHAIN_ID = SUPPORTED_CHAINS[0].id;
+export const DEFAULT_CHAIN_NETWORK = SUPPORTED_CHAINS[0].network;
 
 export const SUPPORTED_CHAIN_SLUGS = SUPPORTED_CHAINS.map(
   (chain) => chain.network,
