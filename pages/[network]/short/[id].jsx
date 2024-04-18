@@ -3,36 +3,34 @@ import Head from 'next/head';
 
 import Short from 'components/Short';
 import { getAgentURL } from 'common-util/Contracts';
-import { useSupportedChains } from 'common-util/hooks/useSupportedChains';
-import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
+import {
+  SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG,
+  SUPPORTED_CHAIN_SLUGS,
+} from 'common-util/constants/supported-chains';
+import { useRouter } from 'next/router';
 
-import { validateNetworkQuery } from 'common-util/functions';
-
-export const getServerSideProps = async ({ query }) => {
-  const { network, id } = query;
-  if (!validateNetworkQuery({ network, strict: true })) {
+export const getServerSideProps = async ({ params }) => {
+  const { network } = params;
+  if (!SUPPORTED_CHAIN_SLUGS.includes(network)) {
     return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
+      notFound: true,
     };
   }
+
   return {
     props: {
-      id,
+      network,
       chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network],
     },
   };
 };
 
-const ShortPage = ({ id, chainId }) => {
-  const { getChainSlug } = useSupportedChains();
+const ShortPage = ({ network, chainId }) => {
+  const router = useRouter();
+  const id = Number(router.query.id) ?? 0;
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [video, setVideo] = useState(null);
-
-  const chainSlug = getChainSlug(chainId);
 
   const fetchVideo = useCallback(async () => {
     if (loading) {
@@ -46,20 +44,21 @@ const ShortPage = ({ id, chainId }) => {
       const agentResponsesURL = `${agentURL}/responses?id=${id}`;
       const response = await fetch(agentResponsesURL);
       const data = await response.json();
-      setVideo(data.data[0]);
+      setVideo(data.data.find((v) => v.chainId === chainId));
     } catch (error) {
       setErrorMessage(error);
       console.error('Failed to fetch video:', error);
     } finally {
       setLoading(false);
     }
-  }, [id, loading]);
+  }, [id, chainId, loading]);
 
   useEffect(() => {
+    if (!id) return;
     if (video) return;
     if (loading) return;
     fetchVideo();
-  }, [loading, video]);
+  }, [loading, video, id, fetchVideo]);
 
   const truncatedTitle = video?.prompt
     ? `${video.prompt.substring(0, 50)}...`
@@ -68,7 +67,7 @@ const ShortPage = ({ id, chainId }) => {
   const title = `${truncatedTitle} | Shorts.WTF`;
   const description =
     'Shorts.WTF is a creative tool for generating AI videos. It aggregates video, music and narration, all in one. Powered by Olas agents. Make your own at https://shorts.wtf.';
-  const url = `https://shorts.wtf/${chainSlug}/short/${id}`;
+  const url = `https://shorts.wtf/${network}/short/${id}`;
 
   return (
     <>

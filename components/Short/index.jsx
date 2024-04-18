@@ -64,7 +64,7 @@ Error.defaultProps = {
 const Short = ({ video, loading, errorMessage }) => {
   const [expanded, setExpanded] = useState(false);
   const router = useRouter();
-  const { id } = router.query;
+  const id = Number(router.query.id);
 
   const {
     video: videoHash,

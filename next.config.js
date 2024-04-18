@@ -2,12 +2,13 @@
  * @type {import('next').NextConfig}
  */
 module.exports = {
+  basePath: '',
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
   },
   images: {
-    domains: ['gateway.autonolas.tech'],
+    remotePatterns: [{ hostname: 'gateway.autonolas.tech' }],
   },
   redirects: async () => [
     {

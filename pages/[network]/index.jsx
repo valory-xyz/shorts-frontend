@@ -1,18 +1,20 @@
 import { HomePage } from 'components/Home';
-import { SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG } from 'common-util/constants/supported-chains';
+import {
+  SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG,
+  SUPPORTED_CHAIN_SLUGS,
+} from 'common-util/constants/supported-chains';
 
-import { validateNetworkQuery } from 'common-util/functions';
+export const getStaticPaths = () => {
+  return {
+    paths: SUPPORTED_CHAIN_SLUGS.map((network) => ({
+      params: { network },
+    })),
+    fallback: 'blocking',
+  };
+};
 
-export const getServerSideProps = async ({ query }) => {
-  const { network } = query;
-  if (!validateNetworkQuery({ network })) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
+export const getStaticProps = async ({ params }) => {
+  const { network } = params;
   return {
     props: {
       chainId: SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG[network],
