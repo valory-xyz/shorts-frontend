@@ -4,15 +4,14 @@ import { useRouter } from 'next/router';
 import { toLower } from 'lodash';
 
 import { setChainId } from 'store/setup/actions';
-// import { PAGES_TO_LOAD_WITHOUT_CHAINID } from 'util/constants';
-import { useHelpers } from './useHelpers';
+import { PAGES_TO_LOAD_WITHOUT_CHAINID } from 'util/constants';
 import {
-  // DEFAULT_CHAIN_NETWORK,
+  DEFAULT_CHAIN_ID,
+  DEFAULT_CHAIN_NETWORK,
   SUPPORTED_CHAINS,
 } from '../constants/supported-chains';
 
 const isValidNetworkName = (name) => {
-  console.log(name, SUPPORTED_CHAINS);
   const isValid = SUPPORTED_CHAINS.some(
     (e) => toLower(e.network) === toLower(name),
   );
@@ -28,7 +27,6 @@ const getChainIdFromPath = (networkName) =>
 export const useHandleRoute = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { isL1Network } = useHelpers();
   const path = router?.pathname || '';
   const networkNameFromUrl = router?.query?.network;
 
@@ -54,30 +52,32 @@ export const useHandleRoute = () => {
     const isValidNetwork = isValidNetworkName(networkNameFromUrl);
 
     const chainIdFromPath = getChainIdFromPath(networkNameFromUrl);
-    updateChainId(isValidNetwork ? chainIdFromPath : 1);
+    updateChainId(isValidNetwork ? chainIdFromPath : DEFAULT_CHAIN_ID);
   }, [networkNameFromUrl, dispatchWithDelay, updateChainId]);
 
   useEffect(() => {
-    // if (PAGES_TO_LOAD_WITHOUT_CHAINID.includes(path)) {
-    //   return;
-    // }
-    // /**
-    //  * if user navigates to `/` (homepage) then
-    //  * redirect to `/gnosis` page
-    //  */
-    // if (path === '/') {
-    //   router.push(`/${DEFAULT_CHAIN_NETWORK}`);
-    //   return;
-    // }
-    // /**
-    //  * if the network name is invalid, eg.
-    //  * - user navigates to `/random-page` => redirect to `/gnosis`
-    //  * -
-    //  */
-    // if (!isValidNetworkName(networkNameFromUrl)) {
-    //   router.push(`/${DEFAULT_CHAIN_NETWORK}`);
-    // }
-  }, [path, networkNameFromUrl, isL1Network, router]);
+    if (PAGES_TO_LOAD_WITHOUT_CHAINID.includes(path)) {
+      return;
+    }
+
+    /**
+     * if user navigates to `/` (homepage) then
+     * redirect to `/gnosis` page
+     */
+    if (path === '/') {
+      router.push(`/${DEFAULT_CHAIN_NETWORK}`);
+      return;
+    }
+
+    /**
+     * if the network name is invalid, eg.
+     * - user navigates to `/random-page` => redirect to `/gnosis`
+     * -
+     */
+    if (!isValidNetworkName(networkNameFromUrl)) {
+      router.push(`/${DEFAULT_CHAIN_NETWORK}`);
+    }
+  }, [path, networkNameFromUrl, router]);
 
   return { updateChainId };
 };

@@ -5,9 +5,11 @@ import { getAgentHash, getIpfsResponse } from 'common-util/functions';
 import { AGENT_REGISTRY_ABI } from 'common-util/AbiAndAddresses';
 import { REGISTRIES } from 'common-util/constants/registries';
 import { DEFAULT_CHAIN } from 'common-util/constants/supported-chains';
+import { useHelpers } from 'common-util/hooks';
 import { RequestForm } from './RequestForm';
 
-export const NewRequest = ({ chainId }) => {
+export const NewRequest = () => {
+  const { chainId } = useHelpers();
   const [dataList, setDataList] = useState([]);
 
   const { data: agentHashes, isLoading } = useContractRead({

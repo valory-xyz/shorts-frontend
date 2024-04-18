@@ -93,7 +93,9 @@ const NavigationBar = ({ children }) => {
       <Banner>This product is in Research Beta</Banner>
 
       <Content className="site-layout">
-        <div className="site-layout-background">{children}</div>
+        {router.isReady && (
+          <div className="site-layout-background">{children}</div>
+        )}
       </Content>
 
       <Footer />
