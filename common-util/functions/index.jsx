@@ -2,15 +2,15 @@ import { GATEWAY_URL } from 'util/constants';
 import { ADDRESSES, RPC_URLS } from 'common-util/Contracts';
 import {
   getProvider as getProviderFn,
-  getChainId as getChainIdFn,
   getChainIdOrDefaultToMainnet as getChainIdOrDefaultToMainnetFn,
   getIsValidChainId as getIsValidChainIdFn,
   sendTransaction as sendTransactionFn,
 } from '@autonolas/frontend-library';
 import {
+  DEFAULT_CHAIN_ID,
   SUPPORTED_CHAINS,
   SUPPORTED_CHAIN_ID_BY_CHAIN_SLUG,
-} from 'common-util/constants/supported-chains';
+} from '../constants/supported-chains';
 
 export const getProvider = () => getProviderFn(SUPPORTED_CHAINS, RPC_URLS);
 
@@ -22,8 +22,22 @@ export const getChainIdOrDefaultToMainnet = (chainId) => {
   return x;
 };
 
-export const getChainId = (chainId = null) =>
-  getChainIdFn(SUPPORTED_CHAINS, chainId);
+export const getChainId = (chainId = null) => {
+  if (chainId) return chainId;
+
+  // chainId fetched from sessionStorage
+  const chainIdFromSessionStorage =
+    typeof sessionStorage === 'undefined'
+      ? 1
+      : Number(sessionStorage.getItem('chainId'));
+
+  // if chainId is not supported, throw error
+  if (!SUPPORTED_CHAINS.find((e) => e.id === chainIdFromSessionStorage)) {
+    return new Error('Invalid chain id');
+  }
+
+  return chainIdFromSessionStorage || DEFAULT_CHAIN_ID;
+};
 
 export const sendTransaction = (fn, account) =>
   sendTransactionFn(fn, account, {

@@ -2,6 +2,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Col, Divider, Empty, Row, Skeleton } from 'antd';
 import styled from 'styled-components';
 
+import { useHelpers } from 'common-util/hooks';
 import { useVideoList } from '../../hooks/useVideoList';
 import { VideoCard } from './VideoCard';
 
@@ -27,7 +28,9 @@ const InfiniteScrollLoader = () => (
   </Row>
 );
 
-export const VideoList = ({ chainId }) => {
+export const VideoList = () => {
+  const { chainId } = useHelpers();
+
   const { videos, loading, hasMoreVideos, increasePageCount } =
     useVideoList(chainId);
 

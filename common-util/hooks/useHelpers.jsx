@@ -9,6 +9,7 @@ export const useHelpers = () => {
 
   const account = useSelector((state) => state?.setup?.account);
   const chainId = useSelector((state) => state?.setup?.chainId);
+  const chainName = useSelector((state) => state?.setup?.chainName);
   const queueTimeInSeconds = useSelector((state) => state.setup.queueTime);
 
   const updateQueueTime = async () => {
@@ -26,6 +27,7 @@ export const useHelpers = () => {
   return {
     chainId,
     account,
+    chainName,
     isValidChainId: getIsValidChainId(chainId),
     queueTimeInSeconds,
     queueTimeInHms,

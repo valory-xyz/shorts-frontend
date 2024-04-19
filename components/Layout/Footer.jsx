@@ -6,7 +6,8 @@ import { FooterContainer } from './styles';
 
 const FooterContent = () => (
   <Typography.Text>
-    © Valory 2023 · <Link href="/disclaimer">Disclaimer</Link>
+    {`© Valory ${new Date().getFullYear()} ·`}{' '}
+    <Link href="/disclaimer">Disclaimer</Link>
   </Typography.Text>
 );
 

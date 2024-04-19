@@ -11,11 +11,11 @@ const Container = styled.div`
   gap: 2rem;
 `;
 
-export const HomePage = ({ chainId }) => {
+export const HomePage = () => {
   return (
-    <Container key={chainId ?? 'none'}>
-      <NewRequest chainId={chainId} />
-      <VideoList chainId={chainId} />
+    <Container>
+      <NewRequest />
+      <VideoList />
     </Container>
   );
 };
