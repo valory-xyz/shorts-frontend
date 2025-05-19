@@ -15,6 +15,7 @@ export const HomePage = () => {
   return (
     <Container>
       <NewRequest />
+      <p>hi</p>
       <VideoList />
     </Container>
   );
