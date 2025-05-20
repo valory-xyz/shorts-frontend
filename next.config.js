@@ -22,18 +22,13 @@ module.exports = {
   redirects: async () => [
     {
       source: '/short/:id',
-      destination: `/gnosis/short/:id`,
+      destination: `/`,
       permanent: false,
     },
     {
       source: '/requests/:id',
-      destination: `/gnosis/requests/:id`,
+      destination: `/`,
       permanent: false,
-    },
-    {
-      source: '/',
-      destination: '/gnosis',
-      permanent: true,
     },
   ],
   async headers() {

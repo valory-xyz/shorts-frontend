@@ -41,7 +41,7 @@
     "import/no-unresolved": [
       2,
       {
-        "ignore": ["util", "common-util", "components", "store"]
+        "ignore": ["util", "common-util", "components"]
       }
     ],
     "no-console": ["warn", { "allow": ["error"] }],

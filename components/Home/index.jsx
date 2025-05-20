@@ -1,6 +1,5 @@
+import { Alert } from 'antd';
 import styled from 'styled-components';
-import { NewRequest } from '../NewRequest';
-import { VideoList } from './VideoList';
 
 const Container = styled.div`
   width: 100%;
@@ -11,12 +10,21 @@ const Container = styled.div`
   gap: 2rem;
 `;
 
+const AlertContainer = styled.div`
+  width: 100%;
+  height: calc(-250px + 100vh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+`;
+
 export const HomePage = () => {
   return (
     <Container>
-      <NewRequest />
-      <p>hi</p>
-      <VideoList />
+      <AlertContainer>
+        <Alert message='This app has been deprecated and is no longer supported.' showIcon />
+      </AlertContainer>
     </Container>
   );
 };
