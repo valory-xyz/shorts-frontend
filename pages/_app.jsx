@@ -20,7 +20,7 @@ const MyApp = ({ Component, pageProps }) => {
       <GlobalStyle />
       <Head>
         <title>Shorts.WTF</title>
-        <meta name='title' content='Shorts.WTF' />
+        <meta name="title" content="Shorts.WTF" />
       </Head>
       {isMounted && (
         <ConfigProvider theme={THEME_CONFIG}>
@@ -34,18 +34,22 @@ const MyApp = ({ Component, pageProps }) => {
 };
 
 MyApp.getInitialProps = async ({ Component, ctx }) => {
-  const pageProps = Component.getInitialProps ? await Component.getInitialProps(ctx) : {};
+  const pageProps = Component.getInitialProps
+    ? await Component.getInitialProps(ctx)
+    : {};
 
   return { pageProps };
 };
 
 MyApp.propTypes = {
-  Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})]).isRequired,
+  Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
+    .isRequired,
   pageProps: PropTypes.shape({}).isRequired,
 };
 
 MyApp.propTypes = {
-  Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})]).isRequired,
+  Component: PropTypes.oneOfType([PropTypes.func, PropTypes.shape({})])
+    .isRequired,
   pageProps: PropTypes.shape({}).isRequired,
 };
 

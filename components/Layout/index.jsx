@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import { COLOR } from '@autonolas/frontend-library';
 
 import { GREEN_THEME } from 'util/theme';
+import Link from 'next/link';
 import Footer from './Footer';
 import { CustomLayout } from './styles';
-import Link from 'next/link';
 
 const { Header, Content } = Layout;
 
@@ -25,27 +25,36 @@ const NavigationBar = ({ children }) => {
     <CustomLayout>
       <StyledHeader>
         <div>
-          <Link href='/' className='column-1' style={{ cursor: 'pointer', outline: 'none' }} tabIndex={0}>
-            <Image src='/images/logo.png' alt='logo' width={280} height={61} />
+          <Link
+            href="/"
+            className="column-1"
+            style={{ cursor: 'pointer', outline: 'none' }}
+            tabIndex={0}
+          >
+            <Image src="/images/logo.png" alt="logo" width={280} height={61} />
           </Link>
         </div>
 
-        <div className='column-2'>
+        <div className="column-2">
           {router.pathname.includes('requests') && (
             <ConfigProvider theme={GREEN_THEME}>
-              <Button type='primary' onClick={() => router.push('/')}>
+              <Button type="primary" onClick={() => router.push('/')}>
                 New request
               </Button>
             </ConfigProvider>
           )}
 
-          <Button type='primary' asChild>
-            <a href='https://olas.network/'>Learn more about Olas</a>
+          <Button type="primary" asChild>
+            <a href="https://olas.network/">Learn more about Olas</a>
           </Button>
         </div>
       </StyledHeader>
 
-      <Content className='site-layout'>{router.isReady && <div className='site-layout-background'>{children}</div>}</Content>
+      <Content className="site-layout">
+        {router.isReady && (
+          <div className="site-layout-background">{children}</div>
+        )}
+      </Content>
 
       <Footer />
     </CustomLayout>

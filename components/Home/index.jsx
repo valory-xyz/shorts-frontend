@@ -23,7 +23,10 @@ export const HomePage = () => {
   return (
     <Container>
       <AlertContainer>
-        <Alert message='This app has been deprecated and is no longer supported.' showIcon />
+        <Alert
+          message="This app has been deprecated and is no longer supported."
+          showIcon
+        />
       </AlertContainer>
     </Container>
   );

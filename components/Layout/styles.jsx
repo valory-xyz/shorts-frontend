@@ -124,6 +124,19 @@ export const SubFooter = styled.div`
   }
 `;
 
+export const ContractsInfoContainer = styled.div`
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  .mech-contract {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    margin-right: 8px;
+  }
+`;
+
 export const FooterContainer = styled.div`
   margin-bottom: 8rem;
 `;
