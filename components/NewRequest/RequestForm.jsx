@@ -68,7 +68,7 @@ export const RequestForm = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [updateQueueTime]);
 
   const onFinishFailed = (errorInfo) => {
     window.console.warn('Failed:', errorInfo);

@@ -42,7 +42,7 @@ export const Request = () => {
 
   useEffect(() => {
     updateQueueTime();
-  }, []);
+  }, [updateQueueTime]);
 
   return (
     <Container>

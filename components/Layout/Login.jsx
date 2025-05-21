@@ -37,7 +37,15 @@ const Login = ({
     } else {
       setLogout();
     }
-  }, [address]);
+  }, [
+    address,
+    chainId,
+    data?.formatted,
+    setChainId,
+    setLogout,
+    setUserAccount,
+    setUserBalance,
+  ]);
 
   const onConnect = (response) => {
     setUserAccount(response.address);

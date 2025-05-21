@@ -60,7 +60,7 @@ export default function App() {
     } catch (error) {
       notifyError('Failed to subscribe to notifications');
     }
-  }, [subscribe, isRegistered]);
+  }, [subscribe, performRegistration]);
 
   if (!isReady) {
     return <Text>Loading client...</Text>;
